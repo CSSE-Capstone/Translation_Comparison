@@ -10,6 +10,8 @@ from rule_based.main import RuleBased
 # from clustering.main import Clustering # TODO 
 from wordnet.main import WordNet
 
+file_path = 'files/'
+
 # Initialize RuleBased model
 rb_noun_grammar = r"""
 
@@ -41,8 +43,8 @@ rb = RuleBased(rb_noun_grammar, rb_chunker, rb_lemmatizer, rb_stemmer, rb_tagger
 wn = WordNet()
 
 ### translation output
-matched_indicators = pd.read_csv('glossarymatchedindicators.csv', index_col=0, header=None, squeeze=True).to_dict()
-cids_classes = pd.read_csv('cidsclasses.csv', header=None, squeeze=True).to_list()
+matched_indicators = pd.read_csv(file_path + 'glossarymatchedindicators.csv', index_col=0, header=None, squeeze=True).to_dict()
+cids_classes = pd.read_csv(file_path + 'cidsclasses.csv', header=None, squeeze=True).to_list()
 t1_text = 'Number of individuals residing in rural areas who sold goods or services to the organization during the reporting period.'
 t1 = rb.get_key_pos_tag(t1_text)
 ind_code = 'PI2566'
@@ -110,7 +112,7 @@ stop.add('##hg')
 stop.add('-')
 
 # Training 
-df = pd.read_csv("iris.csv")
+df = pd.read_csv(file_path + "iris.csv")
 definitionsDF = df[["ID", "Definition"]]
 definitionsDF.head()
 # Load pre-trained model tokenizer (vocabulary)
@@ -479,24 +481,55 @@ def rb_cluster_combined(rb_output, ind_text, clusterMap, kmeans):
 ## Perform wn. Returns an updated dictionary-form KG.
 ### (Extract xxxThing noun phrases from the dictionary)
 '''
+# TODO uncomment
+# rb_output_test = {'PI2566': {'subclassOf': 'Cardinality', 'cardinalityOf': 'PI2566Population'},
+#  'PI2566Population': {'subclassOf': 'Population',
+#   'forTimeInterval': 'ReportingPeriod',
+#   'definedBy': 'Individual'},
+#  'ReportingPeriod': {'subclassOf': 'DateTimeInterval'},
+#  'Cardinality': {},
+#  'Individual': {'subclassOf': 'Person', 'residing': 'RuralArea'},
+#  'RuralArea': {'subclassOf': 'Area', 'sold': 'GoodService'},
+#  'GoodService': {'subclassOf': 'cidsThing'},
+#  'Organization': {}}
 
-rb_output_test = {'PI2566': {'subclassOf': 'Cardinality', 'cardinalityOf': 'PI2566Population'},
- 'PI2566Population': {'subclassOf': 'Population',
-  'forTimeInterval': 'ReportingPeriod',
-  'definedBy': 'Individual'},
- 'ReportingPeriod': {'subclassOf': 'DateTimeInterval'},
- 'Cardinality': {},
- 'Individual': {'subclassOf': 'Person', 'residing': 'RuralArea'},
- 'RuralArea': {'subclassOf': 'Area', 'sold': 'GoodService'},
- 'GoodService': {'subclassOf': 'cidsThing'},
- 'Organization': {}}
+# # Clustering 
+# clustering_kg_dict = rb_cluster_combined(rb_output_test, t1_text, clusterMap, kmeans)
+# print(f'clustering_kg_dict:{clustering_kg_dict}')
 
-# Clustering 
-clustering_kg_dict = rb_cluster_combined(rb_output_test, t1_text, clusterMap, kmeans)
-print(f'clustering_kg_dict:{clustering_kg_dict}')
+# # wn
+# # wn_kg_dict = wordnet(t1_text, clustering_kg_dict) # TODO uncomment
+# print(f't1_output: {t1_output}')
+# wn_kg_dict = wn.wordnet(t1_text, t1_output) # TODO rm
+# print(f'wn_kg_dict: {wn_kg_dict}')
 
-# wn
-# wn_kg_dict = wordnet(t1_text, clustering_kg_dict) # TODO uncomment
-print(f't1_output: {t1_output}')
-wn_kg_dict = wn.wordnet(t1_text, t1_output) # TODO rm
-print(f'wn_kg_dict: {wn_kg_dict}')
+# ===== Demo =====
+indtestset = pd.read_csv(file_path + 'indicatortestset.csv', encoding = "ISO-8859-1", engine='python')
+
+for index, row in indtestset.iterrows():
+  ind_code = row['Indicator Code']
+  ind_def = row['Indicator Definition']
+  print(ind_code)
+  print(ind_def)
+  #output_kg(ind_code, ind_def)
+
+  pos_tagged = rb.get_key_pos_tag(ind_def)
+  rb_output = rb.rb_translation(pos_tagged, ind_code, cids_classes, matched_indicators)
+  print('rb_output')
+  print(rb_output)
+  cluster_output = rb_cluster_combined(rb_output, ind_def, clusterMap, kmeans)
+  print('cluster_output')
+  print(cluster_output)
+  wordnet_output = wn.wordnet(ind_def, rb_output)
+  print('wordnet_output')
+  print(wordnet_output)
+  if cluster_output != wordnet_output: import pdb;pdb.set_trace() # TODO rm
+
+  G, prop_rel = rb.plot_KG(cluster_output)
+  pos = nx.spring_layout(G, k=0.2)
+  plt.figure(figsize=(15,8))                                                    
+  nx.draw(G, pos, with_labels=True, arrows=True)                                                              
+  nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
+
+#   plt.show()
+  print('\n')

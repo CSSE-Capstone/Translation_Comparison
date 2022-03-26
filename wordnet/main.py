@@ -10,7 +10,7 @@ import re
 import owlready2 as owl2
 from nltk.probability import FreqDist
 
-THRESHOLD = 0.3
+THRESHOLD = 0.8
 T_SS_METHOD = 'mfs' # Target word synset selection method
 C_SS_METHOD = 'mfs' # Class word synset selection method 
 LAST_SUBWORD_WEIGHT = 0.6 # Percentage
@@ -30,7 +30,6 @@ class WordNet:
             if bool(clustering_kg_dict[key]) and "subclassOf" in clustering_kg_dict[key]:
                 if "Thing" in clustering_kg_dict[key]["subclassOf"]:
                     res[key] = clustering_kg_dict[key]["subclassOf"]
-        print(res)
         return res
 
 
@@ -42,43 +41,41 @@ class WordNet:
         onto.load() 
         # Get list of CIDS class names
         cids_classes = [c.name for c in list(onto.classes())] # Get all classes from CIDS as well as dependency ontologies
-
+        
         res_dict = clustering_kg_dict.copy()
         tw_c = self.get_Thing_classes(clustering_kg_dict) # TODO if emtpy dont run 
         for target_word, c in tw_c.items():
             res_class = None
             ranked_sim_classes = self.get_parent_cids_class(sentence,target_word, cids_classes)
+            # TODO Get the most similar class (first item in ranked list)
             if len(ranked_sim_classes) > 0:
                 res_class = list(ranked_sim_classes.keys())[0]
-            else:
-                break # TODO Get the most similar class (first item in ranked list)
-            print(target_word) # Target class
-            print(f'{ranked_sim_classes}') # Results before clustering output filtering
-            print(len(ranked_sim_classes)) # Length of results
+            # print(target_word) # Target class
+            # print(f'{ranked_sim_classes}') # Results before clustering output filtering
+            # print(len(ranked_sim_classes)) # Length of results
 
+            
             # Fitler ranked_sim_classes by cluster_class
-            if ranked_sim_classes[res_class] < 0.8:
-                filtered = self.filter_by_genre(ranked_sim_classes, c)
-                if len(filtered) > 0:
-                    res_class = list(filtered.keys())[0]
-                else:
-                    break # Update result class # TODO Get the most similar class (first item in ranked list)
-                print(f'Filter by {c}') 
-                print(filtered) # TODO replace w cluster_label
-                print(len(filtered)) # Length of results after filtering
-                print('\n') 
+            filtered = self.filter_by_genre(ranked_sim_classes, c)
+
+            if len(filtered) > 0:
+                res_class = list(filtered.keys())[0]
+            else:
+                res_class = None
+            # print(f'Filter by {c}') 
+            # print(filtered) # TODO replace w cluster_label
+            # print(len(filtered)) # Length of results after filtering
+            # print('\n') 
                 
             
-            # Update res_dict with res_class # TODO handle if fallback
-            if res_class: 
-                for key in clustering_kg_dict.keys():
-                    if "subclassOf" in clustering_kg_dict[key]:
-                        if clustering_kg_dict[key]["subclassOf"] == c:
+            # Update res_dict with res_class # TODO handle if fallback 
+            for key in clustering_kg_dict.keys():
+                if "subclassOf" in clustering_kg_dict[key]:
+                    if clustering_kg_dict[key]["subclassOf"] == c:
+                        if res_class:
                             res_dict[key]['subclassOf'] = res_class
-                # TODO if below sim threshold, fallback to cluster_output (xxxThing)
-                return res_dict
-            else:
-                return clustering_kg_dict
+                        
+        return res_dict
 
     def get_parent_cids_class(self, sentence: List[str], target_word, list_of_class_names):
         '''
@@ -100,7 +97,7 @@ class WordNet:
                 # If target word is a multi-word, only keep the last subword (assume it is the noun, and preceding subwords are adjectives)
                 if len(wn.synsets(target_word)) == 0:
                     # Split it into its constituent terms
-                    target_word = re.findall('[A-Z][^A-Z]*', target_word)[-1] # Only keep the last subword
+                    target_word = re.findall('[A-Z][^A-Z]*', target_word)[-1] # TODO Only keep the last subword
                 else:
                     # Get target word sense
                     if T_SS_METHOD == 'mfs':
@@ -151,7 +148,7 @@ class WordNet:
             return most_similar_classes
 
 
-    def filter_by_genre(self, similar_classes: Dict[str, float], genre: str, filter_threshold=0.7) -> Dict[str, float]:
+    def filter_by_genre(self, similar_classes: Dict[str, float], genre: str) -> Dict[str, float]:
         '''
         Takes the upstream clustering output class, which is a higher level ancestor, as the filter for the output. 
         For example, 
@@ -169,25 +166,28 @@ class WordNet:
         res = dict()
         for c in similar_classes:
             if len(wn.synsets(c)) == 0:
-                term_similarity = []
+                target_subword_similarity = []
                 # Split it into its constituent terms
                 subwords = re.findall('[A-Z][^A-Z]*', c)
                 for sw in subwords:
                     if len(wn.synsets(sw)) > 0:
                         sw_ss = self.mfs(sw) 
-                        term_similarity.append(g_ss.wup_similarity(sw_ss)) 
-                similarity = 0
-                for idx, t in enumerate(term_similarity):
-                    if idx < len(term_similarity) - 1:
+                        target_subword_similarity.append(g_ss.wup_similarity(sw_ss)) 
+                score = 0
+                for idx, t in enumerate(target_subword_similarity):
+                    if idx < len(target_subword_similarity) - 1:
                         weight = (1.0 - LAST_SUBWORD_WEIGHT) / float(len(term_similarity) - 1) # Weight for each word that is not the last subword
-                        similarity += t * weight
+                        score += t * weight
                     else:
-                        similarity += t * LAST_SUBWORD_WEIGHT
+                        score += t * LAST_SUBWORD_WEIGHT
+                # if does not exceed filter threshold, store to res for filtering later
+                if score < THRESHOLD:
+                    res[c] = score
             else: 
                 c_ss = self.mfs(c)
                 score = c_ss.wup_similarity(g_ss)
                 # if does not exceed filter threshold, store to res for filtering later
-                if score < filter_threshold:
+                if score < THRESHOLD:
                     res[c] = score
         for res_c in res:
             # If c does not have high similarity with the genre (ie does not exceed threshold), remove c from similar class

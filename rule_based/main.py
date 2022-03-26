@@ -116,7 +116,7 @@ class RuleBased:
         return nv_terms
 
 
-    def rb_translation(self, t1,ind_code, cids_classes, matched_indicators):
+    def rb_translation(self, t1, ind_code, cids_classes, matched_indicators):
         pos_breakdown = t1
 
         #default translation components
