@@ -1,0 +1,14 @@
+Indicator,Subject,CIDS Class,Property,Value
+PI2566,PI2566,Indicator,cardinalityOf,PI2566Population
+PI2566,PI2566,Indicator,subclassOf,Cardinality
+PI2566,Cardinality,Parameter,,
+PI2566,RuralSuppliers,,soldBy,RuralPerson or Person
+PI2566,PI2566Population,Population,definedBy,RuralSuppliers
+PI2566,PI2566Population,Population,forTimeInterval,ReportingPeriod
+PI2566,RuralSuppliers,Person,ProductSold,GeneralProduct
+PI2566,RuralSuppliers,Person,ServiceSold,GeneralService
+PI2566,RuralSuppliers,Person,DateSold,xsd:Date
+PI2566,RuralSuppliers,Person,SoldTo,Organization
+PI2566,RuralPerson,Person,resideIn,RuralArea
+PI2566,RuralArea,N/A (Area),,
+PI2566,Area,,hasPhenomenon,Land

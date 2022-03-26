@@ -1,0 +1,9 @@
+nltk
+pandas
+networkx
+matplotlib
+transformers
+owlready2
+torch
+sklearn
+seaborn

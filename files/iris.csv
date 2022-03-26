@@ -1,0 +1,559 @@
+ID,Metric Name,Definition
+PI6372,Client Individuals: Smallholder,Number of unique smallholder farmer individuals who were clients during the reporting period.
+PI9991,Supplier Individuals: Smallholder,Number of smallholder farmers who sold to the organization during the reporting period.
+PI7852,Payments to Supplier Individuals: Smallholder,Value of payments made to smallholder farmers who sold to the organization during the reporting period.
+PI8632,Percent Smallholder Sourcing Payments,Percentage of payments made to smallholder farmer suppliers compared to total payments made to all suppliers of the organization during the reporting period.
+PD1620,Crop Type,Type of crop(s) produced by the organization during the reporting period. Select from the options in the Reference List tab.
+PD4686,Livestock/Fish Type,Type of livestock product(s) produced by the organization during the reporting period. Select from the options in the Reference List tab.
+OI5408,Land Directly Controlled: Total,Area of land directly controlled by the organization during the reporting period.
+OI1674,Land Directly Controlled: Cultivated,Area of land directly controlled by the organization and under cultivation. Report directly controlled land area cultivated during the reporting period.
+OI6912,Land Directly Controlled: Sustainably Managed,Area of land directly controlled by the organization and under sustainable cultivation or sustainable stewardship. Report directly controlled land area sustainably managed during the reporting period.
+OI2569,Land Directly Controlled: Treated with Pesticides,Area of land directly controlled by the organization and treated with pesticides. Report directly controlled land area treated during the reporting period.
+OI9891,Pesticide Use,Amount of pesticides used during the reporting period on land area directly controlled by the organization.
+PI9988,Purchase Contracts,Number of contracts/purchase agreements that the organization holds for purchase of its products/services. Report contracts fulfilled and outstanding as of the end of the reporting period.
+PI3789,Land Indirectly Controlled: Total,Area of land indirectly controlled by the organization during the reporting period.
+PI7403,Land Indirectly Controlled: Cultivated,Area of land indirectly controlled by the organization and under cultivation. Report indirectly controlled land area cultivated during the reporting period.
+PI6796,Land Indirectly Controlled: Sustainably Managed,Area of land indirectly controlled by the organization and under sustainable cultivation or sustainable stewardship. Report indirectly controlled land area sustainably managed during the reporting period.
+PI1568,Producer Price Premium,Price premium percentage that the producer (supplier) selling to the organization obtains from the organization for its goods or services during the reporting period.
+PI3468,Average Client Agricultural Yield: Total,Average agricultural yield per hectare of clients (who were farmers) of the organization during the reporting period.
+PI9421,Average Client Agriculture Yield: Smallholder,"Average agricultural yield per hectare, of clients (who were smallholder farmers) of the organization during the reporting period."
+PI2422,Units/Volume Purchased at Price Premium,Units/volume purchased from supplier individuals and organizations that sold to the organization that have received a price premium during the reporting period.
+PI2019,Units/Volume Purchased from Supplier Organizations: Total,Units/volume purchased from organizations that sold to the reporting organization during the reporting period.
+PI8418,Units/Volume Purchased from Supplier Organizations: Local,Units/volume purchased from local organizations that sold to the reporting organization during the reporting period.
+PI6652,Units/Volume Purchased from Supplier Organizations: Certified,Certified units/volume purchased from organizations who sold to the reporting organization during the reporting period.
+PI5473,Units/Volume Purchased from Supplier Organizations: SME,Units/volume purchased from small-to-medium enterprises (SMEs) that sold to the reporting organization during the reporting period.
+PI7923,Units/Volume Purchased from Supplier Individuals: Total,Units/volume purchased from individuals who sold to the organization during the reporting period.
+PI9428,Units/Volume Purchased from Supplier Individuals: Female,Units/volume purchased from female individuals who sold to the organization during the reporting period.
+PI6646,Units/Volume Purchased from Supplier Individuals: Minorities/Previously Excluded,Units/volume purchased from individuals belonging to minority or previously excluded groups who sold to the organization during the reporting period.
+PI4982,Units/Volume Purchased from Supplier Individuals: Smallholder,Units/volume purchased from smallholder farmers who sold to the organization during the reporting period.
+PI3825,Units/Volume Purchased from Supplier Individuals: Certified,Certified units/volume purchased from individuals who sold to the reporting organization during the reporting period.
+PI2046,Average Supplier Agriculture Yield: Total,Average agricultural yield per hectare of individuals who sold to the organization (supplier individuals) during the reporting period.
+PI1405,Average Supplier Agricultural Yield: Smallholder,Average agricultural yield per hectare of smallholder farmers who sold to the organization during the reporting period.
+PI5935,Smallholder Agricultural Yield,Total agricultural yield of farmer client of the organization during the reporting period.
+PI9151,Number of Threatened Species,Number of threatened species present on land directly controlled by the organization during the reporting period.
+OI1479,Greenhouse Gas Emissions: Total,Amount of greenhouse gases (GHG) emitted through the organization's operations during the reporting period.
+OI4112,Greenhouse Gas Emissions: Direct,Amount of greenhouse gases (GHG) emitted through the organization's operations from direct emissions sources during the reporting period.
+OI9604,Greenhouse Gas Emissions: Indirect,Amount of greenhouse gases (GHG) emitted through the organization's operations from indirect emissions sources during the reporting period.
+OI6774,Greenhouse Gas Emissions Avoided Due to Carbon Offsets Purchased,Amount of greenhouse gas (GHG) emissions avoided through carbon credits purchased during the reporting period.
+OI2436,Value of Carbon Credits Purchased,Value of carbon credits purchased by the organization during the reporting period.
+PI2787,Greenhouse Gas Emissions Avoided Due to Carbon Offsets Sold,Amount of greenhouse gas (GHG) emissions avoided through carbon credits sold during the reporting period.
+PI7015,Greenhouse Gas Emissions of Energy Generated for Sale,Amount of greenhouse gases (GHG) emitted through production of energy by the organization and delivered to offtaker(s) during the reporting period.
+PD9427,Greenhouse Gas Emissions of Product,Amount of greenhouse gases (GHG) emitted by the product over its lifetime.
+PD2243,Greenhouse Gas Emissions of Product Replaced,Amount of greenhouse gases (GHG) that would have been emitted by the replaced product during the lifetime of the organization's product.
+PI5376,Greenhouse Gas Reductions due to Products Sold,Amount of reductions in greenhouse gas (GHG) emissions over the lifetime of products sold during the reporting period.
+OI5951,Greenhouse Gas Emissions Mitigated,Amount of greenhouse gas (GHG) emissions mitigated by the organization during the reporting period. This should include GHG emissions reductions from direct and indirect sources.
+PI9878,Greenhouse Gas Emissions Sequestered,Amount of greenhouse gas (GHG) emissions sequestered by the organization during the reporting period.
+PI2764,Greenhouse Gas Emissions Avoided,Amount of greenhouse gas (GHG) emissions avoided by the organization during the reporting period.
+OI4862,Greenhouse Gas Emissions Reduced,Amount of greenhouse gas (GHG) emissions reduced by the organization during the reporting period.
+PI4060,Client Individuals: Total,Number of unique individuals who were clients of the organization during the reporting period.
+PI8330,Client Individuals: Female,Number of unique women who were clients of the organization during the reporting period.
+PI3193,Client Individuals: Poor,Number of unique poor individuals who were clients of the organization during the reporting period.
+PI9835,Client Individuals: Very Poor,Number of unique very poor individuals who were clients of the organization during the reporting period.
+PI7098,Client Individuals: Low Income,Number of unique low income individuals who were clients of the organization during the reporting period.
+PI1190,Client Individuals: Rural,Number of unique individuals residing in rural areas and were clients of the organization during the reporting period.
+PI6751,Client Individuals: Urban,Number of unique individuals residing in urban areas and were clients of the organization during the reporting period.
+PI3960,Client Individuals: Peri-urban,Number of unique individuals residing in peri-urban areas and were clients of the organization during the reporting period.
+PI6266,Client Individuals: Disabilities,Number of unique individuals with disabilities who were clients of the organization during the reporting period.
+PI4237,Client Individuals: Minorities/Previously Excluded,Number of unique individuals who belong to minority or previously excluded groups and were clients of the organization during the reporting period.
+PI1945,Client Individuals: Children/Adolescents,Number of unique children and adolescents who were clients of the organization during the reporting period.
+PI9327,Client Individuals: Active,Number of unique individuals who were active clients of the organization as of the end of the reporting period.
+PI8732,Client Individuals: New,Number of unique individuals who were first-time clients of the organization during the reporting period.
+PI2822,Client Individuals: Provided New Access,"Number of unique client individuals who were served by the organization and provided access, during the reporting period, to products/services they were unable to access prior to the reporting period.
+
+Organizations should reference New Access to Water, New Access to Energy, New Access to Education, New Access to Finance, or New Access to Healthcare in the glossary for more clarification."
+PI1807,Client Individuals: No Direct Payment,Number of unique client individuals who received products/services during the reporting period where no direct payment was provided to the organization at the time of service but for which the organization expects to be reimbursed.
+PI9622,Client Individuals: Receiving Free Products/Services,Number of unique client individuals who received free products/services from the organization during the reporting period.
+PI2185,Client Individuals: Referred,Number of unique individual clients of the organization who were referred by other clients of the organization during the reporting period.
+PI7954,Client Households: Total,Number of unique households that were clients of the organization during the reporting period.
+PI1726,Client Households: Poor,Number of unique poor households that were clients of the organization during the reporting period.
+PI6705,Client Households: Very Poor,Number of unique very poor households that were clients of the organization during the reporting period.
+PI7318,Client Households: Low Income,Number of unique low income households that were clients of the organization during the reporting period.
+PI1417,Client Households: Urban,Number of unique households in urban areas that were clients of the organization during the reporting period.
+PI7952,Client Households: Peri-urban,Number of unique households in peri-urban areas that were clients of the organization during the reporting period.
+PI3268,Client Households: Minorities/Previously Excluded,"Number of unique households with at least one household member who belongs to minority or previously excluded groups, and were clients of the organization during the reporting period."
+PI6991,Client Households: New,Number of unique households who were first-time clients of the organization during the reporting period.
+PI2845,Client Households: Provided New Access,"Number of unique households that were clients of the organization and provided access, during the reporting period, to products/services they were unable to access prior to the reporting period.
+
+Organizations should reference New Access to Water, New Access to Energy, New Access to Education, New Access to Finance, or New Access to Healthcare in the glossary for more clarification."
+PI2180,Client Households: No Direct Payment,Number of unique client households that received products/services during the reporting period where no direct payment was provided to the organization at the time of service but for which the organization expects to be reimbursed.
+PI1583,Client Households: Receiving Free Products/Services,Number of unique client households who received free products/services from the organization during the reporting period.
+PI4548,Client Household Size,"Average household size of clients of the organization during the reporting period, measured with number of individuals."
+PI9652,Client Organizations: Total,Number of enterprises that were clients of the organization during the reporting period.
+PI6894,Client Organizations: New,Number of enterprises that were first-time clients of the organization during the reporting period.
+PI2575,Client Organizations: Provided New Access,"Number of enterprise clients that were served by the organization and provided access, during the reporting period, to products/services they were unable to access prior to the reporting period.
+
+Organizations should reference New Access to Water, New Access to Energy, New Access to Education, New Access to Finance, or New Access to Healthcare in the glossary for more clarification."
+PI8952,Client Organizations: No Direct Payment,Number of enterprise clients that received products/services during the reporting period where no direct payment was provided to the organization at the time of service but for which the organization expects to be reimbursed.
+PI6050,Client Organizations: Receiving Free Services,Number of enterprise clients that received free products/services from the organization during the reporting period.
+PI9713,Client Organizations: Microenterprises,Number of microenterprises that were clients of the organization during the reporting period.
+PI4940,Client Organizations: SME,Number of small-to-medium enterprises (SMEs) that were clients of the organization during the reporting period.
+PI5184,Client Transactions,Number of sales or client transactions during the reporting period.
+PI9319,Client Retention Rate,Ratio of the number of the organization's active clients retained from the start to the end of the reporting period.
+PI1748,Client Savings Premium,Ratio of the price savings obtained by the client from purchasing a product/service from the organization compared to the average price that would be otherwise paid for a similar product/service in the local market.
+PI9409,Client Income,"Number of unique individuals who were clients of the organization during the reporting period reporting an increase, decrease, or no change in income."
+PI2476,Communities Served,Number of communities where the organization's products/services were available during the reporting period.
+OI8869,Permanent Employees: Total,Number of people employed by the organization as of the end of the reporting period. This is the sum of all paid full-time and part-time employees.
+OI2444,Permanent Employees: Female,Number of females employed by the organization as of the end of the reporting period. This is the sum of all paid full-time and part-time female employees.
+OI8266,Permanent Employees: Low Income Areas,Number of people employed by the organization who reside in low income areas as of the end of the reporting period. This is the sum of all paid full-time and part-time employees residing in low income areas.
+OI4038,Permanent Employees: Disabilities,Number of people with disabilities employed by the organization as of the end of the reporting period. This is the sum of all paid full-time and part-time employees with disabilities.
+OI3236,Permanent Employees: Minorities/Previously Excluded,Number of people employed by the organization who belong to minority or previously excluded groups as of the end of the reporting period. This is the sum of all paid full-time and part-time minority or previously excluded employees.
+OI3547,Permanent Employees: Hired,Number of people hired by the organization during the reporting period. This is the sum of all paid full-time and part-time employees hired.
+OI6995,Employees Promoted: Total,Number of permanent employees who were promoted within the organization during the reporting period.
+OI8646,Employees Promoted: Female,Number of employees who are female and who were promoted within the organization during the reporting period.
+OI3160,Full-time Employees: Total,Number of paid full-time employees at the organization as of the end of the reporting period.
+OI6213,Full-time Employees: Female,Number of paid full-time female employees at the organization as of the end of the reporting period.
+OI2003,Full-time Employees: Disabilities,Number of paid full-time employees at the organization with disabilities as of the end of the reporting period.
+OI8147,Full-time Employees: Minorities/Previously Excluded,Number of paid full-time employees at the organization who belong to minority or previously excluded groups as of the end of the reporting period.
+OI5479,Full-time Employees: Hired,Number of paid full-time employees hired by the organization during the reporting period.
+OI8251,Full-time Employees: Managers,Number of paid full-time management employees (managers) at the organization as of the end of the reporting period.
+OI1571,Full-time Employees: Female Managers,Number of paid full-time female management employees (managers) at the organization as of the end of the reporting period.
+OI8292,Full-time Employees: Managers with Disabilities,Number of paid full-time management employees (managers) with disabilities at the organization as of the end of the reporting period.
+OI3140,Full-time Employees: Minorities/Previously Excluded Managers,Number of paid full-time management employees (managers) at the organization who belong to minority or previously excluded groups as of the end of the reporting period.
+OI8864,Part-time Employees: Total,Number of paid part-time employees at the organization as of the end of the reporting period.
+OI8838,Part-time Employees: Female,Number of paid female part-time employees at the organization as of the end of the reporting period.
+OI4571,Part-time Employees: Disabilities,Number of paid part-time employees with disabilities at the organization as of the end of the reporting period.
+OI6508,Part-time Employees: Minorities/Previously Excluded,Number of paid part-time employees at the organization who belong to minority or previously excluded groups as of the end of the reporting period.
+OI1903,Part-time Employees: Hired,Number of paid part-time employees hired by the organization during the reporting period.
+OI3098,Part-time Employee Hours Worked,Number of paid hours worked by part-time employees of the organization during the reporting period.
+OI9028,Temporary Employees,Number of temporary employees paid by the organization during the reporting period.
+OI8408,Temporary Employees Hours Worked,Number of paid hours worked by temporary employees of the organization during the reporting period.
+OI5858,Employees: Minimum Wage,"Number of full-time, part-time, and temporary employees of the organization that are earning the local minimum wage as of the end of the reporting period."
+OI4061,Healthcare Benefits Participants,Number of full-time employees who received healthcare benefits through the organization's programs during the reporting period.
+OI1166,Volunteer Hours,Number of hours worked by non-employee volunteers who supported the organization during the reporting period.
+OI8429,Community Service Hours Contributed,Number of hours volunteered by full-time and part-time employees of the organization during the reporting period.
+OI4499,Departed Permanent Employees: Total,Number of full-time and part-time employees that departed the organization (for any reason) during the reporting period.
+OI3653,Departed Permanent Employees: Full-time,Number of full-time employees that departed the organization (for any reason) during the reporting period.
+OI7225,Departed Permanent Employees: Involuntary,Number of full-time and part-time employees that departed the organization involuntarily during the reporting period.
+OI8431,Departed Permanent Employees: Voluntary,Number of full-time and part-time employees that departed the organization voluntarily during the reporting period.
+OI3989,Employee Involuntary Turnover Rate,"Ratio of the number of involuntarily departing permanent (full-time and part-time) employees, compared to the average number of permanent (full-time and part-time) employees at the organization during the reporting period."
+OI1638,Employee Voluntary Turnover Rate,"Ratio of the number of permanent (full-time and part-time) employees that departed voluntarily, compared to the average number of permanent (full-time and part-time) employees at the organization during the reporting period."
+OI2248,Average Employee Tenure,Average tenure of employees of the organization as of the end of the reporting period.
+OI6370,Employees Dedicated to Social and Environmental Performance,Number of full-time equivalent employees dedicated to managing social and environmental performance during the reporting period.
+OI9677,Permanent Employee Wages: Total,"Value of wages (including bonuses, excluding benefits) paid to all full-time and part-time employees of the organization during the reporting period."
+OI4559,Permanent Employee Wages: Female,"Value of wages (including bonuses, excluding benefits) paid to all female full-time and part-time employees of the organization during the reporting period."
+OI7064,Permanent Employee Wages: Low Income Areas,"Value of wages (including bonuses, excluding benefits) paid to all full-time and part-time employees of the organization who reside in low income areas during the reporting period."
+OI1682,Permanent Employee Wages: Disabilities,"Value of wages (including bonuses, excluding benefits) paid to all full-time and part-time employees of the organization with disabilities during the reporting period."
+OI1084,Permanent Employee Wages: Minorities/Previously Excluded,"Value of wages (including bonuses, excluding benefits) paid to all full-time and part-time employees of the organization who belong to minority or previously excluded groups during the reporting period."
+OI5887,Full-time Wages: Total,"Value of wages (including bonuses, excluding benefits) paid to all full-time employees of the organization during the reporting period."
+OI8941,Full-time Wages: Female,"Value of wages (including bonuses, excluding benefits) paid to all female full-time employees of the organization during the reporting period."
+OI1508,Full-time Wages: Minorities/Previously Excluded,"Value of wages (including bonuses, excluding benefits) paid to all full-time employees of the organization who belong to minority or previously excluded groups during the reporting period."
+OI6069,Full-time Wages: Management,"Value of wages (including bonuses, excluding benefits) paid to all full-time management employees (managers) of the organization during the reporting period."
+OI5247,Full-time Wages: Female Management,"Value of wages (including bonuses, excluding benefits) paid to all full-time female management employees (managers) of the organization during the reporting period."
+OI3862,Full-time Wages: Minorities/Previously Excluded Management,"Value of wages (including bonuses, excluding benefits) paid to all full-time management employees (managers) of the organization who belong to minority or previously excluded groups during the reporting period."
+OI9948,Part-time Wages: Total,"Value of wages (including bonuses, excluding benefits) paid to all part-time employees of the organization during the reporting period."
+OI8725,Part-time Wages: Female,"Value of wages (including bonuses, excluding benefits) paid to all female part-time employees of the organization during the reporting period."
+OI9956,Part-time Wages: Minorities/Previously Excluded,"Value of wages (including bonuses, excluding benefits) paid to all part-time employees of the organization who belong to minority or previously excluded groups during the reporting period."
+OI4202,Temporary Employee Wages,"Value of wages (including bonuses, excluding benefits) paid to all temporary employees of the organization during the reporting period."
+OI8791,Average Non-Salaried Wage,"Average wage paid to non-salaried full-time, part-time, or temporary employees of the organization during the reporting period. Employees that are salaried should not be included in this calculation."
+OI3480,Median Non-Salaried Wage,"Median wage paid to non-salaried full-time, part-time, or temporary employees of the organization during the reporting period. Employees that are salaried should not be included in this calculation."
+OI6176,Minimum Wage Multiple,"Ratio of the average wage of non-salaried permanent (full-time and part-time) employees of the organization during the reporting period, compared to the local minimum wage as of the end of the reporting period."
+OI1582,Wage Equity,"Ratio of the wages paid during the reporting period to the highest compensated full-time employee (inclusive of bonus, excluding benefits), compared to the lowest paid full-time employee."
+OI1855,Gender Wage Equity,"Ratio of the average wage paid during the reporting period to female employees of the organization for a specified position, compared to the average wage paid to male employees of the organization for the same position."
+OI9767,Wage Premium,"Ratio that compares the additional average wage paid to employees of the organization, to the average wage paid for a similar job in a similar industry/category in the local market, at the end of the reporting period."
+FP5293,Total Assets,"Value, at the end of the reporting period, of all of the organization's assets."
+FP9148,Fixed Assets,"Value, at the end of the reporting period, of the organization's long-term tangible assets that are not expected to be converted into cash in the current or upcoming fiscal year."
+FP6926,Current Assets,"Value, at the end of the reporting period, of the organization's assets that are reasonably expected to be converted into cash within one year in the normal course of business."
+FP4649,Financial Assets,"Value, at the end of the reporting period, of the organization's non-physical assets such as cash, bank accounts, or other investments."
+FP5317,Equity or Net Assets,"Value of the residual interest, at the end of the reporting period, in the assets of the organization after deducting all its liabilities.
+
+Net assets is equivalent to total assets minus total liabilities."
+FP8653,Retained Earnings,"Value of the sum of the organization's profits, cumulative from inception to the end of the reporting period, not paid out as dividends, but retained by the organization to be reinvested in its core business or to pay debt."
+FP2852,Accounts Payable,"Value, at the end of the reporting period, of all outstanding debts that must be paid by the organization within a given period of time in order to avoid default."
+FP2213,Accounts Receivable,"Value, at the end of the reporting period, of the organization's outstanding debts from clients who received goods or services on credit."
+FP1996,Total Liabilities,Value of organization's liabilities at the end of the reporting period.
+FP2269,Current Liabilities,"Value, at the end of the reporting period, of all liabilities that are expected to be settled within one year in the normal course of business."
+FP6094,Long Term Financial Liabilities,"Value, at the end of the reporting period, of an organization's long term financial liabilities."
+FP6750,Loans Payable,"Value of the remaining balance, at the end of the reporting period, on all the organization's outstanding debt obligations carried on the balance sheet."
+FP7264,Cash and Cash Equivalents: Period Start,Value of the organization's cash equivalents at the beginning of the reporting period.
+FP1001,Operating Expenses,Value of expenditures incurred by the organization as a result of performing its normal business operations during the reporting period.
+FP3466,Cash Flow: Net Total,"Value of the organization's net cash flow at the end of the reporting period. Net cash flow equals inflows less outflows of cash and cash equivalents from operating, investing, financing, etc. activities."
+FP4812,Cash Flow: Operating Activities,Value of the organization's cash flows for the reporting period related to operating activities.
+FP9703,Cash Flow: Investing Activities,Value of the organization's cash flows for the reporting period related to investing activities by the organization.
+FP8244,Cash Flow: Financing Activities,Value of the organization's cash flows for the reporting period related to its financing activities.
+FP8293,New Investment Capital,Value of funds invested in the organization (both loans and investments) during the reporting period.
+FP1301,Net Income,"Value of the organization's net profit, calculated as total income minus total expenses, taxes, and cost of goods sold during the reporting period."
+FP3274,Net Income Before Donations,"Value of the organization's net profit before donations, calculated as total income (excluding donations) minus total expenses during the reporting period."
+FP3673,EBIT,"Value of the organization's net income before interest and taxes during the reporting period.
+
+EBIT signifies Earnings Before Interest and Taxes."
+FP1657,EBITDA,"Value of the organization's net income before interest, taxes, depreciation and amortization during the reporting period.
+
+EBITDA signifies Earnings Before Interest, Taxes, Depreciation, and Amortization."
+FP6510,Total Revenue,Value of all revenue received by the organization during the reporting period.
+PI1775,Sales Revenue,Value of the revenue from sales of the organization's products/services during the reporting period.
+FP8300,Sales Revenue: Collected Directly,Value of the revenue from sales of the organization's products/services collected from clients directly during the reporting period.
+FP5624,Sales Revenue: Collected from Third Party Payers,Value of the revenue from sales of the organization's products/services collected from public or private payers during the reporting period.
+FP1012,Interest Expenses,"Value of expenditures incurred by the organization during the reporting period, due to interest incurred on all liabilities, including any client deposit accounts held by the organization, borrowings, subordinated debt, and other liabilities."
+FP1717,Impaired Assets,Value of assets classified as impaired under regulatory or accounting rules and recorded by the organization during the reporting period.
+FP2321,Total Expenses,Value of all expenditures incurred by the organization during the reporting period.
+FP2651,Return on Equity (ROE),"Value of an organization's net profit generated per dollar of shareholders' equity for the reporting period.
+
+This is a profitability ratio calculated as net income divided by average total equity or net assets."
+FP3021,Revenue from Grants and Donations,Value of the revenue that is contributed through grants and donations during the reporting period.
+FP3297,Income Growth,Growth in value of the organization's net income from one reporting period to another.
+FP3774,Charitable Donations,"Value of all financial contributions and in-kind donations of goods and services made by the organization to charities, private foundations, non-profit organizations, or non-governmental organizations during the reporting period."
+FP4224,Working Capital Ratio,Ratio of the organization's current assets to current liabilities at the end of the reporting period.
+FP4326,Return on Assets (ROA),"Value of an organization's net profit after taxes generated per dollar invested in total assets for the reporting period.
+
+This is a profitability ratio calculated as net income divided by average total assets."
+FP4373,Gross Margin,Percentage of revenue that the organization retains after incurring the direct costs associated with production/delivery of its products/services for the reporting period.
+FP4761,Revenue Growth,Growth in value of the organization's revenue from one reporting period to another.
+FP4831,Personnel Expenses,"Value of expenditures related to personnel including wages, benefits, trainings, and payroll taxes incurred by the organization during the reporting period."
+FP4849,Non-operating Revenue,Value of the revenue that is derived from activities not related to the organization's core operations during the reporting period.
+FP5261,Payments to Government,Value of all transfers to the government made by the organization during the reporting period.
+FP6462,Cash and Cash Equivalents: Period End,Value of the organization's cash equivalents at the end of the reporting period.
+FP6856,Working Capital,Value of the organization's operating liquidity at the end of the reporting period.
+FP7629,Gross Profit,Value of the organization's residual profit after incurring the direct costs associated with production/delivery for the reporting period.
+FP7897,Operating Profit Margin,"Value of the proportion of the organization's revenue that is left over after paying for variable costs such as wages, raw materials, etc. during the reporting period."
+FP8295,Personnel Efficiency,"Ratio used to assess an organization's personnel efficiency, calculated by dividing the organization's personnel expense by its average loans receivable gross as of the end of the reporting period."
+FP8569,Operating Efficiency,"Ratio used to assess an organization's operating efficiency, calculated by dividing the organization's operating expense by its average loans receivable gross as of the end of the reporting period."
+FP9049,Cost of Goods Sold,Value of direct expenditures attributable to the production of the goods sold by the organization during the reporting period.
+FP9462,Depreciation and Amortization Expenses,Value of expenses recorded by the organization during the reporting period for depreciation and amortization.
+FP9649,"Selling, General, and Administration Expenses",Value of all direct and indirect selling expenses and all general and administrative expenses incurred by the organization during the reporting period.
+OD1777,Location of Organization's Operating Facilities,Address of the organization's operating facilities.
+OD3520,Year Founded,Year the organization was founded.
+OD3725,IRIS ID,IRIS ID of the organization reporting data.
+OD5828,Name of Organization,Name of the organization.
+OD5990,Reporting Currency,"The national currency used to report currency figures for this IRIS report.
+
+Indicate based on the International Organization for Standardization (ISO) Currency List. Select from the options in the Reference List tab."
+OD6855,Location of Organization's Headquarters,Address of the organization's legally incorporated headquarters.
+OD6951,Report Start Date,Start date of the reporting period for which the organization is providing data.
+OD7111,Report End Date,End date of the reporting period for which the organization is providing data.
+OD7796,Organization Web Address,Web address (URL) of the organization.
+OI1075,Board of Directors: Total,Number of members of the organization's board of directors or other governing body as of the end of the reporting period.
+OI1495,Energy Generated for Use: Non-renewable,Amount of energy generated and consumed by the organization from non-renewable sources during the reporting period.
+OI1496,Energy Purchased: Non-Renewable,Amount of purchased energy consumed by the organization from non-renewable sources during the reporting period.
+OI1503,Healthcare Benefits Premium Covered,Percentage of a full-time employee's healthcare premium that is covered. This should be based on benefits available to full-time employees as of the end of the reporting period.
+OI2165,Number of Legal and Regulatory Complaints,Number of formal legal and regulatory complaints received by the organization during the last reporting period.
+OI2209,Founders: Total,Number of the organization's founders who retain an active role in the company as of the end of the reporting period.
+OI2496,Energy Generated for Use: Renewable,Amount of energy generated and consumed by the organization from renewable sources during the reporting period.
+OI2596,Conflict of Interest Policy,"Indicates whether the organization has a written policy to monitor and disclose any potential conflicts of interest between the organization and its board members, owners, or material investors."
+OI2840,Percent Female Ownership,"Percentage of the organization that is female-owned, as of the end of the reporting period."
+OI3324,Energy Purchased: Renewable,Amount of purchased energy consumed by the organization from renewable sources during the reporting period.
+OI3630,Meeting Frequency of Board of Directors,Number of times the organization's board of directors or governing body met during the reporting period.
+OI3757,Occupational Injuries,"Number of occupational injuries which affected any full-time, part-time, and temporary employees of the organization during the reporting period."
+OI4070,Board of Directors: Independent,Number of independent board members of the organization's board of directors or governing body as of the end of the reporting period.
+OI4136,Social and Environmental Performance Management Training,Indicates whether any member of the organization's board of directors participated in training sessions related to any aspect of environmental or social performance management during the reporting period.
+OI4229,Employees Trained,"Number of employees (full-time, part-time, or temporary) who were trained through programs provided by the organization (both internally and externally) during the reporting period."
+OI5552,Percent Charitable Donations,Percentage of the organization's revenue that was given as charitable donations during the reporting period.
+OI6286,Recycling Policy,Indicates whether the organization implements a recycling policy in its operating facilities.
+OI6525,Occupational Fatalities,"Indicates the number of occupational fatalities of full-time, part-time, and temporary employees of the organization during the reporting period."
+OI6696,Board of Directors: Minority/Previously Excluded,Number of board of directors or other governing body members who belong to minority or previously excluded groups as of the end of the reporting period.
+OI6697,Energy Conserved,Amount of reduction in energy consumption achieved as a direct result of energy conservation and efficiency initiatives employed by the organization during the reporting period.
+OI6765,Green Building Practices,Indicates whether the organization employs green building practices.
+OI7194,Percent Minority/Previously Excluded Ownership,Percentage of the organization that is owned by individuals who belong to minority or previously excluded groups as of the end of the reporting period.
+OI7390,Employee Training Costs,"Value of the costs incurred by the organization as a result of training provided to employees (full-time, part-time, or temporary) during the reporting period."
+OI7421,Charitable Practices,Indicates whether the organization employs charitable practices through its operations.
+OI7639,Value of Fines and Settlements,Value of payments made by organization as legal or regulatory fines and settlements during the last reporting period.
+OI7829,Investment Committee Members: Total,Number of members of the organization's investment committee as of the end of the reporting period.
+OI7877,Employee Training Hours,"Number of training hours provided for employees (full-time, part-time, or temporary) during the reporting period."
+OI8118,Board of Directors: Female,Number of female members of the organization's board of directors or other governing body as of the end of the reporting period.
+OI8670,Strikes and Lockouts,Number of employees' strikes and lockouts at the organization during the reporting period.
+OI8825,Energy Purchased: Total,Amount of purchased energy consumed by the organization during the reporting period.
+OI9624,Energy Generated for Use: Total,Amount of energy generated and consumed by the organization during the reporting period.
+PD2587,Client Locations,Countries where the organization's products/services are purchased/used. Select from the options in the Reference List tab.
+PD4565,Supplier Locations,Countries where the organization's suppliers are located. Select from the options in the Reference List tab.
+PD4587,Product Lifetime,"Lifetime of the product provided by the organization (based on reasonable use).
+
+Organizations should report product lifetime in number of years."
+PD6806,Client State/Province/Region,States or provinces where the organization's products/services are purchased/used.
+PI1060,Distributor Organizations: Total,Number of organizations that served as distributors of the organization's products/services during the reporting period.
+PI1160,Distributor Individuals: Disabilities,Number of individuals with disabilities who served as distributors of the organization's products/services during the reporting period.
+PI1263,Units/Volume Sold: Total,Amount of the product/service sold by the organization during the reporting period.
+PI1290,Units/Volume Produced,Amount of the product/service produced by the organization during the reporting period.
+PI1492,Payments to Supplier Individuals: Total,Value of payments made by the organization to individuals who sold to the organization during the reporting period.
+PI1728,Supplier Individuals: Female,Number of female individuals who sold goods or services to the organization during the reporting period.
+PI1849,Payments to Supplier Organizations: Local,Value of payments made to local enterprises that sold goods or services to the organization during the reporting period.
+PI1997,Purchase Price of Product or Service Replaced,Indicates average price paid in the local market by clients for a product/service similar to the product/service sold by the organization.
+PI2125,Distributor Individuals: Low Income,Number of low income individuals who served as distributors of the organization's products/services during the reporting period.
+PI2242,Supplier Individuals: Poor,Number of poor individuals who sold goods or services to the organization during the reporting period.
+PI2251,Jobs Created at Directly Supported/Financed Enterprises: Low-Income Areas,"Net number of new full-time equivalent employees living in low income areas working for enterprises financed or supported by the organization between the beginning and end of the reporting period.
+
+Many organizations may choose the beginning of the reporting period to be the time when the organization began its support/investment."
+PI2302,Payments to Supplier Individuals: Female,Value of payments made by the organization to female individuals who sold goods or services to the organization during the reporting period.
+PI2551,Earnings of Distributor Individuals: Female,Earnings generated by female individual distributors from selling the organization's products/services during the reporting period.
+PI2566,Supplier Individuals: Rural,Number of individuals residing in rural areas who sold goods or services to the organization during the reporting period.
+PI2594,Earnings of Distributor Individuals: Low Income,Earnings generated by low income individual distributors from selling the organization's products/services during the reporting period.
+PI2688,Jobs Maintained at Directly Supported/Financed Enterprises: Low-Income Areas,"Number of full-time equivalent employees who reside in low income areas and work for enterprises financed or supported by the organization at the beginning of the reporting period who remain at the organization as of the end of the reporting period.
+
+Many organizations may choose the beginning of the reporting period to be the time when the organization began its support/investment."
+PI2758,Distributor Individuals: Total,Number of individuals who served as distributors of the organization's products/services during the reporting period.
+PI2888,Earnings of Distributor Organizations: SME,"Earnings generated by small-to-medium enterprise (SME) distributors from selling the organization's products/services, during the reporting period."
+PI2998,Individuals Trained: Total,Number of individuals who received training offered by the organization during the reporting period.
+PI3016,Supplier Screening Ratio,Percentage of supplier organizations used during the reporting period that were screened using social and/or environmental criteria.
+PI3180,Revenue Generated at Directly Supported/Financed Enterprises,Revenue generated by enterprises financed or supported by the organization during the reporting period.
+PI3406,Payments to Supplier Individuals: Urban,Value of payments made by the organization to individuals residing in urban areas who sold goods or services to the organization during the reporting period.
+PI3527,Job Placement Rate,"Percentage of the organization's clients who were placed in part-time, full-time, temporary, or permanent jobs during the reporting period."
+PI3687,Jobs Created at Directly Supported/Financed Enterprises: Total,"Net number of new full-time equivalent employees working for enterprises financed or supported by the organization between the beginning and end of the reporting period.
+
+Many organizations may choose the beginning of the reporting period to be the time when the organization began its support/investment."
+PI3962,Earnings of Distributor Individuals: Poor,Earnings generated by poor individual distributors from selling the organization's products/services during the reporting period.
+PI3972,Distributor Individuals: Rural,Number of individuals residing in rural areas who served as distributors of the organization's products/services during the reporting period.
+PI3995,Distributor Individuals: Peri-urban,Number of individuals residing in peri-urban areas who served as distributors of the organization's products/services during the reporting period.
+PI4096,Payments to Supplier Individuals: Rural,Value of payments made by the organization to individuals residing in rural areas who sold goods or services to the organization during the reporting period.
+PI4128,Products Recalled,Number of recalls of the organization's products during the last reporting period.
+PI4341,Earnings of Distributor Individuals: Disabilities,Earnings generated by individual distributors with disabilities from selling the organization's products/services during the reporting period.
+PI4874,Jobs in Directly Supported/Financed Enterprises,Number of full-time equivalent employees working for enterprises financed or supported by the organization as of the end of the reporting period.
+PI4881,Earnings of Distributor Individuals: Total,Earnings generated by individual distributors from selling the organization's products/services during the reporting period.
+PI5350,Supplier Individuals: Total,Number of individuals who sold goods or services to the organization during the reporting period.
+PI5352,Individuals Trained: Technical Assistance,Number of individuals who received one-on-one technical assistance from the organization during the reporting period.
+PI5391,Earnings of Distributor Individuals: Very Poor,Earnings generated by very poor individual distributors from selling the organization's products/services during the reporting period.
+PI5478,Payments to Supplier Organizations: Total,Value of payments made to enterprises that sold goods or services to the organization during the reporting period.
+PI5691,Jobs Maintained at Directly Supported/Financed Enterprises: Total,Number of full-time equivalent employees working for enterprises financed or supported by the organization as of the end of the reporting period.
+PI5920,Sales Revenue: Exports,Value of the revenue from sales of exports of the product/service during the reporting period.
+PI6065,Organizations Trained,Number of organizations that received training from the organization during the reporting period.
+PI6085,Supplier Individuals: Peri-urban,Number of individuals residing in peri-urban areas who sold goods or services to the organization during the reporting period.
+PI6179,Supplier Individuals: Urban,Number of individuals residing in urban areas who sold goods or services to the organization during the reporting period.
+PI6189,Supplier Individuals: Disabilities,Number of individuals with disabilities who sold goods or services to the organization during the reporting period.
+PI6218,Earnings of Distributor Organizations: Total,Earnings generated by distributor enterprises from selling the organization's products/services during the reporting period.
+PI6385,Supplier Organizations: Local,Number of local enterprises that sold goods or services to the organization during the reporting period.
+PI6659,Distributor Individuals: Female,Number of female individuals who served as distributors of the organization's products/services during the reporting period.
+PI6858,Payments to Supplier Individuals: Disabilities,Value of payments made by the organization to individuals with disabilities who sold goods or services to the organization during the reporting period.
+PI7163,Client Satisfaction Ratio,"Ratio reflecting score obtained of the organization's clients who are likely to recommend the organization's product or service at the end of the reporting period, compared with those who are unlikely to recommend it."
+PI7289,Units/Volume Sold: Certified,Amount of the product/service sold by the organization as certified during the reporting period.
+PI7321,Sales Revenue: Certified,Value of the revenue from sales of the organization's certified products during the reporting period.
+PI7643,Purchase Price of Product or Service Sold,Indicates purchase price paid by clients for product or service sold by the organization.
+PI7814,Payments to Supplier Individuals: Minorities/Previously Excluded,Value of payments made by the organization to individuals belonging to minority or previously excluded groups who sold goods or services to the organization during the reporting period.
+PI7815,Payments to Supplier Individuals: Poor,Value of payments made by the organization to poor individuals who sold goods or services to the organization during the reporting period.
+PI7867,Payments to Supplier Organizations: SME,Value of payments to small-to-medium enterprises (SMEs) that sold goods or services to the organization during the reporting period.
+PI7997,Individuals Trained: Group-Based Training,Number of individuals who received group-based training from the organization during the reporting period.
+PI8021,Earnings of Distributor Organizations: Microenterprises,"Earnings generated by microenterprise distributors from selling the organization's products/services, during the reporting period."
+PI8163,Client Households: Rural,Number of unique households in rural areas that were clients of the organization during the reporting period.
+PI8168,Percent Revenue Generated from Social/Environmental Products and Services,Percentage of revenue that the organization earns from projects and services designed to deliver a specific social or environmental benefit during the reporting period.
+PI8329,Units/Volume Sold: Free,Amount of the product/service provided by the organization for free during the reporting period.
+PI8337,Supplier Individuals: Very Poor,Number of very poor individuals who sold goods or services to the organization during the reporting period.
+PI8415,Distributor Organizations: Microenterprises,Number of microenterprises that served as distributors of the organization's products/services during the reporting period.
+PI8454,Units/Volume Sold: No Direct Payment,Amount of the product/service sold during the reporting period where no direct payment was provided to the organization at the time of service but for which the organization expects to be reimbursed.
+PI8470,Distributor Individuals: Minorities/Previously Excluded,Number of individuals who belong to minority or previously excluded groups and served as distributors of the organization's products/services during the reporting period.
+PI8785,Number of Insurance Policies,Number of insurance policies managed by the organization as of the end of the reporting period.
+PI8819,Supplier Individuals: Low Income,Number of low income individuals who sold goods or services to the organization during the reporting period.
+PI8943,Earnings of Distributor Individuals: Rural,"Earnings generated by individual distributors residing in rural areas from selling the organization's products/services, during the reporting period."
+PI8982,Distributor Individuals: Urban,Number of individuals residing in urban areas who served as distributors of the organization's products/services during the reporting period.
+PI8999,Payments to Supplier Individuals: Low Income,Value of payments made by the organization to low income individuals who sold goods or services to the organization during the reporting period.
+PI9029,Units/Volume Sold: Exported,Amount of the product/service exported by the organization during the reporting period.
+PI9048,Payments to Supplier Individuals: Very Poor,Value of payments made by the organization to very poor individuals who sold goods or services to the organization during the reporting period.
+PI9113,Distributor Individuals: Very Poor,Number of very poor individuals who served as distributors to sell the organization's products/services during the reporting period.
+PI9261,Supplier Individuals: Minorities/Previously Excluded,Number of individuals who belong to minority or previously excluded groups and who sold goods or services to the organization during the reporting period.
+PI9401,Distributor Organizations: SME,Number of small-to-medium enterprises (SMEs) that served as distributors of the organization's products/services during the reporting period.
+PI9467,Gender Ratio of Promotions,Ratio of the number of the organization's female employees promoted during the reporting period compared to the number of other employees promoted.
+PI9495,Supplier Organizations: SME,Number of small-to-medium enterprises (SMEs) that sold goods or services to the organization during the reporting period.
+PI9516,Distributor Individuals: Poor,Number of poor individuals who served as distributors of the organization's products/services during the reporting period.
+PI9566,Supplier Organizations: Total,Number of enterprises that sold goods or services to the organization during the reporting period.
+PI9626,Client Spending: Total,Amount of money spent by the client during the reporting period.
+PI9654,Earnings of Distributor Individuals: Minorities/Previously Excluded,Earnings generated by individuals who belong to minority or previously excluded groups from selling the organization's products/services during the reporting period.
+PI9676,Earnings of Distributor Individuals: Urban,"Earnings generated by individual distributors residing in urban areas from selling the organization's products/services, during the reporting period."
+PI9850,Payments to Supplier Individuals: Peri-Urban,Value of payments made by the organization to individuals residing in peri-urban areas who sold goods or services to the organization during the reporting period.
+PI9973,Earnings of Distributor Individuals: Peri-urban,"Earnings generated by individuals distributors residing in peri-urban areas from selling the organization's products/services, during the reporting period."
+PI5297,Client Individuals: Forcibly Displaced,Number of unique individuals who were forcibly displaced and were clients of the organization during the reporting period.
+OI1619,Value of Community Development Contributions,"Value of payments made by the organization during the reporting period towards activities that benefit local communities.
+"
+OI6978,Temporary Employees: Female,Number of female temporary employees paid by the organization during the reporting period.
+OI8197,Founders: Female,Number of the organization's founders who are female and retain an active role in the company as of the end of the reporting period.
+OI8709,Investment Committee Members: Female,Number of female members of the organization's investment committee as of the end of the reporting period.
+PI8069,School Enrollment: Urban,"Number of students residing in urban areas enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+OI5896,Teachers Employed,Number of full-time and part-time teachers employed by the organization as of the end of the reporting period.
+PD1392,Parent/Community-Teacher Engagement,NOTE: this metric has been discontinued
+PD4120,Hours of School Offered per Week,Number of classroom hours taught to a representative student per week during the reporting period.
+PD8635,Days of School Offered per Year,Number of days of school offered by the organization per year.
+PI1081,School Enrollment: Female,"Number of female students enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI1136,Student Transportation,Indicates if the organization provided transportation to students that needed/requested it during the reporting period.
+PI1902,Teachers Qualified,Number of teachers as of the end of the reporting period who have obtained training or have qualifications that meet or exceed minimum requirements of the local area.
+PI2173,School Enrollment: Low Income,"Number of low income students enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI2389,School Enrollment: Total,"Number of students enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI2718,School Fees,Average school fee per student per month during the reporting period.
+PI3337,School Enrollment: Peri-urban,"Number of students residing in peri-urban areas enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI3499,Students Provided Partial Scholarship,Number of students receiving partial scholarships during the reporting period.
+PI3651,Teacher Attendance Rate,Rate of teacher attendance during the reporting period.
+PI3786,Student Attendance Rate,Rate of student attendance during the reporting period.
+PI4243,Student to Toilet Ratio,Number of students per functioning toilet during the reporting period.
+PI4279,Educational Resource to Student Ratio,Number of textbooks or digital educational resources per student provided by the organization during the reporting period.
+PI4509,Students Provided Full Scholarship,Number of students receiving full scholarships during the reporting period.
+PI4554,Value of New Education Facility Materials,Value of new educational facility materials provided to students by the organization during the reporting period.
+PI4555,Percent Students Receiving Free and Subsidized School Meals,Percentage of students receiving free and subsidized school meals as of the end the reporting period.
+PI4924,Student Transition Rate,Percentage of students advancing from one level of schooling to the next during the reporting period.
+PI5110,Student to Teacher Ratio,Number of students per teacher during the reporting period.
+PI5380,Classroom Area per Student,Area of classroom space per student during the reporting period.
+PI5501,Student to Classroom Ratio,Number of students per classroom during the reporting period.
+PI5583,School Enrollment: Very Poor,"Number of very poor students enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI5736,Value of New Education Instructional Materials,Value of new educational instructional materials provided to students by the organization during the reporting period.
+PI5954,School Enrollment: Disabilities,"Number of students with disabilities enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI6569,School Enrollment: Rural,"Number of students residing in rural areas enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI6971,School Meals,Number of free or subsidized meals provided by the organization during the reporting period.
+PI7254,School Enrollment: Poor,"Number of poor students enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI7268,Classroom Space New/Improved,"Area of classroom space that was built, converted, or expanded for use within educational facilities. Report only space completed during the reporting period."
+PI7774,School Enrollment: Minorities/Previously Excluded,"Number of students who belong to minority or previously excluded groups and are enrolled as of the end of the reporting period, both full-time and part-time, where each discrete student is counted regardless of number of courses."
+PI7871,Teaching Experience,Average number of years of formal education for teachers/instructors as of the end of the reporting period.
+PI8372,Student Tests Pass Rate,Percentage of school students passing standardized tests set by a regional governance body during the reporting period.
+PI8836,Vocational/Technical Training,Number of students receiving vocational or technical training during the reporting period.
+PI9910,Student Dropout Rate,Percentage of students that were attending school at the beginning of the reporting period but dropped out during the reporting period.
+OI3115,Caregivers Employed: Responsive,Number of caregivers who are responsive to children's needs and who are employed by the organization as of the end of the reporting period.
+PI9024,Average Student Test Score,Average test score (as a percent of a perfect score) earned by students served by the organization during the reporting period.
+PI1836,Learning Hours,Number of learning hours provided to students during the reporting period.
+PI9465,Job Placements,"Number of the organization's clients who were placed in part-time, full-time, temporary, or permanent jobs during the reporting period."
+OI4564,Units/Volume Replaced,Number of status-quo products that were replaced by products sold during the reporting period.
+OI5657,Total Personal Connectivity Devices,Average number of connectivity devices utilized in each client household during the reporting period.
+OI9206,Renewable Energy Expenditures,Amount of money spent by the organization for its own consumption in renewable energy infrastructure and technology at the organization's operating facilities during the reporting period.
+PD1504,Energy Capacity of Products Sold,Amount of potential energy generation over the lifetime of the product for all products sold by the organization during the reporting period.
+PD2713,Energy Capacity of Product,Amount of potential energy generation over the lifetime of the product based on the planned operation of the product/system.
+PD4927,Energy Savings from Services Sold,Amount of energy savings due to the organization's services that were sold during the reporting period.
+PD5578,Energy Consumption of Product Replaced,Amount of energy that would have been used by the replaced product during the lifetime of the organization's product.
+PD6596,Energy Consumption of Product,Amount of energy used by the product during the lifetime of the product.
+PI2111,Client Spending: Connectivity,Amount of money spent by the client on connectivity costs during the reporting period.
+PI2210,Energy Generated for Sale: Non-Renewable,Amount of non-renewable energy generated and sold to offtaker(s) during the reporting period.
+PI3486,Product Hours of Light Available,Number of hours of light available from the product during the reporting period.
+PI5489,Client Spending: Energy,Amount of money spent by the client on sources of energy during the reporting period.
+PI5842,Energy Generated for Sale: Renewable,Amount of renewable energy generated and sold to offtaker(s) during the reporting period.
+PI7623,Energy Savings from Products Sold,Amount of energy savings over the lifetime of the product for those products that were sold by the organization during the reporting period.
+PI8706,Energy Generated for Sale: Total,Amount of energy generated and sold to offtaker(s) during the reporting period.
+FP1129,Loans Receivable Net,Net value of the organization's loans receivable at the end of the reporting period.
+FP1192,Loan to Deposit (LTD) Ratio,"Ratio used to assess an organization's liquidity, calculated by dividing the organization's loans receivable gross by its total deposits as of the end of the reporting period."
+FP1307,Capital Available: Total,Value of capital available to the organization for lending and investing at the end of the reporting period.
+FP2392,Impairment Loss Allowance,Value of contra asset account set up by the organization as a provision for the potential future loss of capital that has been lent out by the firm at the end of the reporting period.
+FP2460,Gross Incurred Claims,Value of the organization's gross incurred claims at the end of the reporting period.
+FP2553,Financial Expenses,"Value of expenditures incurred by the organization during the reporting period due to interest, fees, and commissions incurred on the organization's liabilities, including any client deposit accounts held by the organization, borrowings, subordinated debt, and other financial liabilities during the reporting period."
+FP2630,Loans Receivable Gross,Value of outstanding principals for all of the organization's outstanding loans due from clients at the end of the reporting period.
+FP2635,Non Performing Loans (Portfolio at Risk)- 30 Days,Value of all of the organization's loans outstanding at the end of the reporting period that have one or more installments of principal past due for more than 30 days.
+FP2638,Capital Available: Borrowed Funds,Value of capital available to the organization for lending and investing at the end of the reporting period that is attributed to debt obligations on the organization's balance sheet.
+FP3939,Loans Recovered,Value collected by the organization during the reporting period on loans that had previously been written off.
+FP5662,Capital Available: Equity Capital,Value of capital available to the organization for lending and investing at the end of the reporting period that is attributed to equity contributions.
+FP5979,Number of Loans Fully Repaid on Time,Number of all the organization's loans due for pay back during the reporting period (but disbursed at any time) that have been paid no later than their due date.
+FP6152,Solvency Ratio,"Ratio of an organization's admitted assets to liabilities, per an organization's statutory accounts, as of the end of the reporting period."
+FP6354,Non Performing Loans (Portfolio at Risk)- 60 Days,Value of all of the organization's loans outstanding at the end of the reporting period that have one or more installments of principal past due for more than 60 days.
+FP6373,Non Performing Loans (Portfolio at Risk)- 90 Days,Value of all of the organization's loans outstanding at the end of the reporting period that have one or more installments of principal past due for more than 90 days.
+FP8478,Incurred Claims Ratio,Percentage of gross incurred claims during the reporting period relative to the gross earned premium during the same reporting period.
+FP9083,Total Deposits,"Value of the organization's customer deposits, whether voluntary, compulsory, demand, or term, as well as all other liabilities from customers at the end of the reporting period."
+FP9717,Loan Write-offs,Value of loans written off by the organization during the reporting period.
+FP9954,Value of Loans Fully Repaid on Time,Value of all the organization's loans due for pay back during the reporting period (but disbursed at any time) that have been paid no later than their due date.
+OI2818,Loan Officers Employed,Number of loan officers employed by the organization as of the end of the reporting period.
+OI5803,Loan Officer Wages,Value of wages (including bonuses) paid to loan officers during the reporting period.
+PD3079,Weighted Average Tenor of Loans Outstanding,"Weighted average tenor of loans outstanding on the organization's balance sheet at the end of the reporting period.
+
+Organizations should report average tenor in months."
+PI1275,Renewal Ratio,"Percentage of the policies belonging to the organization's clients that stay enrolled after their coverage term expires, during the reporting period."
+PI1478,Number of Loans Outstanding,Number of disbursed loans remaining on the organization's balance sheet at the end of the reporting period.
+PI1914,Number of Equity Investments Outstanding,Number of equity investments on the organization's balance sheet at the end of the reporting period.
+PI1934,Average Insurance Premium,Average amount of annualized insurance premium charged for a particular insurance product provided by the organization during the reporting period.
+PI2025,Gross Earned Premium,Value of gross earned premiums collected by the organization as of the end of the reporting period without any deductions such as commissions and other expenses.
+PI2070,Promptness of Claims Submission,"Average number of days elapsed between when an insured incident occurred and when the stakeholder (client of the organization) submits a complete claim, for all claims settled during the reporting period."
+PI2197,Number of Complaints Registered,Number of complaints registered by clients of the reporting organization during the reporting period.
+PI3069,Number of Potential Renewals,Number of policies belonging to the organization's clients that could have been renewed during the reporting period.
+PI3212,Number of Renewals,"Number of policies belonging to the organization's clients that are renewed after the coverage term expired, during the reporting period."
+PI3240,Value of Voluntary Savings Accounts,"Value of voluntary savings accounts managed by the organization, including demand deposits and time deposits, as of the end of the reporting period."
+PI3383,Claims Rejected,Number of claims that were submitted to the organization but were rejected during the reporting period.
+PI3734,Minimum Insurance Premium,Minimum annualized insurance premium offered for the insurance product provided by the organization during the reporting period.
+PI4142,Value of Equity Investments Closed,Value of equity investments closed by the organization at the end of the reporting period.
+PI4583,New Businesses Created: Total,Number of new businesses created as a result of investments made by the organization during the reporting period.
+PI5066,Number of Equity Investments Closed,Number of equity investments closed by the organization during the reporting period.
+PI5160,Average Loan Size Disbursed,Average loan size disbursed by the organization during the reporting period.
+PI5216,Complaints Ratio,Percentage of complaints registered by clients of the reporting organization relative to the number of clients during the reporting period.
+PI5476,Value of Loans Disbursed,Value of loans disbursed by the organization during the reporting period.
+PI6414,New Businesses Created: Low Income Areas,Number of new businesses created in low income areas as a result of investments made during the reporting period.
+PI6439,Number of Voluntary Savings Accounts,"Number of voluntary savings accounts managed by the organization, including demand deposits and time deposits, as of the end of the reporting period."
+PI7467,Effective Interest Rate (EIR),Effective interest rate (EIR) for the most representative loan product of the organization during the reporting period.
+PI7569,Value of Loans Outstanding,Value of disbursed loans remaining on the organization's balance sheet at the end of the reporting period.
+PI7902,Claims Rejection Ratio,Percentage of claims made by clients of the organization that were rejected during the reporting period relative to the total claims submitted to the organization during the reporting period.
+PI7940,Value of Equity Investments Outstanding,Value of equity investments on the organization's balance sheet at the end of the reporting period.
+PI8018,Claims Submitted,Number of claims submitted to the organization during the reporting period.
+PI8381,Number of Loans Disbursed,Number of loans disbursed by the organization during the reporting period.
+PI8919,Promptness of Claims Processing,"Average number of days elapsed between when a stakeholder (client of the organization) submits a completed claim and when the stakeholder received the payment or claim denial, for all claims settled during the reporting period."
+PI9250,Active Borrowers per Loan Officer,Number of active borrowers (clients) per loan officer at the organization as of the end of the reporting period.
+PI9897,Promptness of Claims Settlement,Average number of days elapsed between when an insured incident occurred and when the stakeholder (client of the organization) received the payment or claim denial for all claims settled (or rejected) during the reporting period.
+OI4919,Caregivers Employed: Professionals,"Number of caregiver professionals with current licenses or certifications based on local requirements, employed by the organization as of the end of the reporting period."
+OI5323,Caregivers Employed: Total,"Number of caregivers with current licenses, certifications, or trainings based on local requirements, employed by the organization as of the end of the reporting period."
+PI1017,Healthcare Facilities,Number of healthcare units/facilities under the organization's management as of the end of the reporting period.
+PI3902,Health Intervention Completion Rate,"Percentage of the organization's clients, or patients, who successfully completed the course of a health intervention during the reporting period."
+PI5060,Patients Completing Treatment,Number of patients who successfully completed the clinically recommended course of a health intervention during the reporting period.
+PI5743,Critical Equipment/Facility Utilization Rate,Utilization rate of identified critical equipment/facility during the reporting period.
+PI6845,Patients Screened,"Number of patients screened for medical conditions, illnesses, or risk factors during the reporting period."
+PI7395,Client Spending: Health,Amount of money spent by the client on health costs during the reporting period.
+PI3594,Child Stunting Prevalence,Ratio of children within the area served by the organization who experienced stunting as of the end of the reporting period.
+OI7065,Number of Containers Handled,"Number twenty-foot equivalent units (TEUs) of cargo containers transported by a road, railway, port, or airport during the reporting period.
+"
+OI5490,Bulk Cargo Handled,"Volume of bulk cargo transported through the road, railway, port, or airport during the reporting period."
+OI0659,Average Daily Traffic,Average number of vehicles per day using an urban road over the course of a year.
+PI2135,Length of Adjacent Protected Land,Length of protected land boundary shared with the organization's protected land as of the end of the reporting period.
+PI2538,Length of Coastline Restored,"Length of marine or freshwater coastline under ecological restoration management on protected land, land under sustainable stewardship, or land under sustainable cultivation during the reporting period."
+PI3239,Length of Streams Present,"Length of freshwater streams present during the reporting period on protected land, land under sustainable stewardship, or land under sustainable cultivation."
+PI3848,Area of Trees Planted: Native Species,Area of land on which native species of trees were planted by the organization during the reporting period.
+PI3924,Protected Land Area: Permanent,Area of land with a permanently protected land status as of the end of the reporting period.
+PI4127,Area of Trees Planted: Total,Area of land on which trees were planted by the organization during the reporting period.
+PI4716,Protected Land Area: Total,Area of land with a protected land status as of the end of reporting period.
+PI4907,Area of Land Reforested,Area of land that has been reforested by the organization during the reporting period.
+PI5750,Area of Adjacent Protected Land,Area of protected land that shares a boundary with the organization's protected land as of the end of the reporting period.
+PI5840,Length of Coastline Present,"Length of marine or freshwater coastline present during the reporting period on protected land, land under sustainable stewardship, or land under sustainable cultivation."
+PI6885,Length of Streams Restored,"Length of freshwater streams under ecological restoration management on protected land, land under sustainable stewardship, or land under sustainable cultivation during the reporting period."
+PI7170,Area of Fresh Water Bodies Present,"Surface area of freshwater bodies present during the reporting period on protected land, land under sustainable stewardship, or land under sustainable cultivation."
+PI9556,Ecological Restoration Management Area,Area of land under ecological restoration management during the reporting period. Include both land area directly controlled and land area indirectly controlled by the organization.
+OI5942,Toxic Materials,Amount of toxic materials used in the organization's manufacturing processes during the reporting period.
+PD5833,Percent Affordable Housing,Percentage of housing units projected to be constructed or preserved as a result of expenditures made by the organization during the reporting period that will be considered to be affordable housing.
+PI1409,Client Spending: Housing,Amount of money spent by the client on housing costs during the reporting period.
+PI1586,Building Area of Energy Efficiency Improvements,Area of buildings projected to receive energy efficiency improvements as a result of investments made by the organization during the reporting period.
+PI2410,Value of Community Facilities Financed,"Value of community facilities projected to be built, renovated, or purchased as a result of investments made by the organization during the reporting period."
+PI2491,Number of Housing Units Constructed,Number of housing units constructed by the organization during the reporting period.
+PI2640,Individuals Housed,"Number of individuals projected to be housed in single-family or multi-family dwellings as a result of new construction, loans, repairs, or remodeling resulting from investments made by the organization during the reporting period."
+PI4765,Area of Community Facilities Financed,Area of community facilities projected to be constructed or preserved as a result of investments made by the organization during the reporting period.
+PI5965,Number of Housing Units Financed,Number of housing units projected to be constructed or preserved as a result of investments made by the organization during the reporting period.
+PI5983,Value of Commercial or Retail Infrastructure Financed,Value of commercial or retail infrastructure projected to be built or renovated as a result of investments made by the organization during the reporting period.
+PI6058,Number of Housing Units Improved,Number of housing units improved or refurbished by the organization during the reporting period.
+PI6303,Eviction Rate,Percentage of tenants involuntarily removed from the housing unit and the total number of permanent tenants during the reporting period.
+PI7233,Value of Housing Units Financed,Value of housing units projected to be constructed or preserved as a result of investments made by the organization during the reporting period.
+PI8007,Number of Community Facilities Financed,"Number of community facilities projected to be built, renovated, or purchased as a result of investments made by the organization during the reporting period."
+PI9170,Area of Buildings Reused,Area of buildings projected to be renovated/remodeled that qualify for building reuse as a result of investments made by the organization during the reporting period.
+OI1346,Waste Produced: Hazardous Waste,Amount of hazardous waste created by the organization's operations during the reporting period.
+OI2535,Waste Disposed: Recycled/Reused,Amount of waste disposed by the organization through reuse and recycling during the reporting period.
+OI4328,Recycled Materials,Amount of recycled materials used in the organization's products (including packaging) during the reporting period.
+OI4483,Waste Disposed: Landfill,Amount of waste disposed by the organization through landfills during the reporting period.
+OI5101,Biodegradable Materials,Amount of biodegradable materials used in the organization's products (including packaging) during the reporting period.
+OI6192,Waste Disposed: Total,Amount of waste disposed by the organization during the reporting period.
+OI6709,Waste Produced: Total,Amount of waste created by the organization's operations during the reporting period.
+OI7442,Waste Produced: Non-Hazardous Waste,Amount of non-hazardous waste created by the organization's operations during the reporting period.
+OI7920,Waste Reduced,"Amount of waste reduced by the organization during the reporting period through programs for substitution, recycling, or recovery."
+OI8357,Waste Disposed: Incinerated,Amount of waste disposed by the organization through incineration during the reporting period.
+OI8843,Waste Disposed: Other,Amount of waste disposed by the organization through other means during the reporting period.
+OI9847,Waste Disposed: Composted,Amount of waste disposed by the organization through composting during the reporting period.
+PD9364,Percent Recycled Materials,Percentage of recycled materials used to manufacture the organization's product (including packaging)/services during the reporting period.
+PI2073,Hazardous Waste Avoided,Amount of hazardous waste avoided based on refurbishing/reusing/recycling as part of delivering or developing the organization's products/services during the reporting period.
+PI5678,Waste Reductions from Services Sold,Amount of reductions in waste during the reporting period due to the organization's services sold.
+PI5926,Waste Reductions from Products Sold,Amount of reductions in waste over the lifetime of products sold by the organization during the reporting period.
+PI8177,Non-hazardous Waste Avoided,Amount of non-hazardous waste disposal avoided based on the organization's refurbishing/reusing/recycling as part of delivering or developing the organization's products/services during the reporting period.
+OI1697,Water Consumed: Total,Volume of water used for the organization's operations during the reporting period.
+OI1927,Water Consumed: Recycled,Volume of recycled water used for the organization's operations during the reporting period.
+OI3031,Water Consumed: Municipal,Volume of water drawn from municipal water sources used for the organization's operations during the reporting period.
+OI3637,Water Consumed: Regions with High Water Stress,Volume of water used from regions with high or extremely high baseline water stress during the reporting period.
+OI4015,Water Conserved,Volume of reduced water usage achieved as a result of the organization's water conservation efforts during the reporting period.
+OI4467,Water Consumed: Groundwater,Volume of groundwater used for the organization's operations during the reporting period.
+OI6721,Water Consumed: Rainwater,Volume of rainwater used for the organization's operations during the reporting period.
+OI8060,Water Consumed: Surface Water,Volume of surface water used for the organization's operations during the reporting period.
+OI8828,Water Consumed: Wastewater,Volume of wastewater used for the organization's operations during the reporting period.
+OI9412,Wastewater Treated,Volume of wastewater treated by the organization during the reporting period.
+PD1403,Water Provision Capacity of Products Sold: Potable,"Volume of potential potable water provided over the lifetime of the product, for all products sold during the reporting period."
+PD2020,Water Provision Capacity of Products Sold: Total,Volume of potential water provided over the lifetime of the product for all products sold during the reporting period.
+PD3523,Water Treatment Capacity of Products Sold,Volume of potential water treated over the lifetime of the product for all products sold during the reporting period.
+PD3931,Water Consumption of Product,Average volume of water utilization/consumption over the lifetime of the product based on the planned operation of the product/system.
+PD5087,Water Treatment Capacity of Product: Potable,Volume of water treated to become potable over the lifetime of the product based on the planned operational capacity of the product/system.
+PD5786,Water Savings from Products Sold,Volume of water savings over the lifetime of the organization's products for products that were sold during the reporting period.
+PD6052,Water Provision Capacity of Product: Total,Volume of water provided over the lifetime of the product based on the planned operational capacity of the product/system.
+PD6929,Water Provision Capacity of Product: Potable,Volume of potable water provided over the lifetime of the product based on the planned operational capacity of the product/system.
+PD7621,Water Consumption of Product Replaced,Average volume of water that would have been consumed by the replaced product during the lifetime of the organization's product.
+PD8586,Water Treatment Capacity of Product: Total,Volume of water treated over the lifetime of the product based on the planned operational capacity of the product/system.
+PI2884,Water Savings from Services Sold,Volume of water savings during the reporting period due to the organization's services sold.
+PI8043,Water Provided for Sale: Potable,Volume of potable water provided and delivered to offtaker(s) during the reporting period.
+PI9468,Water Provided for Sale: Total,Volume of water provided and delivered to offtaker(s) during the reporting period.
+OI2799,Level of Water Stress,"Level of baseline water stress on land directly or indirectly managed by the organization as of the end of the reporting period. Choose all that apply: 
+- Low (<10%)
+- Low-medium (10–19.9%)
+- Medium-high (20–39.9%)
+- High (40–80%)
+- Extremely high (>80%)
+- Arid and low water use
+- No data"
+OI0263,Water Withdrawn,"Volume of all water drawn from surface water, groundwater, seawater, or a third party for any use by the organization during the reporting period."
+OI0386,Water Discharged,"Volume of effluents, used water, and unused water released to surface water, groundwater, seawater, or a third party, for which the organization has no further use, during the reporting period."
+OI9202,Streamflow Rate,Rate of flowing water in a stream or river on land directly or indirectly managed by the organization as of the end of the reporting period.
+OI8541,Peak Flow Rate,Rate of maximum flow of water through a stream or river on land directly or indirectly managed by the organization as of the end of the reporting period.
+OI3979,Stream Turbidity Level,"Level of turbidity (in Nephelometric Turbidity Units, or NTU) observed in streams or rivers on land directly or indirectly managed by the organization as of the end of the reporting period."
+OI7560,Land Directly Controlled: Impervious Surfaces,Area of land directly controlled by the organization that is impervious to water during the reporting period.
+OD6737,Stormwater Runoff,Volume of water generated from rain and snowmelt flowing over (without soaking into the ground of) land indirectly or directly controlled by the organization during the reporting period.
+PI8053,Number of Household and Business Connections,Number of residential and commercial connections to utilities and services provided by the organization as of the end of the reporting period.
+PI3317,Number of Individual Connections,Number of connections to utilities and services provided to individuals by the organization as of the end of the reporting period.
