@@ -1,0 +1,880 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://ontology.eil.utoronto.ca/tove/activity#"
+     xml:base="http://ontology.eil.utoronto.ca/tove/activity"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:adms="http://www.w3.org/ns/adms#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:terms="http://purl.org/dc/terms/">
+    <owl:Ontology rdf:about="http://ontology.eil.utoronto.ca/tove/activity">
+        <owl:imports rdf:resource="http://www.w3.org/2006/time.rdf"/>
+        <terms:creator xml:lang="eil.utoronto.ca)">Mark S. Fox (msf@eil.utoronto.ca)</terms:creator>
+        <terms:description xml:lang="en">A transformational view of the world.
+• State: description of what is true and not true of the world at a particular time point or interval
+• Activity: Transforms one state into another.
+• Activity Relations: A representation of the enabling and causal linkages among states and activities</terms:description>
+        <terms:description>TOVE Activity Ontology as defined in:
+
+Fox, M., Chionglo, J.F., and Fadel, F.G., (1993), &quot;A Common Sense Model of the Enterprise&quot;, Proceedings of the 2nd Industrial Engineering Research Conference , pp. 425-429, Norcross GA: Institute for Industrial Engineers.</terms:description>
+        <vann:preferredNamespacePrefix>act</vann:preferredNamespacePrefix>
+        <owl:versionInfo xml:lang="en">Updated 18 Nov 2020
+- Added object properties actBefore/actAfter, actDuring/actContains, actOverlaps/actOverlappedBy. These properties imply the equivalent temporal relation.
+
+Updated 6 Aug 2020
+- Added ActivityAction with multiple individuals that are actions that
+   result in the activity state change
+
+Updated 26 May 2020
+ - removed non CamelCase properties and classes
+ - added OWL Time, added hasTime to Activity and State
+
+Updated 9 November 2019
+  - change IRI to /tove/activity
+
+Updated 2 Oct 2019:
+  - added CamelCase versions of hyphenated object properties</owl:versionInfo>
+        <adms:relatedDocumentation>Gruninger, M., and Fox, M.S. , (1994), “An Activity Ontology for Enterprise Modelling”, Workshop on Enabling Technologies – Infrastructures for Collaborative Enterprises , West Virginia University.
+http://www.eil.utoronto.ca/wp-content/uploads/enterprise-modelling/papers/gruninger-wetice94-act.pdf</adms:relatedDocumentation>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/vocab/vann/preferredNamespacePrefix -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/vocab/vann/preferredNamespacePrefix"/>
+    
+
+
+    <!-- http://www.w3.org/ns/adms#relatedDocumentation -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/adms#relatedDocumentation"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#actAfter -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#actAfter">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actBefore"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#actBefore -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#actBefore">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <rdfs:comment xml:lang="en">Specifies that the domain activity ends before the range activity.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#actContains -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#actContains">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actDuring"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#actCoupled -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#actCoupled">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#actDuring -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#actDuring">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <rdfs:comment xml:lang="en">Specifies that the domain activity occurs during the range activity.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#actOverlappedBy -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#actOverlappedBy">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actOverlaps"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#actOverlaps -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#actOverlaps">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <rdfs:comment xml:lang="en">Specifies that the domain activity ends after the range activity begins, but ends before the range activity end.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#causedBy -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#causedBy">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#causes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#causes -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#causes">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <terms:description xml:lang="en">The &quot;causes&quot; object property links an Activity to a State.  The interpretation is that the completion of the activity, as signified by a &quot;completed&quot; status, causes the caused State to have a StateStatus of &quot;satisfied&quot;.</terms:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#elaborationOf -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#elaborationOf">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasElaboration"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#enabledBy -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#enabledBy">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#enables"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#enables -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#enables">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#finalActivity -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#finalActivity">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasSubActivity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#hasDurationDescription -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#hasDurationDescription">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#hasElaboration -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#hasElaboration">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#hasResource -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#hasResource">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#resourceOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#hasStatus -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#hasStatus">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#hasSubActivity -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#hasSubActivity">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#subActivityOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#hasSubState -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#hasSubState">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#subStateOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#initialActivity -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#initialActivity">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasSubActivity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#nextActivity -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#nextActivity">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#resourceOf -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#resourceOf">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#stateCoupled -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#stateCoupled">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#subActivityOf -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#subActivityOf">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#subStateOf -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/tove/activity#subStateOf">
+        <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#activityObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/2006/time#hasTime -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/2006/time#hasTime"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Activity -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Activity">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityThing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actAfter"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actBefore"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actContains"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actDuring"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actOverlappedBy"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#actOverlaps"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#enabledBy"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasElaboration"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#AggregateActivity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasSubActivity"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#nextActivity"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2006/time#hasTime"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2006/time#Interval"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasStatus"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#causes"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Resource"/>
+        <owl:disjointWith rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+        <terms:description xml:lang="en">An Activity describes something that occurs in the domain. It may have precondition and/or effect states, and may be further decomposed into subactivities. An Activity may be enabled by or cause some States. An enabling/causing state is a generalization of a precondition/effect; an Activity is enabled by or causes some State if it has a subactivity with a precondition or effect (respectively) of that State. An Activity occurs at some point in time and space, and may have some participants.
+
+An activity is the basic transformational action primitive with which processes and operations can be represented; it specifies how the world is changed. An enabling state defines what has to be true of the world in order for the activity to be performed. A caused state defines what is true of the world once the activity has been completed.
+
+An activity, along with its enabling and caused states, is called an activity cluster.The state tree linked by an enables relation to an activity specifies what has to be true in order for the activity to be performed. The state tree linked to an activity by a causes relation defines what is true of the world once the activity has been completed. Intermediate states of an activity can be defined by elaborating the aggregate activity into an activity network.
+
+• causes links activity to State that results from the performance of the activity.
+• actCoupled links activity to another that is causely related.
+• nextActivity links activity to another, implies that the linked to actiivty occurs after in time.
+• hasElaboration links to an aggregateActivity that decomposes the activity into subactivities
+• status specifies the status of the activity
+• hasTime specifies the time intervals that the activity is performed.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#ActivityAction -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityThing"/>
+        <terms:description xml:lang="en">Actions that are performed on an Activity by an Agent that change its State.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://ontology.eil.utoronto.ca/tove/activity#completed"/>
+                    <rdf:Description rdf:about="http://ontology.eil.utoronto.ca/tove/activity#dormant"/>
+                    <rdf:Description rdf:about="http://ontology.eil.utoronto.ca/tove/activity#executing"/>
+                    <rdf:Description rdf:about="http://ontology.eil.utoronto.ca/tove/activity#reExecuting"/>
+                    <rdf:Description rdf:about="http://ontology.eil.utoronto.ca/tove/activity#suspended"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityThing"/>
+        <terms:description xml:lang="en">Activity Status
+Dormant - the activity is not executing.
+Executing - the activity is enabled and executing.
+Suspended - the activity was executing and has been forced to a suspended state due to dis-enabling of its state.
+Terminated - the activity has finished executing.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#ActivityThing -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#ActivityThing"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#AggregateActivity -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#AggregateActivity">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#elaborationOf"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#finalActivity"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#initialActivity"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Defines the decomposition of another activity into sub activities.
+• initialActivity links to the initial activities in the decomposition.
+• finalActivity links to the final activities in the decomposition.
+• elaborationOf links back to the abstract activity.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Conjunction -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Conjunction">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#NonTerminalState"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Consume -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Consume">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#TerminalState"/>
+        <terms:description xml:lang="en">Consume: Specifies the resource that is to be consumed by the activity.  When the activity is complete, that resource &quot;disappears&quot;.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#DiscreteConsume -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#DiscreteConsume">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Consume"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#DiscreteProduce -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#DiscreteProduce">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Produce"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#DiscreteUse -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#DiscreteUse">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Use"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Disjunction -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Disjunction">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#NonTerminalState"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Exclusive -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Exclusive">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#NonTerminalState"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#NonTerminalState -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#NonTerminalState">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasSubState"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasSubState"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#TerminalState"/>
+        <terms:description xml:lang="en">A non-terminal state may be conjunctive or disjunctive. Naturally, a conjunctive state is defined by the conjunction of its child state, whereas a disjunctive state is defined by the disjunction of its child states. A state cannot be both conjunctive and disjunctive.
+Conjunctive and disjunctive states, which do have substates, are achieved at some time if their decomposition of state is achieved.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Not -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Not">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#NonTerminalState"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasSubState"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Predicate -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Predicate">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#TerminalState"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Produce -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Produce">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#TerminalState"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Release -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Release">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#TerminalState"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Resource -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Resource">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityThing"/>
+        <owl:disjointWith rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#State -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#State">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityThing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#causedBy"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#enables"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Activity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#stateCoupled"/>
+                <owl:allValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/2006/time#hasTime"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2006/time#Interval"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasStatus"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <terms:description xml:lang="en">State: description of what is true and not true of the world at a particular time point or interval</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#StateStatus -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#StateStatus">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityThing"/>
+        <terms:description xml:lang="en">State Status
+committed - the resources have been reserved.
+complete - the resources have been used and are no longer needed.
+disenabled - the resources have been de-committed.
+enabled- the resources are being used.
+notPossible - the resources are not available.
+possible - the resources are available but not reserved.
+reEnabled - the resources have been re-committed and are being used.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#TerminalState -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#TerminalState">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#State"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#hasResource"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#Resource"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <terms:description xml:lang="en">A terminal state has cannot be decomposed, in other words it has no substates</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#TimeThing -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#TimeThing"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#Use -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/activity#Use">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#TerminalState"/>
+        <terms:description xml:lang="en">Use: Specifies the resource that is used by an activity.  When the activity is complete, the resource is &quot;released&quot; for use by other activities.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2006/time#Interval -->
+
+    <owl:Class rdf:about="http://www.w3.org/2006/time#Interval"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#commit -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#commit">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#committed -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#committed">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#complete -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#complete">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction"/>
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#completed -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#completed">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#disenable -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#disenable">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#disenabled -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#disenabled">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#dormant -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#dormant">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#enable -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#enable">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#enabled -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#enabled">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#execute -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#execute">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#executing -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#executing">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#notPossible -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#notPossible">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#possible -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#possible">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#reEnabled -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#reEnabled">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#StateStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#reExecuting -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#reExecuting">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#reenable -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#reenable">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#suspend -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#suspend">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityAction"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/activity#suspended -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/activity#suspended">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/activity#ActivityStatus"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.13) https://github.com/owlcs/owlapi -->
+
