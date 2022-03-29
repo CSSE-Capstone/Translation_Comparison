@@ -10,8 +10,11 @@ class Comparison:
     def compare_class_or_individual(self, item1, item2):
         
         self.instance_type_consistency_check(item1, item2) #for class and individual
+<<<<<<< HEAD
         self.correspondence_consistency_check #for class and individual
         self.singular_unit_consistency_check #for class and individual
+=======
+>>>>>>> ea81864 (Neevi Testing)
         
         if item1 in self.classes:
             allprop = item1.get_class_properties()
