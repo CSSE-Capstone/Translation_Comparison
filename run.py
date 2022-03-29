@@ -13,7 +13,7 @@ from wordnet.main import WordNet
 file_path = 'files/'
 
 # Initialize RuleBased model
-rb_noun_grammar = r"""
+rb_grammar = r"""
 
     NP:
         {<NN.*|NNS.*>*<JJ><NN|NNS>+}
@@ -30,14 +30,13 @@ rb_noun_grammar = r"""
 treebankTagger = nltk.data.load('taggers/maxent_treebank_pos_tagger/english.pickle')
 nltk.download('punkt')
 
-rb_chunker = nltk.RegexpParser(rb_noun_grammar)
+rb_chunker = nltk.RegexpParser(rb_grammar)
 rb_lemmatizer = nltk.WordNetLemmatizer()
-rb_stemmer = nltk.stem.porter.PorterStemmer()
 rb_model = {'from': 'VB'}
 rb_tagger = nltk.tag.UnigramTagger(model=rb_model, backoff=treebankTagger) 
 rb_tagger = rb_tagger.tag 
 
-rb = RuleBased(rb_noun_grammar, rb_chunker, rb_lemmatizer, rb_stemmer, rb_tagger)
+rb = RuleBased(rb_grammar, rb_chunker, rb_lemmatizer, rb_tagger)
 
 # Initialize WordNet model
 wn = WordNet()
@@ -46,12 +45,12 @@ wn = WordNet()
 matched_indicators = pd.read_csv(file_path + 'glossarymatchedindicators.csv', index_col=0, header=None, squeeze=True).to_dict()
 cids_classes = pd.read_csv(file_path + 'cidsclasses.csv', header=None, squeeze=True).to_list()
 t1_text = 'Number of individuals residing in rural areas who sold goods or services to the organization during the reporting period.'
-t1 = rb.get_key_pos_tag(t1_text)
+pos_breakdown = rb.get_key_pos_tag(t1_text)
 ind_code = 'PI2566'
-t1_output = rb.rb_translation(t1, ind_code, cids_classes, matched_indicators)
+pos_breakdown_output = rb.rb_translation(pos_breakdown, ind_code, cids_classes, matched_indicators)
 
 # networkx
-G, prop_rel = rb.plot_KG(t1_output)
+G, prop_rel = rb.plot_KG(pos_breakdown_output)
 pos = nx.spring_layout(G, k=0.2)
 plt.figure(figsize=(15,8))                                                    
 nx.draw(G, pos, with_labels=True, arrows=True)                                                              
@@ -499,8 +498,8 @@ def rb_cluster_combined(rb_output, ind_text, clusterMap, kmeans):
 
 # # wn
 # # wn_kg_dict = wordnet(t1_text, clustering_kg_dict) # TODO uncomment
-# print(f't1_output: {t1_output}')
-# wn_kg_dict = wn.wordnet(t1_text, t1_output) # TODO rm
+# print(f'pos_breakdown_output: {pos_breakdown_output}')
+# wn_kg_dict = wn.wordnet(t1_text, pos_breakdown_output) # TODO rm
 # print(f'wn_kg_dict: {wn_kg_dict}')
 
 # ===== Demo =====
