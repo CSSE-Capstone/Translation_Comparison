@@ -9,6 +9,7 @@ class Comparison:
     # MAIN
     def compare_class_or_individual(self, item1, item2):
         self.instance_type_consistency_check(item1, item2) #for class and individual
+        
         if item1 in self.classes:
             allprop = item1.get_class_properties()
             #remove annotation properties
