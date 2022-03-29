@@ -7,7 +7,7 @@ class Comparison:
         self.individuals = individuals
     
     # MAIN
-    def compare_class_or_individual(self, item1, item2):   
+    def compare_class_or_individual(self, item1, item2):
         self.instance_type_consistency_check(item1, item2) #for class and individual
         if item1 in self.classes:
             allprop = item1.get_class_properties()
@@ -540,7 +540,7 @@ class Comparison:
 
                 #equals: start(a) = start(b) < end(a) = end(b) (a and b are identical)
                 if (intervalBeginning1 == intervalBeginning2 and intervalBeginning2 < intervalEnd1 and intervalEnd1 == intervalEnd2):
-                    print(item1 , "'s time interval is identical to " , item2 , "'s. Therefore they   are interval equality consistent.")
+                    print(item1 , "'s time interval is identical to " , item2 , "'s. Therefore they are interval equality consistent.")
                     return
                 else:
                     print(item1 , "'s time interval is not identical to " , item2 , "'s. Therefore they are interval equality inconsistent.")
@@ -613,126 +613,127 @@ class Comparison:
         '''
         #if item1 or item2 = indicator and the other item is its population definition: should be all same location. 
         #forCitySection, forState, forProvince, for_city, parentCountry, located_in are common location properties. "reside_in" is used for area for IRIS indicators rather than actual geographical locations
+        
+        #not considering ratios
         '''
         place_equality_consistent = False #used in subplace consistency check
 
-        if item2 in self.individuals: #item1 and item2 both need to be self.individuals
-            parent = item1.is_instance_of[0] #parent class of item1
-            parent2 = item2.is_instance_of[0] #parent class of item2
-            location = None
-            location2 = None
-            
-            if item1.located_in:
-                location = item1.located_in
-            elif item1.parentCountry:
-                location = item1.parentCountry
-            elif item1.hasCountry:
-                location = item1.hasCountry
-            elif item1.hasProvince:
-                location = item1.hasProvince
-            elif item1.hasState:
-                location = item1.hasState
-            elif item1.for_city: #city checked after Province/State so that most specific information can be compared
-                location = item1.for_city
-            elif item1.hasCity:
-                location = item1.hasCity
-            elif item1.hasCitySection:
-                location = item1.hasCitySection
-
-            if item2.located_in:
-                location2 = item2.located_in
-            elif item2.parentCountry:
-                location2 = item2.parentCountry
-            elif item2.hasCountry:
-                location2 = item2.hasCountry
-            elif item2.hasProvince:
-                location2 = item2.hasProvince
-            elif item2.hasState:
-                location2 = item2.hasState
-            elif item2.for_city: #city checked after Province/State so that most specific information can be compared
-                location2 = item2.for_city
-            elif item2.hasCity:
-                location2 = item2.hasCity
-            elif item2.hasCitySection:
-                location2 = item2.hasCitySection
-
-            if location and location2: #both have locations
-                #considering case when checking consistency between indicator (item1) that has a location + its population/population definition (item2) has a location
-                if ("iso21972.Indicator" in str(parent.ancestors())) or ("cids.Indicator" in str(parent.ancestors())): 
-                    population = item1.sumOf
-                    if population:
-                        definition = population[0].definedBy
-
-                        if item2 == item1.sumOf or item2 == definition: #if item2 is item1's population or if item2 is item1's population's definition             
-                            #compare within indicator
-                            if location and location2 and location == location2:
-                                print(item1, " is place equality consistent with ", item2, " - they both refer to the same location.")
-                                place_equality_consistent = True
-                                return place_equality_consistent
-                            elif location and location2 and location != location2:
-                                print(item1, " is not place equality consistent with ", item2, " due to them referring to different locations.")
-                                return place_equality_consistent 
-
-                elif ("iso21972.Indicator" in str(parent2.ancestors())) or ("cids.Indicator" in str(parent2.ancestors())): 
-                    population = item2.sumOf
-                    if population:
-                        definition = population[0].definedBy
-
-                        if item1 == item2.sumOf or item1 == definition: #if item1 is item2's population or if item1 is item2's population's definition             
-                            #compare within indicator
-                            if location and location2 and location == location2:
-                                print(item2, " is place equality consistent with ", item1, " - they both refer to the same location.")
-                                place_equality_consistent = True
-                                return place_equality_consistent
-                            elif location and location2 and location != location2:
-                                print(item2, " is not place equality consistent with ", item1, " due to them referring to different locations.")
-                                return place_equality_consistent  
-
-                else: #has location but does not fulfill above indicator relationship
-                    if (item1.hasCitySection and item2.hasCitySection) and location2 == item1.hasCitySection:
-                        print(item1, " and ", item2, " refer to the same city section. Therefore they are place equality consistent.")
-                        place_equality_consistent = True
-                        #not returning here in case the city section name is the same but the country/province/state/city isnt
-                    elif (item1.hasCitySection and item2.hasCitySection) and location2 != item1.hasCitySection:
-                        print(item1, " and ", item2, " do not refer to the same city section. Therefore they are not place equality consistent.")
-                        return place_equality_consistent
-                    elif (item1.hasCity or item1.for_city) and (item2.hasCity or item2.for_city): 
-                        if (item2.hasCity or item2.for_city) and ((item1.hasCity == item2.hasCity) or (item1.for_city == item2.for_city) or (item1.hasCity == item2.for_city) or (item1.for_city == item2.hasCity)):
-                            print(item1, " and ", item2, " refer to the same city. Therefore they are place equality consistent.")
-                            place_equality_consistent = True
-                            #not returning here in case the city name is the same but the country/province/state isnt
-                        else:
-                            print(item1, " and ", item2, " do not refer to the same city. Therefore they are not place equality consistent.")
-                            return place_equality_consistent
-                    if (item1.hasProvince or item1.hasState) and (item2.hasProvince or item2.hasState):
-                        if  (item1.hasProvince == item2.hasProvince or item1.hasState == item2.hasState or item1.hasProvince == item2.hasState or item1.hasState == item2.hasProvince):
-                            print(item1, " and ", item2, " refer to the same province/state. Therefore they are place equality consistent.")
-                            place_equality_consistent = True
-                            #not returning here in case the state/province name is the same but the country isnt
-                        else:
-                            print(item1, " and ", item2, " do not refer to the same province/state. Therefore they are not place equality consistent.")
-                            return place_equality_consistent
-                    if (item1.hasCountry or item1.parentCountry) and (item2.hasCountry or item2.parentCountry):
-                        if item1.hasCountry == item2.hasCountry or item1.parentCountry == item2.parentCountry or item1.hasCountry == item2.parentCountry or item1.parentCountry == item2.hasCountry:
-                            print(item1, " and ", item2, " refer to the same country. Therefore they are place equality consistent.")
-                            place_equality_consistent = True
-                            return place_equality_consistent
-                        else:
-                            print(item1, " and ", item2, " do not refer to the same country. Therefore they are not place equality consistent.")
-                            return place_equality_consistent
-
-            elif not location: #item1 does not have a location 
-                print(item1, " does not have a location property associated with it - place equality consistency check cannot be run.")
-                return place_equality_consistent
-
-            elif not location2: #item2 does not have a location 
-                print(item2, " does not have a location property associated with it - place equality consistency check cannot be run.")
-                return place_equality_consistent
-
-            #not considering ratios
-        else:
+        if item2 not in self.individuals:
             print("Place equality consistency check not run - it is only done when comparing an instance to itself or another instance.")
             return place_equality_consistent
+    
+        parent = item1.is_instance_of[0] #parent class of item1
+        parent2 = item2.is_instance_of[0] #parent class of item2
+        location = None
+        location2 = None
+        
+        if item1.located_in:
+            location = item1.located_in
+        elif item1.parentCountry:
+            location = item1.parentCountry
+        elif item1.hasCountry:
+            location = item1.hasCountry
+        elif item1.hasProvince:
+            location = item1.hasProvince
+        elif item1.hasState:
+            location = item1.hasState
+        elif item1.for_city: #city checked after Province/State so that most specific information can be compared
+            location = item1.for_city
+        elif item1.hasCity:
+            location = item1.hasCity
+        elif item1.hasCitySection:
+            location = item1.hasCitySection
+
+        if item2.located_in:
+            location2 = item2.located_in
+        elif item2.parentCountry:
+            location2 = item2.parentCountry
+        elif item2.hasCountry:
+            location2 = item2.hasCountry
+        elif item2.hasProvince:
+            location2 = item2.hasProvince
+        elif item2.hasState:
+            location2 = item2.hasState
+        elif item2.for_city: #city checked after Province/State so that most specific information can be compared
+            location2 = item2.for_city
+        elif item2.hasCity:
+            location2 = item2.hasCity
+        elif item2.hasCitySection:
+            location2 = item2.hasCitySection
+        
+        if not(location) or not(location2):
+            if not(location) and not(location2):
+                print(f'{item1} and {item2} do not have a location property associated with it - place equality consistency check cannot be run.')
+                return place_equality_consistent
+
+            item = item1 if not(location) else item2
+            print(item, " does not have a location property associated with it - place equality consistency check cannot be run.")
+            return place_equality_consistent
+
+
+        #considering case when checking consistency between indicator (item1) that has a location + its population/population definition (item2) has a location
+        if ("iso21972.Indicator" in str(parent.ancestors())) or ("cids.Indicator" in str(parent.ancestors())): 
+            population = item1.sumOf
+            if population:
+                definition = population[0].definedBy
+
+                if item2 == item1.sumOf or item2 == definition: #if item2 is item1's population or if item2 is item1's population's definition             
+                    #compare within indicator
+                    if location and location2 and location == location2:
+                        print(item1, " is place equality consistent with ", item2, " - they both refer to the same location.")
+                        place_equality_consistent = True
+                        return place_equality_consistent
+                    elif location and location2 and location != location2:
+                        print(item1, " is not place equality consistent with ", item2, " due to them referring to different locations.")
+                        return place_equality_consistent 
+
+        elif ("iso21972.Indicator" in str(parent2.ancestors())) or ("cids.Indicator" in str(parent2.ancestors())): 
+            population = item2.sumOf
+            if population:
+                definition = population[0].definedBy
+
+                if item1 == item2.sumOf or item1 == definition: #if item1 is item2's population or if item1 is item2's population's definition             
+                    #compare within indicator
+                    if location and location2 and location == location2:
+                        print(item2, " is place equality consistent with ", item1, " - they both refer to the same location.")
+                        place_equality_consistent = True
+                        return place_equality_consistent
+                    elif location and location2 and location != location2:
+                        print(item2, " is not place equality consistent with ", item1, " due to them referring to different locations.")
+                        return place_equality_consistent  
+
+        else: #has location but does not fulfill above indicator relationship
+            if (item1.hasCitySection and item2.hasCitySection) and location2 == item1.hasCitySection:
+                print(item1, " and ", item2, " refer to the same city section. Therefore they are place equality consistent.")
+                place_equality_consistent = True
+                #not returning here in case the city section name is the same but the country/province/state/city isnt
+            elif (item1.hasCitySection and item2.hasCitySection) and location2 != item1.hasCitySection:
+                print(item1, " and ", item2, " do not refer to the same city section. Therefore they are not place equality consistent.")
+                return place_equality_consistent
+            elif (item1.hasCity or item1.for_city) and (item2.hasCity or item2.for_city): 
+                if (item2.hasCity or item2.for_city) and ((item1.hasCity == item2.hasCity) or (item1.for_city == item2.for_city) or (item1.hasCity == item2.for_city) or (item1.for_city == item2.hasCity)):
+                    print(item1, " and ", item2, " refer to the same city. Therefore they are place equality consistent.")
+                    place_equality_consistent = True
+                    #not returning here in case the city name is the same but the country/province/state isnt
+                else:
+                    print(item1, " and ", item2, " do not refer to the same city. Therefore they are not place equality consistent.")
+                    return place_equality_consistent
+            if (item1.hasProvince or item1.hasState) and (item2.hasProvince or item2.hasState):
+                if  (item1.hasProvince == item2.hasProvince or item1.hasState == item2.hasState or item1.hasProvince == item2.hasState or item1.hasState == item2.hasProvince):
+                    print(item1, " and ", item2, " refer to the same province/state. Therefore they are place equality consistent.")
+                    place_equality_consistent = True
+                    #not returning here in case the state/province name is the same but the country isnt
+                else:
+                    print(item1, " and ", item2, " do not refer to the same province/state. Therefore they are not place equality consistent.")
+                    return place_equality_consistent
+            if (item1.hasCountry or item1.parentCountry) and (item2.hasCountry or item2.parentCountry):
+                if item1.hasCountry == item2.hasCountry or item1.parentCountry == item2.parentCountry or item1.hasCountry == item2.parentCountry or item1.parentCountry == item2.hasCountry:
+                    print(item1, " and ", item2, " refer to the same country. Therefore they are place equality consistent.")
+                    place_equality_consistent = True
+                    return place_equality_consistent
+                else:
+                    print(item1, " and ", item2, " do not refer to the same country. Therefore they are not place equality consistent.")
+                    return place_equality_consistent
         
 
     def subplace_consistency_check(self, place_equality_consistent, item1, item2):
@@ -746,7 +747,7 @@ class Comparison:
         #   city section vs province
         #   city section vs country
         '''
-
+    
         if item2 in self.individuals and place_equality_consistent == False:
             #item1
             if not item1.hasCitySection and (not item1.hasCity or not item1.for_city) and (not item1.hasProvince or not item1.hasState) and (not item1.hasCountry or not item1.parentCountry):
