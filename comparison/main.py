@@ -11,10 +11,13 @@ class Comparison:
         
         self.instance_type_consistency_check(item1, item2) #for class and individual
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.correspondence_consistency_check #for class and individual
         self.singular_unit_consistency_check #for class and individual
 =======
 >>>>>>> ea81864 (Neevi Testing)
+=======
+>>>>>>> ea81864e5f5915b13c5887a771d517b7dc5fdd99
         
         if item1 in self.classes:
             allprop = item1.get_class_properties()
