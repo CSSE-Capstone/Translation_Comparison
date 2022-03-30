@@ -60,7 +60,7 @@ class Comparison:
             self.interval_non_overlap_consistency_check(item1, item2)
             self.indicator_unit_component_consistency_check(item1, item2)
             #self.quantity_measure_consistency_check(item1, item2)
-    
+    #inter
     def class_type_consistency_check(self, item1, item2): # item: KG of SPO or Indicator
         class_type_consistent = False
 
@@ -101,7 +101,7 @@ class Comparison:
             print("Class type inconsistent - neither of the two self.classes is equal, equivalent, or a subclass of the other class.")
             return class_type_consistent
         
-
+    #inter
     def instance_type_consistency_check(self, item1, item2):
         '''
         Instance type inconsistency verifies that if the instances that make up a city's indicator are an instance of the same class, 
@@ -207,6 +207,7 @@ class Comparison:
             #print(intervalBeginning2, intervalEnd2)
         return intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2
     
+    #inter, if you want to check a ratio then you have to put item1 as the numerator and item2 as the denominator for example
     def subinterval_consistency_check(self, item1, item2): 
         '''
         #TODO NEED VERSION THAT WORKS WHEN YEAR MISSING! OR IN THIS CASE JUST PRINT - MISSING YEAR INFO. POTENTIALLY INCONSISTENT.
@@ -351,6 +352,7 @@ class Comparison:
             print(item1 , " and " , item2 , " are subinterval consistent.")
             return
 
+    #inter with an intra component (the beginning and end of the input's time interval is checked first), if you want to check a ratio then you have to put item1 as the numerator and item2 as the denominator for example
     def temporal_granularity_consistency_check(self, item1, item2):
         if item2 not in self.individuals: #cannot run this check unless both are instances
             print("Temporal granularity consistency check not run - it is only done when comparing 2 individuals.")
@@ -382,7 +384,7 @@ class Comparison:
         elif (beginning2.year) and (beginning2.month) and type(beginning2.day) == None and (end2.year) and (end2.month) and type(end2.day) == None:
             print("Both the beginning and end of " , item2, "'s reporting period time interval have month and year temporal units. Therefore they are temporal granular consistent.") 
 
-        #only start or only end missing year
+        #only start or only end missing year # TODO potentially inconsistent
         elif ((type(beginning1.year) == None and (beginning1.month) and (beginning1.day) and (end1.year) and (end1.month) and (end1.day)) or ((beginning1.year) and (beginning1.month) and (beginning1.day) and type(end1.year) == None and (end1.month) and (end1.day))):
             print("The beginning or end of " , item1, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
             return
@@ -432,6 +434,7 @@ class Comparison:
             print(item1 , " does not have a day unit whereas " , item2 , " does. Therefore they have different temporal granularity and are inconsistent.")
             return
     
+    #inter (instance compared to its definition class)
     def property_consistency_check(self, item1, item2):
         '''
         #Property Inconsistency: An instance mij ∊ Mi is potentially inconsistent with its corresponding definition class nik ∊ Ni if there exist a necessary property ait 
@@ -499,6 +502,7 @@ class Comparison:
             print("Property consistency check not run - it is only done when comparing instance m with its definition class n.")
             return
 
+    #inter, if you want to check a ratio then you have to put item1 as the numerator and item2 as the denominator for example
     def interval_equality_consistency_check(self, item1, item2):
         if item2 not in self.individuals:
             print("Interval equality consistency check not run - it is only done when comparing an instance to another instance.")
@@ -532,6 +536,7 @@ class Comparison:
                 print(item1 , "'s time interval is not identical to " , item2 , "'s. Therefore they are interval equality inconsistent.")
                 return
     
+    #inter, if you want to check a ratio then you have to put item1 as the numerator and item2 as the denominator for example
     def interval_non_overlap_consistency_check(self, item1, item2):
         if item2 not in self.individuals:
             print("Non overlapping interval consistency check not run - it is only done when comparing an instance to another instance.")
@@ -575,8 +580,12 @@ class Comparison:
                 print(item1 , " and " , item2 , "'s time intervals are overlapping or equal. Therefore they are non overlapping interval consistent.")
                 return
     
+    #both. 
+    #inter, if you want to check a ratio then you have to put item1 as the numerator and item2 as the denominator for example
+    #intra, there is a case where you can compare the indicator's location to its population's location, so that would be intra? 
     def place_equality_consistency_check(self, item1, item2):
         '''
+        #Place equality inconsistency where a population was drawn from a place different than the place specified by the indicator
         #if item1 or item2 = indicator and the other item is its population definition: should be all same location. 
         #forCitySection, forState, forProvince, for_city, parentCountry, located_in are common location properties. "reside_in" is used for area for IRIS indicators rather than actual geographical locations
         
@@ -700,7 +709,9 @@ class Comparison:
             else:
                 print(item1, " and ", item2, " do not refer to the same country. Therefore they are not place equality consistent.")
                 return place_equality_consistent
-        
+
+    #inter
+    #intra, there is a case where you can compare the indicator's location to its population's location. If the population is drawn from areas within the place specified by the indicator, subplace inconsistent  
     def subplace_consistency_check(self, place_equality_consistent, item1, item2):
         '''
         Any two instances mij and mik ∊ Mi are potentially subplace inconsistent if instance of placename referred by mik is an area within city referred by mij 
@@ -867,10 +878,15 @@ class Comparison:
                 print("Subplace consistency check not run - it is only done when comparing an instance to another instance.") 
             return
 
-    def quantity_measure_consistency_check(self, item1, item2):
+    # intra check: done outside of the recursive loop
+    def quantity_measure_consistency_check(self, item):
         '''
         Any two instances mij and mik ∊ Mi are measurement inconsistent if an instance of Quantity mij has a unit of measure uniti that is different from the Measure's unit of measure unit’i. 
         '''
+        #TODO update this check to be based on item instead of item1 and item2 since its an internal check
+        item1 = item
+        item2 = item.valueOf
+
         if item2 not in self.individuals:
             print(item2, " is not an instance. Quantity Measurement Consistency Check cannot be run.")
             return
@@ -902,7 +918,8 @@ class Comparison:
         else:
             print("Either ", item1, " is not an instance of Quantity or ", item2, " is not an instance of Measure. Quantity Measurement Consistency Check cannot be run.")
             return
-
+    
+    # intra
     def indicator_unit_component_consistency_check(self, item1, item2):
         '''
         Any two instances of om:Quantity mij and mik ∊ Mi where mij is connected to mik via a property ait(e.g., numerator, denominator), 
@@ -929,7 +946,7 @@ class Comparison:
         else:
             print(item1, "or ", item2, " is not a ratio (missing numerator or denominator property). Indicator Unit Component Consistency Check cannot be run.")
             return
-
+    #this is inter since the instance is compared to its corresponding class
     def singular_unit_consistency_check(self, item1, item2):
         '''
         Singular Unit Inconsistency: when an instance mij has a unit of measure uniti that is a multiple or submultiple of the unit defined in its corresponding definition class nik. 
@@ -981,6 +998,7 @@ class Comparison:
         else:
             print(item1, " or ", item2, "is not the definition class of the other. Singular Unit Consistency Check cannot be run.")
 
+    #this one is comparing the instance to its definition class, but the way it does the proving is by looking at both internally. But I think it's still inter
     def correspondence_consistency_check(self, item1, item2):
         '''
         Correspondence Inconsistency: where there are no correspondence detected between nodes in the indicator’s definition and published indicator data. 
