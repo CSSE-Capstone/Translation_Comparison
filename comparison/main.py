@@ -508,7 +508,7 @@ class Comparison:
         #it is not possible to do for loop over prop in proplist of item1 and then do item1.prop. 
         #it needs the exact name of the prop to get the value. Therefore this isn't possible to do in owlready2, would have to be done manually.
         for r in restrictions:
-            if r.property in allprop:
+            if r.property in item1.get_class_properties():
                 print("property: " , r.property , " value: " , r.value)
             else:
                 print(item1 , " is property inconsistent with " , item2 , " because it does not satisfy the value restriction of property " , prop , " defined in " , item2, ".")
@@ -517,7 +517,7 @@ class Comparison:
             if (len(prop.range) > 0) and (type(item1) not in prop.range):
                 print(item1 , " is property inconsistent with " , item2 , " because it does not satisfy the range restriction of property " , prop , " defined in " , item2 , ".")
                 return
-            elif prop not in allprop:
+            elif prop not in item1.get_class_properties():
                 print(item1 , " is property inconsistent with " , item2 , " because  property " , prop , " defined in " , item2 , " does not exist for " , item1 , ".")
                 return
             #at this point already checked if definition property not in instance
@@ -1026,11 +1026,11 @@ class Comparison:
         Correspondence Inconsistency: where there are no correspondence detected between nodes in the indicator’s definition and city published indicator data. 
         This means that not all components in the definition are covered by the published indicator data. 
         '''
-        if item1 in classes and item2 in individuals:
+        if item1 in self.classes and item2 in self.individuals:
             class_nodes = item1.get_class_properties()
             #remove annotation properties
             class_nodes = [str(s) for s in class_nodes]
-            if len(prop) > 0:
+            if len(class_nodes) > 0:
                 for s in class_nodes:
                 #print (type(s))
                 #print(s)
@@ -1063,11 +1063,11 @@ class Comparison:
             else:
                 print("All components in the definition are covered by the instance. Therefore they are correspondence consistent.")
         
-        elif item1 in individuals and item2 in classes:
+        elif item1 in self.individuals and item2 in self.classes:
             class_nodes = item2.get_class_properties()
             #remove annotation properties
             class_nodes = [str(s) for s in class_nodes]
-            if len(prop) > 0:
+            if len(class_nodes) > 0:
                 for s in class_nodes:
                 #print (type(s))
                 #print(s)
