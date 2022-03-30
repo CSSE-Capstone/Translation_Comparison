@@ -19,44 +19,31 @@ nltk.download('maxent_treebank_pos_tagger')
 nltk.download('punkt')
 
 class RuleBased:
-    def __init__(self, noun_grammar, chunker, lemmatizer, tagger):
-        self.noun_grammar = noun_grammar
+    def __init__(self, rb_grammar, chunker, lemmatizer, tagger):
+        self.rb_grammar = rb_grammar
         self.chunker = chunker
         self.lemmatizer = lemmatizer
         self.tagger = tagger
 
-    def acceptable_word(word):
+    def POS_tagger(self, phrase, chunker, lemmatizer):
         """
-        Checks conditions for acceptable word: word length, not a stopword (the, and, or)
+        POS tag words in input text according to noun/verb, chunk into key phrases according to a set grammar, lemmatize key phrases
 
         Parameters:
-        word (str): word to check for validity
-
-        Returns:
-        accepted (bool): True if word is checks pass
-        """
-        accepted = bool(1 < len(word) <= 40 and word.lower() not in ['the','and','or'])
-        return accepted
-
-    def POS_tagger(self, text, chunker, lemmatizer):
-        """
-        POS tag input words according to noun/verb, chunk into key phrases according to a set grammar, lemmatize key phrases
-
-        Parameters:
-        subtrees: grammar tree created after parsing input text
+        phrase (str): input text
         chunker: selected chunker (ex: nltk.RegexpParser)
         lemmatizer: selected lemmatizer (ex: nltk.WordnetLemmatizer)
 
         Returns:
         terms (dict): key phrases and their POS tag (N for noun, V for verb)
         """
-        #chunk input text into key phrases
-        phrases = re.findall(r'\w+', text)
+        #split input text into words
+        words = re.findall(r'\w+', phrase)
 
-        #tag key phrases according to tagged POS
-        tagged_phrases = self.tagger(phrases)
+        #tag words according to tagged POS
+        tagged_words = self.tagger(words)
         #chunk tagged words into key phrases
-        chunked_phrases = chunker.parse(tagged_phrases)
+        chunked_phrases = chunker.parse(tagged_words)
         subtrees = chunked_phrases.subtrees()
 
         terms = {}   #term dictionary of tagged noun/verb keyphrases
@@ -82,6 +69,20 @@ class RuleBased:
 
         return terms
 
+    def acceptable_word(word):
+        """
+        Checks conditions for acceptable word to be considered in a key phrase: 
+            word length, not a stopword (the, and, or)
+
+        Parameters:
+        word (str): word to check for validity
+
+        Returns:
+        accepted (bool): True if word is checks pass
+        """
+        accepted = bool(1 < len(word) <= 40 and word.lower() not in ['the','and','or'])
+        return accepted
+
     def get_key_pos_tag(self, phrase):
         """
         Clean up raw input text before preprocessing, run POS tag
@@ -90,7 +91,7 @@ class RuleBased:
         phrase (str): raw input text
 
         Returns:
-        keyphrases (dict): nested dictionary of key phrases and POS tag, in order of appearance in input text
+        keyphrases (dict): nested dictionary of key phrases and POS tag, in order of appearance in input phrase
         """
         #input text clean up
         phrase = re.split(r'. [A-Z]', phrase)[0] #get first sentence of input text
@@ -112,15 +113,15 @@ class RuleBased:
         
         return keyphrases
 
-    def flip_translation(t):
+    def flip_POS_tag(POS_tag):
         """
-        Reformat POS tag output dictionary from using keyphrase position as keys, to word phrase as key
+        Reformat POS tag output dictionary from using key phrase position as keys, to word phrase as key
         """
-        t_output = {}
-        for k, v in t.items():
-            t_output[v.pop('word')] = v 
+        flipped_POS_tag = {}
+        for k, v in POS_tag.items():
+            flipped_POS_tag[v.pop('word')] = v 
 
-        return t_output
+        return flipped_POS_tag
     
     def joinPhrase(input):
         """
@@ -211,7 +212,7 @@ class RuleBased:
                     translation[word_index] = {'word':word, 'subclassOf':'cidsThing'}
                 
         # run through verb keyphrases, use as properties to relate noun keyphrases
-        translation = self.flip_translation(translation)
+        translation = self.flip_POS_tag(translation)
         for word_index in pos_breakdown:  
             phrase = pos_breakdown[word_index]['phrase']
             word = ' '.join(str(word) for word in pos_breakdown[word_index]['phrase'].values())

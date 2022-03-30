@@ -18,9 +18,6 @@ rb_grammar = r"""
     NP:
         {<NN.*|NNS.*>*<JJ><NN|NNS>+}
         {<NN.*|NNS.*>+}
-        
-    JJ:
-        {<JJ>}
     
     VP:
         {<VB|VBG|VBN>+}
