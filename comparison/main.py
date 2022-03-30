@@ -9,15 +9,10 @@ class Comparison:
     # MAIN
     def compare_class_or_individual(self, item1, item2):
         
-        self.instance_type_consistency_check(item1, item2) #for class and individual
-<<<<<<< HEAD
-<<<<<<< HEAD
         self.correspondence_consistency_check #for class and individual
+        #TODO some checks may benefit from recognizing correspondence
+        self.instance_type_consistency_check(item1, item2) #for class and individual
         self.singular_unit_consistency_check #for class and individual
-=======
->>>>>>> ea81864 (Neevi Testing)
-=======
->>>>>>> ea81864e5f5915b13c5887a771d517b7dc5fdd99
         
         if item1 in self.classes:
             allprop = item1.get_class_properties()
@@ -68,66 +63,66 @@ class Comparison:
     
     def class_type_consistency_check(self, item1, item2): # item: KG of SPO or Indicator
         class_type_consistent = False
-        if item2 in self.classes:
-            prop1 = [p for p in item1.get_class_properties()]
-            prop2 = [p for p in item2.get_class_properties()]
-            # type(item) <- direct parent of item
-            # prop1 <- names of properties, not the actual property values
-            if ((type(item1) == type(item2)) and (item1.label == item2.label) and (set(prop1) == set(prop2))): 
-                #check if properties the same (not checking property values to save computation time) and label and type
-                class_type_consistent = True
-                print("Class type consistent because self.classes are equal.")
-                return class_type_consistent
-            elif item2 in item1.INDIRECT_equivalent_to or item1 in item2.INDIRECT_equivalent_to:
-                class_type_consistent = True
-                print("Class type consistent due to equivalency.")
-                return class_type_consistent
-            elif item2 in list(item1.self.subclasses()) or item1 in list(item2.self.subclasses()):
-                class_type_consistent = True
-                print("Class type consistent because one is the subclass of the other.")
-                return class_type_consistent
-            #subsumption
-            for x in list(item1.self.subclasses()):
-                if x in list(item2.self.subclasses()) or x in item2.INDIRECT_equivalent_to or x == item2:
-                    class_type_consistent = True
-                    print("Class type consistent due to subsumption.")
-                    return class_type_consistent
-            for y in list(item2.self.subclasses()):
-                if y in list(item1.self.subclasses()) or y in item1.INDIRECT_equivalent_to or y == item1:
-                    class_type_consistent = True
-                    print("Class type consistent due to subsumption.")
-                    return class_type_consistent
-            #final verdict
-            if class_type_consistent == False:
-                print("Class type inconsistent - neither of the two self.classes is equal, equivalent, or a subclass of the other class.")
-                return class_type_consistent
-        else:
+
+        if item2 not in self.classes:
             print("Class type consistency check not run - ", item2, " is not a class.")
             return
-    
+
+        prop1 = [p for p in item1.get_class_properties()]
+        prop2 = [p for p in item2.get_class_properties()]
+        # type(item) <- direct parent of item
+        # prop1 <- names of properties, not the actual property values
+        if ((type(item1) == type(item2)) and (item1.name and item2.name) and (item1.name == item2.name) and (set(prop1) == set(prop2))): 
+            #check if properties the same (not checking property values to save computation time) and name and type
+            class_type_consistent = True
+            print("Class type consistent because self.classes are equal.")
+            return class_type_consistent
+        elif item2 in item1.INDIRECT_equivalent_to or item1 in item2.INDIRECT_equivalent_to:
+            class_type_consistent = True
+            print("Class type consistent due to equivalency.")
+            return class_type_consistent
+        elif item2 in list(item1.subclasses()) or item1 in list(item2.subclasses()):
+            class_type_consistent = True
+            print("Class type consistent because one is the subclass of the other.")
+            return class_type_consistent
+        #subsumption
+        for x in list(item1.self.subclasses()):
+            if x in list(item2.subclasses()) or x in item2.INDIRECT_equivalent_to or x == item2:
+                class_type_consistent = True
+                print("Class type consistent due to subsumption.")
+                return class_type_consistent
+        for y in list(item2.self.subclasses()):
+            if y in list(item1.subclasses()) or y in item1.INDIRECT_equivalent_to or y == item1:
+                class_type_consistent = True
+                print("Class type consistent due to subsumption.")
+                return class_type_consistent
+        #final verdict
+        if class_type_consistent == False:
+            print("Class type inconsistent - neither of the two self.classes is equal, equivalent, or a subclass of the other class.")
+            return class_type_consistent
+        
 
     def instance_type_consistency_check(self, item1, item2):
         '''
+        Instance type inconsistency verifies that if the instances that make up a city's indicator are an instance of the same class, 
+        #an equivalent class, a subclass of concepts defined in standard, 
+        or have all necessary properties with values that satisfy the restrictions of those properties defined in the standard definition.
+        
+        There does  not  exist  a  direct  rdf:type  relation  between mij  and  nik,  mij is not an  instance  of  nik,  and mij is an  instance  of  civ, and  civ  is type inconsistent with  nik 
 
-                #Instance type inconsistency verifies that if the instances that make up a city's indicator are an instance of the same class, 
-                # #an equivalent class, a subclass of concepts defined in standard, 
-                #or have all necessary properties with values that satisfy the restrictions of those properties defined in the standard definition.
-            
-            #There does  not  exist  a  direct  rdf:type  relation  between mij  and  nik,  mij is not an  instance  of  nik,  and mij is an  instance  of  civ, and  civ  is type inconsistent with  nik 
-
-            #For example, let mij be the 15.2 indicator value published by Toronto, nik be the class iso37120:’15.2’ where Cor(mij,nik). 
-            #Assuming there is a direct rdf:type such that Tri(mij, rdf:type, nik), or Tri(mij, rdf:type, civ) 
-            #and civ is the same class, equivalent class or a subclass of nik, i.e., iso37120:15.2, then mij is instance type consistent nik. 
-            #In Figure 22, given that Cor(mij,nik) and mij is an instance of civ. The class civ and nik are linked to c’iv and n’ik respectively via property ait. 
+        For example, let mij be the 15.2 indicator value published by Toronto, nik be the class iso37120:’15.2’ where Cor(mij,nik). 
+        Assuming there is a direct rdf:type such that Tri(mij, rdf:type, nik), or Tri(mij, rdf:type, civ) 
+        and civ is the same class, equivalent class or a subclass of nik, i.e., iso37120:15.2, then mij is instance type consistent nik. 
+        In Figure 22, given that Cor(mij,nik) and mij is an instance of civ. The class civ and nik are linked to c’iv and n’ik respectively via property ait. 
 
 
-            # There does not exist a direct rdf:type relation between mij and nik  (comparing instance m to class n)
-            # mij is not an instance of nik, and  
-            # mij is an instance of civ, and civ is type inconsistent with nik
+        There does not exist a direct rdf:type relation between mij and nik  (comparing instance m to class n)
+        mij is not an instance of nik, and  
+        mij is an instance of civ, and civ is type inconsistent with nik
 
-            # Given an individual and its corresponding class, the rules determine whether:
-            # • the individual contains all of the necessary properties as defined by the class it is a member of, and
-            # • the corresponding value for the individual’s property is consistent with the restrictions defined by the class for that property.
+        Given an individual and its corresponding class, the rules determine whether:
+        • the individual contains all of the necessary properties as defined by the class it is a member of, and
+        • the corresponding value for the individual’s property is consistent with the restrictions defined by the class for that property.
 
         '''
         if (item2 in self.classes and item1 in self.individuals):
@@ -196,14 +191,14 @@ class Comparison:
 
     #might delete
     def get_date_when_none_values(self, beginning1, beginning2, end1, end2): 
-        if type(beginning1.year) == None and type(beginning1.month) != None and type(beginning1.day) != None and type(beginning2.year) == None and type(beginning2.month) != None and type(beginning2.day) != None:
+        if type(beginning1.year) == None and (beginning1.month) and (beginning1.day) and type(beginning2.year) == None and (beginning2.month) and (beginning2.day):
             intervalBeginning1 = [int(beginning1.month), int(beginning1.day)]
             intervalEnd1 = [int(end1.month), int(end1.day)]
             #print(intervalBeginning1, intervalEnd1)
             intervalBeginning2 = [int(beginning2.month), int(beginning2.day)]
             intervalEnd2 = [int(end2.month), int(end2.day)]
             #print(intervalBeginning2, intervalEnd2)
-        elif type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) == None and type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) == None:
+        elif (beginning1.year) and (beginning1.month) and type(beginning1.day) == None and (beginning2.year) and type(beginning2.month) and type(beginning2.day) == None:
             intervalBeginning1 = [int(beginning1.year), int(beginning1.month)]
             intervalEnd1 = [int(end1.year), int(end1.month)]
             #print(intervalBeginning1, intervalEnd1)
@@ -214,258 +209,227 @@ class Comparison:
     
     def subinterval_consistency_check(self, item1, item2): 
         '''
-        #NEED VERSION THAT WORKS WHEN YEAR MISSING!
-        #subinterval consistency check ALWAYS results in potentially inconsistent. It's only if the time intervals don't overlap at all that it would be inconsistent
-        #no, im using potentially inconsistent when there isn't enough info. so these would all be inconsistent.
+        #TODO NEED VERSION THAT WORKS WHEN YEAR MISSING! OR IN THIS CASE JUST PRINT - MISSING YEAR INFO. POTENTIALLY INCONSISTENT.
+        #TODO Add docstring
         '''
         if item2 not in self.individuals: #cannot run this check unless both are instances
-            print("Subinterval consistency check not run - it is only done when comparing 2 self.individuals.")
+            print("Subinterval consistency check not run - it is only done when comparing 2 individuals.")
             return
-
-        indicatorSumOf1 = item1.sumOf
-        indicatorSumOf2 = item2.sumOf
-
-        if indicatorSumOf1 and indicatorSumOf2:
-            if indicatorSumOf1[0].forTimeInterval and indicatorSumOf2[0].forTimeInterval:
-                timeInterval1 = indicatorSumOf1[0].forTimeInterval
-                timeInterval2 = indicatorSumOf2[0].forTimeInterval
-            
-                beginning1 = timeInterval1[0].hasBeginning
-                end1 = timeInterval1[0].hasEnd
-                beginning2 = timeInterval2[0].hasBeginning
-                end2 = timeInterval2[0].hasEnd
     
-                #^^ I did it this way to guarantee label names dont matter
-                if type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) != None and type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) != None:
-                    intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
+        beginning1 = item1.hasBeginning
+        end1 = item1.hasEnd
+        beginning2 = item2.hasBeginning
+        end2 = item2.hasEnd
 
-                #compare
-                #item1 = January 1 2020 - December 31 2020
-                #item2 = January 1 2020 - January 1 2021
+        if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
+            intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
 
-                    #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
-                    if (intervalBeginning2 < intervalBeginning1 and intervalBeginning1< intervalEnd1 and intervalEnd1 < intervalEnd2):
-                        print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are potentially inconsistent.")
-                        return
-                    elif (intervalBeginning1 < intervalBeginning2 and intervalBeginning2 < intervalEnd2 and intervalEnd2 < intervalEnd1):
-                        print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are potentially inconsistent.")
-                        return
+        #compare:
 
-                    #overlaps: start(a) < start(b) < end(a) < end(b)
-                    elif (intervalBeginning1 < intervalBeginning2 and intervalBeginning2 < intervalEnd1 and intervalEnd1 < intervalEnd2):
-                        print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are potentially inconsistent.")
-                        return
-                    elif (intervalBeginning2 < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
-                        print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are potentially inconsistent.")
-                        return
-                    
-                    #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
-                    elif intervalBeginning1 == intervalBeginning2 and intervalBeginning2 < intervalEnd1 and intervalEnd1 < intervalEnd2:
-                        print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are  inconsistent.")
-                        return
-                    elif intervalBeginning1 == intervalBeginning2 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1:
-                        print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are  inconsistent.")
-                        return
+            #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
+            if (intervalBeginning2 < intervalBeginning1 and intervalBeginning1< intervalEnd1 and intervalEnd1 < intervalEnd2):
+                print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are subinterval inconsistent.")
+                return
+            elif (intervalBeginning1 < intervalBeginning2 and intervalBeginning2 < intervalEnd2 and intervalEnd2 < intervalEnd1):
+                print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are subinterval inconsistent.")
+                return
 
-                    #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
-                    elif intervalBeginning2 < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
-                        print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are potentially inconsistent.")
-                        return
-                    elif intervalBeginning1 < intervalBeginning2 and intervalBeginning2 < intervalEnd2 and intervalEnd2 == intervalEnd1:
-                        print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are potentially inconsistent.")
-                        return
-                    #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
-                    elif intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalBeginning2 and intervalBeginning2 < intervalEnd2:
-                        print(item1 , " ends when " , item2, " begins. Therefore they are potentially inconsistent.")
-                        return
-                    elif intervalBeginning2 < intervalEnd2 and intervalEnd2 == intervalBeginning1 and intervalBeginning1 < intervalEnd1:
-                        print(item2 , " ends when " , item1, " begins. Therefore they are potentially inconsistent.")
-                        return
-                    else:
-                        print(item1 , " and " , item2 , " are subinterval consistent.")
-                        return
-                else:
-                #check each item of list. List is always organized from [year, month, day]
-                    intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date_when_none_values(beginning1, beginning2, end1, end2)
+            #overlaps: start(a) < start(b) < end(a) < end(b)
+            elif (intervalBeginning1 < intervalBeginning2 and intervalBeginning2 < intervalEnd1 and intervalEnd1 < intervalEnd2):
+                print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are subinterval inconsistent.")
+                return
+            elif (intervalBeginning2 < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
+                print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are subinterval inconsistent.")
+                return
+            
+            #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
+            elif intervalBeginning1 == intervalBeginning2 and intervalBeginning2 < intervalEnd1 and intervalEnd1 < intervalEnd2:
+                print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are subinterval inconsistent.")
+                return
+            elif intervalBeginning1 == intervalBeginning2 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1:
+                print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are subinterval inconsistent.")
+                return
 
-                #compare all intervals on first element of list. then compare items on second element of list. 
-                #TODO See if more efficient method
-                #TODO make sure this works if month is higher but year is lower for something. it should though because I'm checking [0] before [1]
-
-                #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
-                if (intervalBeginning2[0] < intervalBeginning1[0]) and intervalBeginning1[0] < intervalEnd1[0] and intervalEnd1[0] < intervalEnd2[0]:
-                    print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are  inconsistent.")
-                    return
-                elif intervalBeginning1[0] < intervalBeginning2[0] and intervalBeginning2[0] < intervalEnd2[0] and intervalEnd2[0] < intervalEnd1[0]:
-                    print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are  inconsistent.")
-                    return
-                #overlaps: start(a) < start(b) < end(a) < end(b)
-                elif intervalBeginning1[0] < intervalBeginning2[0] and intervalBeginning2[0] < intervalEnd1[0] and intervalEnd1[0] < intervalEnd2[0]:
-                    print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are  inconsistent.")
-                    return
-                elif (intervalBeginning2[0] < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
-                    print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are  inconsistent.")
-                    return
-                #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
-                elif intervalBeginning1[0]  == intervalBeginning2[0] and intervalBeginning2[0]< intervalEnd1[0]  and intervalEnd1[0]  < intervalEnd2[0]:
-                    print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are  inconsistent.")
-                    return
-                elif intervalBeginning1[0]  == intervalBeginning2[0] and intervalBeginning1[0] < intervalEnd2[0]  and intervalEnd2[0]  < intervalEnd1[0]:
-                    print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are  inconsistent.")
-                    return
-                #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
-                elif intervalBeginning2[0] < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
-                    print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are inconsistent.")
-                    return
-                elif intervalBeginning1[0] < intervalBeginning2[0] and intervalBeginning2[0] < intervalEnd2[0] and intervalEnd2[0]  == intervalEnd1[0]:
-                    print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are inconsistent.")
-                    return
-                #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
-                elif intervalBeginning1[0] < intervalEnd1[0] and intervalEnd1[0] == intervalBeginning2[0] and intervalBeginning2[0]< intervalEnd2[0]:
-                    print(item1 , " ends when " , item2, " begins. Therefore they are inconsistent.")
-                    return
-                elif intervalBeginning2[0]< intervalEnd2[0] and intervalEnd2[0] == intervalBeginning1[0] and intervalBeginning1[0] < intervalEnd1[0]:
-                    print(item2 , " ends when " , item1, " begins. Therefore they are inconsistent.")
-                    return
-                
-                #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
-                elif (intervalBeginning2[1] < intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
-                    print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are inconsistent.")
-                    return
-                elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1] < intervalEnd1[1]):
-                    print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are inconsistent.")
-                    return
-                #overlaps: start(a) < start(b) < end(a) < end(b)
-                elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
-                    print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are inconsistent.")
-                    return
-                elif (intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
-                    print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are inconsistent.")
-                    return
-                #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
-                elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd1[1]  and intervalEnd1[1]  < intervalEnd2[1]:
-                    print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are inconsistent.")
-                    return
-                elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning1[1] < intervalEnd2[1]  and intervalEnd2[1]  < intervalEnd1[1]:
-                    print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are  inconsistent.")
-                    return
-                #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
-                elif intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
-                    print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are  inconsistent.")
-                    return
-                elif intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1]  == intervalEnd1[1]:
-                    print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are inconsistent.")
-                    return
-                #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
-                elif intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd2[1]:
-                    print(item1 , " ends when " , item2, " begins. Therefore they are inconsistent.")
-                    return
-                elif intervalBeginning2[1]< intervalEnd2[1] and intervalEnd2[1] == intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1]:
-                    print(item2 , " ends when " , item1, " begins. Therefore they are inconsistent.")
-                    return
-                else:
-                    print(item1 , " and " , item2 , " are subinterval consistent.")
-                    return
+            #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
+            elif intervalBeginning2 < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
+                print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are subinterval inconsistent.")
+                return
+            elif intervalBeginning1 < intervalBeginning2 and intervalBeginning2 < intervalEnd2 and intervalEnd2 == intervalEnd1:
+                print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are subinterval inconsistent.")
+                return
+            
+            #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
+            elif intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalBeginning2 and intervalBeginning2 < intervalEnd2:
+                print(item1 , " ends when " , item2, " begins. Therefore they are subinterval inconsistent.")
+                return
+            elif intervalBeginning2 < intervalEnd2 and intervalEnd2 == intervalBeginning1 and intervalBeginning1 < intervalEnd1:
+                print(item2 , " ends when " , item1, " begins. Therefore they are subinterval inconsistent.")
+                return
             else:
-                print("Subinterval consistency check not run - either ", item1, " or ", item2, " does not have a time interval associated with it.")
+                print(item1 , " and " , item2 , " are subinterval consistent.")
                 return
         else:
-            print("Subinterval consistency check not run - either ", item1, " or ", item2, " does not have a time interval associated with it.")
+        #check each item of list. List is always organized from [year, month, day]
+            intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date_when_none_values(beginning1, beginning2, end1, end2)
+
+        #compare all intervals on first element of list. then compare items on second element of list. 
+        #TODO See if more efficient method
+        #TODO make sure this works if month is higher but year is lower for something. it should though because I'm checking [0] before [1]
+
+        #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
+        if (intervalBeginning2[0] < intervalBeginning1[0]) and intervalBeginning1[0] < intervalEnd1[0] and intervalEnd1[0] < intervalEnd2[0]:
+            print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        elif intervalBeginning1[0] < intervalBeginning2[0] and intervalBeginning2[0] < intervalEnd2[0] and intervalEnd2[0] < intervalEnd1[0]:
+            print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        #overlaps: start(a) < start(b) < end(a) < end(b)
+        elif intervalBeginning1[0] < intervalBeginning2[0] and intervalBeginning2[0] < intervalEnd1[0] and intervalEnd1[0] < intervalEnd2[0]:
+            print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        elif (intervalBeginning2[0] < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
+            print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
+        elif intervalBeginning1[0]  == intervalBeginning2[0] and intervalBeginning2[0]< intervalEnd1[0]  and intervalEnd1[0]  < intervalEnd2[0]:
+            print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are subinterval inconsistent.")
+            return
+        elif intervalBeginning1[0]  == intervalBeginning2[0] and intervalBeginning1[0] < intervalEnd2[0]  and intervalEnd2[0]  < intervalEnd1[0]:
+            print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are subinterval inconsistent.")
+            return
+        #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
+        elif intervalBeginning2[0] < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
+            print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are subinterval inconsistent.")
+            return
+        elif intervalBeginning1[0] < intervalBeginning2[0] and intervalBeginning2[0] < intervalEnd2[0] and intervalEnd2[0]  == intervalEnd1[0]:
+            print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are subinterval inconsistent.")
+            return
+        #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
+        elif intervalBeginning1[0] < intervalEnd1[0] and intervalEnd1[0] == intervalBeginning2[0] and intervalBeginning2[0]< intervalEnd2[0]:
+            print(item1 , " ends when " , item2, " begins. Therefore they are subinterval inconsistent.")
+            return
+        elif intervalBeginning2[0]< intervalEnd2[0] and intervalEnd2[0] == intervalBeginning1[0] and intervalBeginning1[0] < intervalEnd1[0]:
+            print(item2 , " ends when " , item1, " begins. Therefore they are subinterval inconsistent.")
+            return
+        
+        #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
+        elif (intervalBeginning2[1] < intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
+            print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1] < intervalEnd1[1]):
+            print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        #overlaps: start(a) < start(b) < end(a) < end(b)
+        elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
+            print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        elif (intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
+            print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are subinterval inconsistent.")
+            return
+        #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
+        elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd1[1]  and intervalEnd1[1]  < intervalEnd2[1]:
+            print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are subinterval inconsistent.")
+            return
+        elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning1[1] < intervalEnd2[1]  and intervalEnd2[1]  < intervalEnd1[1]:
+            print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are subinterval inconsistent.")
+            return
+        #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
+        elif intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
+            print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are subinterval inconsistent.")
+            return
+        elif intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1]  == intervalEnd1[1]:
+            print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are subinterval inconsistent.")
+            return
+        #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
+        elif intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd2[1]:
+            print(item1 , " ends when " , item2, " begins. Therefore they are subinterval inconsistent.")
+            return
+        elif intervalBeginning2[1]< intervalEnd2[1] and intervalEnd2[1] == intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1]:
+            print(item2 , " ends when " , item1, " begins. Therefore they are subinterval inconsistent.")
+            return
+        else:
+            print(item1 , " and " , item2 , " are subinterval consistent.")
             return
 
     def temporal_granularity_consistency_check(self, item1, item2):
         if item2 not in self.individuals: #cannot run this check unless both are instances
-            print("Temporal granularity consistency check not run - it is only done when comparing 2 self.individuals.")
+            print("Temporal granularity consistency check not run - it is only done when comparing 2 individuals.")
             return
 
-        indicatorSumOf1 = item1.sumOf
-        indicatorSumOf2 = item2.sumOf
+        beginning1 = item1.hasBeginning
+        end1 = item1.hasEnd
+        beginning2 = item2.hasBeginning
+        end2 = item2.hasEnd
 
-        if indicatorSumOf1 and indicatorSumOf2:
-            if indicatorSumOf1[0].forTimeInterval and indicatorSumOf2[0].forTimeInterval:
-                timeInterval1 = indicatorSumOf1[0].forTimeInterval
-                timeInterval2 = indicatorSumOf2[0].forTimeInterval
-            
-                beginning1 = timeInterval1[0].hasBeginning
-                end1 = timeInterval1[0].hasEnd
-                beginning2 = timeInterval2[0].hasBeginning
-                end2 = timeInterval2[0].hasEnd
+        #print(beginning1.year, type(beginning1.month), end1, beginning2, end2.day, type(end2.day))
 
-                print(beginning1.year, type(beginning1.month), end1, beginning2, end2.day, type(end2.day)) # TODO do we need to print this?
+        #checking the beginning vs end of each instance
+        #consistency
+        if (beginning1.year) and (beginning1.month) and (beginning1.day)  and (end1.year)  and (end1.month)  and (end1.day):
+            print("Both the beginning and end of " , item1, "'s reporting period time interval have day, month, and year temporal units. Therefore they are temporal granular consistent.")
+        elif (beginning2.year) and (beginning2.month) and (beginning2.day) and (end2.year) and (end2.month) and (end2.day):
+            print("Both the beginning and end of " , item2, "'s reporting period time interval have day, month, and year temporal units. Therefore they are temporal granular consistent.")    
+        
+        #both start and end missing year
+        elif type(beginning1.year) == None and (beginning1.month) and (beginning1.day) and type(end1.year) == None and (end1.month) and (end1.day):
+            print("Both the beginning and end of " , item1, "'s reporting period time interval have day and month temporal units. Therefore they are temporal granular consistent.")
+        elif type(beginning2.year) == None and (beginning1.month) and (beginning1.day) and type(end2.year) == None and (end1.month) and (end1.day):
+            print("Both the beginning and end of " , item2, "'s reporting period time interval have day and month temporal units. Therefore they are temporal granular consistent.")
+        
+        #both start and end missing day
+        elif (beginning1.year) and (beginning1.month) and type(beginning1.day) == None and (end1.year) and (end1.month) and type(end1.day) == None:
+            print("Both the beginning and end of " , item1, "'s reporting period time interval have month and year temporal units. Therefore they are temporal granular consistent.") 
+        elif (beginning2.year) and (beginning2.month) and type(beginning2.day) == None and (end2.year) and (end2.month) and type(end2.day) == None:
+            print("Both the beginning and end of " , item2, "'s reporting period time interval have month and year temporal units. Therefore they are temporal granular consistent.") 
 
-                #checking the beginning vs end of each instance
-                #consistency
-                if type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) != None and type(end1.year) != None and type(end1.month) != None and type(end1.day) != None:
-                    print("Both the beginning and end of " , item1, "'s reporting period time interval have day, month, and year temporal units. Therefore they are temporal granular consistent.")
-                elif type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) != None and type(end2.year) != None and type(end2.month) != None and type(end2.day) != None:
-                    print("Both the beginning and end of " , item2, "'s reporting period time interval have day, month, and year temporal units. Therefore they are temporal granular consistent.")    
-                
-                #both start and end missing year
-                elif type(beginning1.year) == None and type(beginning1.month) != None and type(beginning1.day) != None and type(end1.year) == None and type(end1.month) != None and type(end1.day) != None:
-                    print("Both the beginning and end of " , item1, "'s reporting period time interval have day and month temporal units. Therefore they are temporal granular consistent.")
-                elif type(beginning2.year) == None and type(beginning1.month) != None and type(beginning1.day) != None and type(end2.year) == None and type(end1.month) != None and type(end1.day) != None:
-                    print("Both the beginning and end of " , item2, "'s reporting period time interval have day and month temporal units. Therefore they are temporal granular consistent.")
-                
-                #both start and end missing day
-                elif type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) == None and type(end1.year) != None and type(end1.month) != None and type(end1.day) == None:
-                    print("Both the beginning and end of " , item1, "'s reporting period time interval have month and year temporal units. Therefore they are temporal granular consistent.") 
-                elif type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) == None and type(end2.year) != None and type(end2.month) != None and type(end2.day) == None:
-                    print("Both the beginning and end of " , item2, "'s reporting period time interval have month and year temporal units. Therefore they are temporal granular consistent.") 
+        #only start or only end missing year
+        elif ((type(beginning1.year) == None and (beginning1.month) and (beginning1.day) and (end1.year) and (end1.month) and (end1.day)) or ((beginning1.year) and (beginning1.month) and (beginning1.day) and type(end1.year) == None and (end1.month) and (end1.day))):
+            print("The beginning or end of " , item1, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
+            return
+        elif ((type(beginning2.year) == None and (beginning2.month) and (beginning2.day) and (end2.year) and (end2.month) and (end2.day)) or ((beginning2.year) and (beginning2.month) and (beginning2.day) and type(end2.year) == None and (end2.month) and (end2.day))):
+            print("The beginning or end of " , item2, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
+            return
+        
+        #only start or end missing day
+        elif (((beginning1.year) and (beginning1.month) and type(beginning1.day) == None and (end1.year) and (end1.month) and (end1.day)) or ((beginning1.year) and (beginning1.month) and (beginning1.day) and (end1.year) and (end1.month) and type(end1.day) == None)):
+            print("The beginning or end of " , item1, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
+            return
+        elif (((beginning2.year) and (beginning2.month) and type(beginning2.day) == None and (end2.year) and (end2.month) and (end2.day)) or ((beginning2.year) and (beginning2.month) and (beginning2.day) and (end2.year) and (end2.month) and type(end2.day) == None)):
+            print("The beginning or end of " , item2, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
+            return
 
-                #only start or only end missing year
-                elif ((type(beginning1.year) == None and type(beginning1.month) != None and type(beginning1.day) != None and type(end1.year) != None and type(end1.month) != None and type(end1.day) != None) or (type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) != None and type(end1.year) == None and type(end1.month) != None and type(end1.day) != None)):
-                    print("The beginning or end of " , item1, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                elif ((type(beginning2.year) == None and type(beginning2.month) != None and type(beginning2.day) != None and type(end2.year) != None and type(end2.month) != None and type(end2.day) != None) or (type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) != None and type(end2.year) == None and type(end2.month) != None and type(end2.day) != None)):
-                    print("The beginning or end of " , item2, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                
-                #only start or end missing day
-                elif ((type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) == None and type(end1.year) != None and type(end1.month) != None and type(end1.day) != None) or (type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) != None and type(end1.year) != None and type(end1.month) != None and type(end1.day) == None)):
-                    print("The beginning or end of " , item1, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                elif ((type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) == None and type(end2.year) != None and type(end2.month) != None and type(end2.day) != None) or (type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) != None and type(end2.year) != None and type(end2.month) != None and type(end2.day) == None)):
-                    print("The beginning or end of " , item2, "'s reporting period time interval have different temporal units (one of them is missing the year temporal unit). Therefore they have different temporal granularity and are inconsistent.")
-                    return
-
-                #checking both instances against each other. Only using beginning value since assumption is that beginning and end of each instance are already checked for temporal granularity
-                #consistent cases
-                # if type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) != None and type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) != None:
-                #     print("Both " , item1 , " and " , item2, " have day, month, and year temporal units to describe their reporting intervals. Therefore they are temporal granular consistent.")
-                #     return
-                if (beginning1.year) != None and (beginning1.month) != None and (beginning1.day) != None and (beginning2.year) != None and (beginning2.month) != None and (beginning2.day) != None:
-                    print("Both " , item1 , " and " , item2, " have day, month, and year temporal units to describe their reporting intervals. Therefore they are temporal granular consistent.")
-                    return
-                elif type(beginning1.day) == None and type(beginning2.day) == None:
-                    print("Both " , item1 , " and " , item2, " do not have day temporal unit to describe their reporting intervals. Therefore they are temporal granular consistent.")
-                    return
-                elif type(beginning1.year) == None and type(beginning2.year) == None:
-                    print("Both " , item1 , " and " , item2, " do not have year temporal unit to describe their reporting intervals. Therefore they are temporal granular consistent.")
-                    return
-                #inconsistent cases
-                elif (type(beginning1.year) != None and type(beginning2.year) == None):
-                    print(item2 , " does not have a year unit whereas " , item1 , " does. Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                elif (type(beginning1.month) != None and type(beginning2.month) == None):
-                    print(item2 , " does not have a month unit whereas " , item1 , " does. Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                elif (type(beginning1.day) != None and type(beginning2.year) == None):
-                    print(item2 , " does not have a day unit whereas " , item1 , " does. Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                elif (type(beginning2.year) != None and type(beginning1.year) == None):
-                    print(item1 , " does not have a year unit whereas " , item2 , " does. Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                elif (type(beginning2.month) != None and type(beginning1.month) == None):
-                    print(item1 , " does not have a month unit whereas " , item2 , " does. Therefore they have different temporal granularity and are inconsistent.")
-                    return
-                elif (type(beginning2.day) != None and type(beginning1.year) == None):
-                    print(item1 , " does not have a day unit whereas " , item2 , " does. Therefore they have different temporal granularity and are inconsistent.")
-                    return
-            else:
-                print("Temporal granularity consistency check not run - either ", item1, " or ", item2, " does not have a time interval associated with it.")
-                return
-        else:
-            print("Temporal granularity consistency check not run - either ", item1, " or ", item2, " does not have a time interval associated with it.")
+        #checking both instances against each other. Only using beginning value since assumption is that beginning and end of each instance are already checked for temporal granularity
+        #consistent cases
+        # if type(beginning1.year) and type(beginning1.month) and type(beginning1.day) and type(beginning2.year) and type(beginning2.month) and type(beginning2.day):
+        #     print("Both " , item1 , " and " , item2, " have day, month, and year temporal units to describe their reporting intervals. Therefore they are temporal granular consistent.")
+        #     return
+        if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
+            print("Both " , item1 , " and " , item2, " have day, month, and year temporal units to describe their reporting intervals. Therefore they are temporal granular consistent.")
+            return
+        elif type(beginning1.day) == None and type(beginning2.day) == None:
+            print("Both " , item1 , " and " , item2, " do not have day temporal unit to describe their reporting intervals. Therefore they are temporal granular consistent.")
+            return
+        elif type(beginning1.year) == None and type(beginning2.year) == None:
+            print("Both " , item1 , " and " , item2, " do not have year temporal unit to describe their reporting intervals. Therefore they are temporal granular consistent.")
+            return
+        #inconsistent cases
+        elif ((beginning1.year) and type(beginning2.year) == None):
+            print(item2 , " does not have a year unit whereas " , item1 , " does. Therefore they have different temporal granularity and are inconsistent.")
+            return
+        elif ((beginning1.month) and type(beginning2.month) == None):
+            print(item2 , " does not have a month unit whereas " , item1 , " does. Therefore they have different temporal granularity and are inconsistent.")
+            return
+        elif ((beginning1.day) and type(beginning2.year) == None):
+            print(item2 , " does not have a day unit whereas " , item1 , " does. Therefore they have different temporal granularity and are inconsistent.")
+            return
+        elif ((beginning2.year) and type(beginning1.year) == None):
+            print(item1 , " does not have a year unit whereas " , item2 , " does. Therefore they have different temporal granularity and are inconsistent.")
+            return
+        elif ((beginning2.month) and type(beginning1.month) == None):
+            print(item1 , " does not have a month unit whereas " , item2 , " does. Therefore they have different temporal granularity and are inconsistent.")
+            return
+        elif ((beginning2.day) and type(beginning1.year) == None):
+            print(item1 , " does not have a day unit whereas " , item2 , " does. Therefore they have different temporal granularity and are inconsistent.")
             return
     
     def property_consistency_check(self, item1, item2):
@@ -513,23 +477,23 @@ class Comparison:
         #cardinality of a for m does not satisfy cardinality restriction in n
         #it is not possible to do for loop over prop in proplist of item1 and then do item1.prop. 
         #it needs the exact name of the prop to get the value. Therefore this isn't possible to do in owlready2, would have to be done manually.
-        for r in restrictions:
-            if r.property in allprop:
-                print("property: " , r.property , " value: " , r.value)
-            else:
-                print(item1 , " is property inconsistent with " , item2 , " because it does not satisfy the value restriction of property " , prop , " defined in " , item2, ".")
-        for prop in item1.get_class_properties():
-            properties_of_parent.append(prop)
-            if (len(prop.range) > 0) and (type(item1) not in prop.range):
-                print(item1 , " is property inconsistent with " , item2 , " because it does not satisfy the range restriction of property " , prop , " defined in " , item2 , ".")
-                return
-            elif prop not in allprop:
-                print(item1 , " is property inconsistent with " , item2 , " because  property " , prop , " defined in " , item2 , " does not exist for " , item1 , ".")
-                return
-            #at this point already checked if definition property not in instance
-            elif (len(prop.range) == 0):
-                print(item1 , " is potentially property inconsistent with " , item2 , " because the value restriction (range) of property " , prop , " is not provided.")
-                return
+            for r in restrictions:
+                if r.property in item1.get_class_properties():
+                    print("property: " , r.property , " value: " , r.value)
+                else:
+                    print(item1 , " is property inconsistent with " , item2 , " because it does not satisfy the value restriction of property " , prop , " defined in " , item2, ".")
+            for prop in item1.get_class_properties():
+                properties_of_parent.append(prop)
+                if (len(prop.range) > 0) and (type(item1) not in prop.range):
+                    print(item1 , " is property inconsistent with " , item2 , " because it does not satisfy the range restriction of property " , prop , " defined in " , item2 , ".")
+                    return
+                elif prop not in item1.get_class_properties():
+                    print(item1 , " is property inconsistent with " , item2 , " because  property " , prop , " defined in " , item2 , " does not exist for " , item1 , ".")
+                    return
+                #at this point already checked if definition property not in instance
+                elif (len(prop.range) == 0):
+                    print(item1 , " is potentially property inconsistent with " , item2 , " because the value restriction (range) of property " , prop , " is not provided.")
+                    return
 
         else: #TODO redo code to move this else to the top and reduce the if statements in this section. 
             print("Property consistency check not run - it is only done when comparing instance m with its definition class n.")
@@ -540,16 +504,12 @@ class Comparison:
             print("Interval equality consistency check not run - it is only done when comparing an instance to another instance.")
             return
         
-        indicatorSumOf1 = item1.sumOf
-        timeInterval1 = indicatorSumOf1[0].forTimeInterval
-        beginning1 = timeInterval1[0].hasBeginning
-        end1 = timeInterval1[0].hasEnd
-        indicatorSumOf2 = item2.sumOf
-        timeInterval2 = indicatorSumOf2[0].forTimeInterval
-        beginning2 = timeInterval2[0].hasBeginning
-        end2 = timeInterval2[0].hasEnd
+        beginning1 = item1.hasBeginning
+        end1 = item1.hasEnd
+        beginning2 = item2.hasBeginning
+        end2 = item2.hasEnd
         
-        if type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) != None and type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) != None:
+        if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
             intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
 
             #equals: start(a) = start(b) < end(a) = end(b) (a and b are identical)
@@ -577,16 +537,12 @@ class Comparison:
             print("Non overlapping interval consistency check not run - it is only done when comparing an instance to another instance.")
             return
 
-        indicatorSumOf1 = item1.sumOf
-        timeInterval1 = indicatorSumOf1[0].forTimeInterval
-        beginning1 = timeInterval1[0].hasBeginning
-        end1 = timeInterval1[0].hasEnd
-        indicatorSumOf2 = item2.sumOf
-        timeInterval2 = indicatorSumOf2[0].forTimeInterval
-        beginning2 = timeInterval2[0].hasBeginning
-        end2 = timeInterval2[0].hasEnd
+        beginning1 = item1.hasBeginning
+        end1 = item1.hasEnd
+        beginning2 = item2.hasBeginning
+        end2 = item2.hasEnd
 
-        if type(beginning1.year) != None and type(beginning1.month) != None and type(beginning1.day) != None and type(beginning2.year) != None and type(beginning2.month) != None and type(beginning2.day) != None:
+        if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
             intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
 
             #only need to check before since after is an inverse of before. before: start(a) < end(a) < start(b) < end(b) (a ends before b starts)
@@ -680,72 +636,71 @@ class Comparison:
             print(item, " does not have a location property associated with it - place equality consistency check cannot be run.")
             return place_equality_consistent
 
+    #   #considering case when checking consistency between indicator (item1) that has a location + its population/population definition (item2) has a location
+    #     if ("iso21972.Indicator" in str(parent.ancestors())) or ("cids.Indicator" in str(parent.ancestors())): 
+    #         population = item1.sumOf
+    #         if population:
+    #             definition = population[0].definedBy
 
-        #considering case when checking consistency between indicator (item1) that has a location + its population/population definition (item2) has a location
-        if ("iso21972.Indicator" in str(parent.ancestors())) or ("cids.Indicator" in str(parent.ancestors())): 
-            population = item1.sumOf
-            if population:
-                definition = population[0].definedBy
+    #             if item2 == item1.sumOf or item2 == definition: #if item2 is item1's population or if item2 is item1's population's definition             
+    #                 #compare within indicator
+    #                 if location and location2 and location == location2:
+    #                     print(item1, " is place equality consistent with ", item2, " - they both refer to the same location.")
+    #                     place_equality_consistent = True
+    #                     return place_equality_consistent
+    #                 elif location and location2 and location != location2:
+    #                     print(item1, " is not place equality consistent with ", item2, " due to them referring to different locations.")
+    #                     return place_equality_consistent 
 
-                if item2 == item1.sumOf or item2 == definition: #if item2 is item1's population or if item2 is item1's population's definition             
-                    #compare within indicator
-                    if location and location2 and location == location2:
-                        print(item1, " is place equality consistent with ", item2, " - they both refer to the same location.")
-                        place_equality_consistent = True
-                        return place_equality_consistent
-                    elif location and location2 and location != location2:
-                        print(item1, " is not place equality consistent with ", item2, " due to them referring to different locations.")
-                        return place_equality_consistent 
+    #     elif ("iso21972.Indicator" in str(parent2.ancestors())) or ("cids.Indicator" in str(parent2.ancestors())): 
+    #         population = item2.sumOf
+    #         if population:
+    #             definition = population[0].definedBy
 
-        elif ("iso21972.Indicator" in str(parent2.ancestors())) or ("cids.Indicator" in str(parent2.ancestors())): 
-            population = item2.sumOf
-            if population:
-                definition = population[0].definedBy
+    #             if item1 == item2.sumOf or item1 == definition: #if item1 is item2's population or if item1 is item2's population's definition             
+    #                 #compare within indicator
+    #                 if location and location2 and location == location2:
+    #                     print(item2, " is place equality consistent with ", item1, " - they both refer to the same location.")
+    #                     place_equality_consistent = True
+    #                     return place_equality_consistent
+    #                 elif location and location2 and location != location2:
+    #                     print(item2, " is not place equality consistent with ", item1, " due to them referring to different locations.")
+    #                     return place_equality_consistent  
 
-                if item1 == item2.sumOf or item1 == definition: #if item1 is item2's population or if item1 is item2's population's definition             
-                    #compare within indicator
-                    if location and location2 and location == location2:
-                        print(item2, " is place equality consistent with ", item1, " - they both refer to the same location.")
-                        place_equality_consistent = True
-                        return place_equality_consistent
-                    elif location and location2 and location != location2:
-                        print(item2, " is not place equality consistent with ", item1, " due to them referring to different locations.")
-                        return place_equality_consistent  
-
-        else: #has location but does not fulfill above indicator relationship
-            if (item1.hasCitySection and item2.hasCitySection) and location2 == item1.hasCitySection:
-                print(item1, " and ", item2, " refer to the same city section. Therefore they are place equality consistent.")
+        #else: 
+        #has location but does not fulfill above indicator relationship
+        if (item1.hasCitySection and item2.hasCitySection) and location2 == item1.hasCitySection:
+            print(item1, " and ", item2, " refer to the same city section. Therefore they are place equality consistent.")
+            place_equality_consistent = True
+            #not returning here in case the city section name is the same but the country/province/state/city isnt
+        elif (item1.hasCitySection and item2.hasCitySection) and location2 != item1.hasCitySection:
+            print(item1, " and ", item2, " do not refer to the same city section. Therefore they are not place equality consistent.")
+            return place_equality_consistent
+        elif (item1.hasCity or item1.for_city) and (item2.hasCity or item2.for_city): 
+            if (item2.hasCity or item2.for_city) and ((item1.hasCity == item2.hasCity) or (item1.for_city == item2.for_city) or (item1.hasCity == item2.for_city) or (item1.for_city == item2.hasCity)):
+                print(item1, " and ", item2, " refer to the same city. Therefore they are place equality consistent.")
                 place_equality_consistent = True
-                #not returning here in case the city section name is the same but the country/province/state/city isnt
-            elif (item1.hasCitySection and item2.hasCitySection) and location2 != item1.hasCitySection:
-                print(item1, " and ", item2, " do not refer to the same city section. Therefore they are not place equality consistent.")
+                #not returning here in case the city name is the same but the country/province/state isnt
+            else:
+                print(item1, " and ", item2, " do not refer to the same city. Therefore they are not place equality consistent.")
                 return place_equality_consistent
-            elif (item1.hasCity or item1.for_city) and (item2.hasCity or item2.for_city): 
-                if (item2.hasCity or item2.for_city) and ((item1.hasCity == item2.hasCity) or (item1.for_city == item2.for_city) or (item1.hasCity == item2.for_city) or (item1.for_city == item2.hasCity)):
-                    print(item1, " and ", item2, " refer to the same city. Therefore they are place equality consistent.")
-                    place_equality_consistent = True
-                    #not returning here in case the city name is the same but the country/province/state isnt
-                else:
-                    print(item1, " and ", item2, " do not refer to the same city. Therefore they are not place equality consistent.")
-                    return place_equality_consistent
-            if (item1.hasProvince or item1.hasState) and (item2.hasProvince or item2.hasState):
-                if  (item1.hasProvince == item2.hasProvince or item1.hasState == item2.hasState or item1.hasProvince == item2.hasState or item1.hasState == item2.hasProvince):
-                    print(item1, " and ", item2, " refer to the same province/state. Therefore they are place equality consistent.")
-                    place_equality_consistent = True
-                    #not returning here in case the state/province name is the same but the country isnt
-                else:
-                    print(item1, " and ", item2, " do not refer to the same province/state. Therefore they are not place equality consistent.")
-                    return place_equality_consistent
-            if (item1.hasCountry or item1.parentCountry) and (item2.hasCountry or item2.parentCountry):
-                if item1.hasCountry == item2.hasCountry or item1.parentCountry == item2.parentCountry or item1.hasCountry == item2.parentCountry or item1.parentCountry == item2.hasCountry:
-                    print(item1, " and ", item2, " refer to the same country. Therefore they are place equality consistent.")
-                    place_equality_consistent = True
-                    return place_equality_consistent
-                else:
-                    print(item1, " and ", item2, " do not refer to the same country. Therefore they are not place equality consistent.")
-                    return place_equality_consistent
+        if (item1.hasProvince or item1.hasState) and (item2.hasProvince or item2.hasState):
+            if  (item1.hasProvince == item2.hasProvince or item1.hasState == item2.hasState or item1.hasProvince == item2.hasState or item1.hasState == item2.hasProvince):
+                print(item1, " and ", item2, " refer to the same province/state. Therefore they are place equality consistent.")
+                place_equality_consistent = True
+                #not returning here in case the state/province name is the same but the country isnt
+            else:
+                print(item1, " and ", item2, " do not refer to the same province/state. Therefore they are not place equality consistent.")
+                return place_equality_consistent
+        if (item1.hasCountry or item1.parentCountry) and (item2.hasCountry or item2.parentCountry):
+            if item1.hasCountry == item2.hasCountry or item1.parentCountry == item2.parentCountry or item1.hasCountry == item2.parentCountry or item1.parentCountry == item2.hasCountry:
+                print(item1, " and ", item2, " refer to the same country. Therefore they are place equality consistent.")
+                place_equality_consistent = True
+                return place_equality_consistent
+            else:
+                print(item1, " and ", item2, " do not refer to the same country. Therefore they are not place equality consistent.")
+                return place_equality_consistent
         
-
     def subplace_consistency_check(self, place_equality_consistent, item1, item2):
         '''
         Any two instances mij and mik ∊ Mi are potentially subplace inconsistent if instance of placename referred by mik is an area within city referred by mij 
@@ -835,7 +790,7 @@ class Comparison:
             #item2
             if not item2.hasCitySection and (not item2.hasCity or not item2.for_city) and (not item2.hasProvince or not item2.hasState) and (not item2.hasCountry or not item2.parentCountry):
                 #no location information
-                print("Subplace consistency check not run - location information not available for ", item1, ".") 
+                print("Subplace consistency check not run - location information not available for ", item2, ".") 
                 return
             elif item2.hasCitySection and item2.hasCity and item1.hasCity and not item1.hasCitySection and item1.hasCity == item2.hasCity:
                 #item1 is a city section, item2 is not a city section, and item1's city is item2's city
@@ -975,7 +930,6 @@ class Comparison:
             print(item1, "or ", item2, " is not a ratio (missing numerator or denominator property). Indicator Unit Component Consistency Check cannot be run.")
             return
 
-    # TODO Singular Unit Inconsistency 
     def singular_unit_consistency_check(self, item1, item2):
         '''
         Singular Unit Inconsistency: when an instance mij has a unit of measure uniti that is a multiple or submultiple of the unit defined in its corresponding definition class nik. 
@@ -1029,14 +983,16 @@ class Comparison:
 
     def correspondence_consistency_check(self, item1, item2):
         '''
-        Correspondence Inconsistency: where there are no correspondence detected between nodes in the indicator’s definition and city published indicator data. 
+        Correspondence Inconsistency: where there are no correspondence detected between nodes in the indicator’s definition and published indicator data. 
         This means that not all components in the definition are covered by the published indicator data. 
+        published indicator data Si is inconsistent in terms of correspondence if for any corresponding nodes mij  Mi and nik  Ni, 
+        there exists a class niy that is linked to nik via property ait where there is no node mix linked to mij that corresponds to niy. 
         '''
-        if item1 in classes and item2 in individuals:
+        if item1 in self.classes and item2 in self.individuals:
             class_nodes = item1.get_class_properties()
             #remove annotation properties
             class_nodes = [str(s) for s in class_nodes]
-            if len(prop) > 0:
+            if len(class_nodes) > 0:
                 for s in class_nodes:
                 #print (type(s))
                 #print(s)
@@ -1069,11 +1025,11 @@ class Comparison:
             else:
                 print("All components in the definition are covered by the instance. Therefore they are correspondence consistent.")
         
-        elif item1 in individuals and item2 in classes:
+        elif item1 in self.individuals and item2 in self.classes:
             class_nodes = item2.get_class_properties()
             #remove annotation properties
             class_nodes = [str(s) for s in class_nodes]
-            if len(prop) > 0:
+            if len(class_nodes) > 0:
                 for s in class_nodes:
                 #print (type(s))
                 #print(s)
