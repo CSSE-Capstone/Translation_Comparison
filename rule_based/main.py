@@ -116,6 +116,17 @@ class RuleBased:
     def flip_POS_tag(POS_tag):
         """
         Reformat POS tag output dictionary from using key phrase position as keys, to word phrase as key
+
+        Parameters:
+        POS_tag (dict): a dictionary output from get_key_pos_tag()
+            keys: order of appearance of key phrase in input phrase
+            values: key phrase text, POS tag
+
+        Returns:
+        flipped_POS_tag(): reformatted dictionary
+            keys: key phrase text
+            values: POS tag
+
         """
         flipped_POS_tag = {}
         for k, v in POS_tag.items():
@@ -141,13 +152,15 @@ class RuleBased:
         Set up framework of translation using rules
 
         Parameters:
-        pos_breakdown (dict): output from get_key_pos_tag
-        ind_code (str): indicator code number
+        pos_breakdown (dict): output dictionary of POS labeled key phrases from get_key_pos_tag
+        ind_code (str): indicator code number (ex: OI5667)
+        cids_classes (list): a list of CIDS class names (from cidsclasses.csv)
+        matched_indicators (dict): dictionary of indicator key phrases and their matched CIDS class (from glossarymatchedindicators.csv)
 
         Returns:
-        translation (dict): 
-            Keys: text keyphrases and CIDS indicator key classes
-            Values: parameters and associated keys
+        translation (dict): rule based translation of an input indicator
+            keys: input indicator key phrases and CIDS indicator classes
+            values: parameters associated to the key phrase
         """
 
         #default translation components
@@ -157,6 +170,7 @@ class RuleBased:
 
         word_indices = list(pos_breakdown.keys())
         phenom_key = word_indices[1] #phenomenon of the quantity
+        area_present = False
 
         # run through noun keyphrases
         for word_index in pos_breakdown:
@@ -197,6 +211,8 @@ class RuleBased:
                     translation[word_index] = {'word':word}
                 elif word in matched_indicators.keys():
                     translation[word_index] = {'word':word, 'subclassOf': matched_indicators[word]}
+                    if matched_indicators[word] == 'Area':
+                        area_present = True
                 else: 
                     translation[word_index] = {'word':word, 'subclassOf':'cidsThing'}
             
@@ -208,6 +224,8 @@ class RuleBased:
                     translation[word_index] = {'word':word}
                 elif word in matched_indicators.keys():
                     translation[word_index] = {'word':word, 'subclassOf': matched_indicators[word]}
+                    if matched_indicators[word] == 'Area':
+                        area_present = True
                 else:
                     translation[word_index] = {'word':word, 'subclassOf':'cidsThing'}
                 
@@ -227,6 +245,11 @@ class RuleBased:
                         original_verb_phrase = self.joinPhrase(pos_breakdown[word_index])
                         verb_phrase = original_verb_phrase[0].lower() + original_verb_phrase[1:] #set verb phrase into camelcase
                         translation[self.joinPhrase(pos_breakdown[word_index-i])][verb_phrase]=self.joinPhrase(pos_breakdown[word_index+1]) #add noun-verb-noun triple to dictionary
+        
+        # add properties if area is present
+        if area_present:
+            translation['Area'] = {'hasPhenomenon':'Land'}
+            translation['Land'] = {'subclassOf':'Feature'}
 
         return translation
 
