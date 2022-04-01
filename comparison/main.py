@@ -5,7 +5,128 @@ class Comparison:
     def __init__(self, classes, individuals):
         self.classes = classes
         self.individuals = individuals
+        # RECURSION MAIN 
     
+    def recursion_check(self, node1, node2, check_type, count=0): # both roots are individuals
+        '''
+        Recursively performs consistency checks at every node in the owlready2 item. 
+        Parameters:
+            node1 - the current node being checked for item 1
+            node2 - the current node being checked for item 2
+            check_type - the type of check - individual check, class check, or mixed check (if item1 and item2 are a class-individual combination)
+                options:
+                    'individual'
+                    'class'
+                    'mixed'
+        Outputs:
+            consistency check print statements. For each check, it will determine if the two items are consistent, inconsistent, or potentially consistent at appropriate nodes. 
+    '''
+        # Validate check_type
+        assert check_type in ['individual', 'class', 'mixed'], f"check_type of {check_type} undefined. Make sure that it is one of the following options: 'individual', 'class', 'mixed'"
+
+        # run intra checks only once at the start node
+        # import pdb; pdb.set_trace() # TODO rm
+        if count == 0:
+            if check_type == 'individual':
+                self.run_individual_intra_checks(node1)
+                self.run_individual_intra_checks(node2)
+            elif check_type == 'class':
+                self.run_class_intra_checks(node1)
+                self.run_class_intra_checks(node2)
+            elif check_type == 'mixed':
+                self.run_mixed_intra_checks(node1)
+                self.run_mixed_intra_checks(node2)
+        
+        # run inter checks
+        if check_type == 'individual':
+            self.run_individual_inter_checks(node1, node2)
+        elif check_type == 'class':
+            self.run_class_inter_checks(node1, node2)
+        elif check_type == 'mixed':
+            self.run_mixed_inter_checks(node1, node2)
+        
+        # TODO instance_of - still need this? <- this is just for the unit_of_measure check? Put it under intra_checks - run once at start node
+        # Get all properties of node1 and node2
+        node1_properties = node1.get_class_properties() if node1 in self.classes else node1.get_properties()
+        node2_properties = node2.get_class_properties() if node2 in self.classes else node2.get_properties()
+
+        # Remove duplicate properties in list, then sort node1_properties and node2_properties
+        node1_properties = sorted(list(set(self.remove_annotation_properties(list(node1_properties)))))
+        node2_properties = sorted(list(set(self.remove_annotation_properties(list(node2_properties)))))
+
+        # Print inconsistent if a property from node1 is not found in node2, and vice versa
+        ## If there are properties found in node1 but not in node2
+        if set(node1_properties) - set(node2_properties):
+            for p in list(set(node1_properties) - set(node2_properties)):
+                print(f'Item 1 has the {node1} - {p} - {p[node1]} triple, but Item 2 does not.')
+        ## If there are properties found in node2 but not in node1
+        if set(node2_properties) - set(node1_properties):
+            for p in list(set(node2_properties) - set(node1_properties)):
+                print(f'Item 2 has the {node2} - {p} - {p[node2]} triple, but Item 1 does not.')
+
+        # Get the list of common properties from node1 and node2
+        common_properties = set(node1_properties).intersection(set(node2_properties))
+
+        # Traverse both trees using their common properties
+        for p in common_properties:
+            # Get the child of this p for both trees
+            node1_obj = p[node1]
+            node2_obj = p[node2]
+            
+            # Determine if the child is a data value (ie a leaf node)
+            node1_obj_is_data_value = isinstance(node1_obj, str) and isinstance(node1_obj, int) # TODO any more types?
+            node2_obj_is_data_value = isinstance(node2_obj, str) and isinstance(node2_obj, int) # TODO any more types?
+
+            # immediately inconsistent cases
+            # TODO already in consistency checks? if so rm 
+            if node1_obj_is_data_value and not node2_obj_is_data_value or not node1_obj_is_data_value and node2_obj_is_data_value:
+                print('Inconsistent')
+                print(f'node1 object is {node1_obj} but node2 object is {node2_obj}')
+                return
+            
+            # Base case 1: if children are None 
+            # TODO already in consistency checks? if so rm 
+            # TODO none type - potentially inconsistent
+            if node1_obj and node2_obj is None:
+                return # TODO do what check? check if they belong to the same class, then check if their names/labels are the same? 
+            # Base case 2: if children are data values
+            if node1_obj_is_data_value and node2_obj_is_data_value:
+                return
+            
+            # Recursion case 
+            if not node1_obj_is_data_value and not node2_obj_is_data_value:
+                return self.recursion_check(node1_obj, node2_obj, check_type, count+1) 
+
+    # TODO check if should do individual check or class check
+    def run_individual_inter_checks(self, item1, item2):
+        place_equality_consistent = self.place_equality_consistency_check(item1, item2) #needed to run self.subplace_consistency_check
+        self.subplace_consistency_check(place_equality_consistent, item1, item2)
+        self.temporal_granularity_consistency_check(item1, item2) #run this before subinterval since subinterval needs them to be the same temporal unit, but actually, does it matter? No, but it does in the way that I implemented it using the datetime library
+        self.subinterval_consistency_check(item1, item2)
+        #property_consistency_check(item1, item2) #need to debug
+        self.interval_equality_consistency_check(item1, item2)
+        self.interval_non_overlap_consistency_check(item1, item2)
+
+    def run_individual_intra_checks(self, item):
+        self.quantity_measure_consistency_check(item)
+
+    def run_class_intra_checks(self, item):
+        self.quantity_measure_consistency_check(item)
+
+    def run_class_inter_checks(self, item1, item2):
+        self.class_type_consistency_check(item1, item2)
+
+    def run_mixed_intra_checks(self, item):
+        self.quantity_measure_consistency_check(item)
+
+    def run_mixed_inter_checks(self, item1, item2):
+        pass
+
+    
+    def remove_annotation_properties(self, properties):
+        return [p for p in properties if str(p) not in ['rdf-schema.commment', 'rdf-schema.label']]
+
+
     # MAIN
     def compare_class_or_individual(self, item1, item2):
         
@@ -883,7 +1004,7 @@ class Comparison:
         '''
         Any two instances mij and mik ∊ Mi are measurement inconsistent if an instance of Quantity mij has a unit of measure uniti that is different from the Measure's unit of measure unit’i. 
         '''
-        #TODO update this check to be based on item instead of item1 and item2 since its an internal check
+        # TODO error
         item1 = item
         item2 = item.valueOf
 
@@ -920,6 +1041,7 @@ class Comparison:
             return
     
     # intra
+    #TODO update this check to be based on item instead of item1 and item2 since its an internal check
     def indicator_unit_component_consistency_check(self, item1, item2):
         '''
         Any two instances of om:Quantity mij and mik ∊ Mi where mij is connected to mik via a property ait(e.g., numerator, denominator), 
