@@ -5,8 +5,8 @@ class Comparison:
     def __init__(self, classes, individuals):
         self.classes = classes
         self.individuals = individuals
-        # RECURSION MAIN 
     
+    # RECURSION MAIN 
     def recursion_check(self, node1, node2, check_type, count=0): # both roots are individuals
         '''
         Recursively performs consistency checks at every node in the owlready2 item. 
@@ -25,17 +25,12 @@ class Comparison:
         assert check_type in ['individual', 'class', 'mixed'], f"check_type of {check_type} undefined. Make sure that it is one of the following options: 'individual', 'class', 'mixed'"
 
         # run intra checks only once at the start node
-        # import pdb; pdb.set_trace() # TODO rm
+        # works at the start node level
         if count == 0:
-            if check_type == 'individual':
-                self.run_individual_intra_checks(node1)
-                self.run_individual_intra_checks(node2)
-            elif check_type == 'class':
-                self.run_class_intra_checks(node1)
-                self.run_class_intra_checks(node2)
-            elif check_type == 'mixed':
-                self.run_mixed_intra_checks(node1)
-                self.run_mixed_intra_checks(node2)
+            if node1 in self.individuals:
+                self.run_intra_checks(node1)
+            if node2 in self.individuals:
+                self.run_intra_checks(node2)
         
         # run inter checks
         if check_type == 'individual':
@@ -45,7 +40,6 @@ class Comparison:
         elif check_type == 'mixed':
             self.run_mixed_inter_checks(node1, node2)
         
-        # TODO instance_of - still need this? <- this is just for the unit_of_measure check? Put it under intra_checks - run once at start node
         # Get all properties of node1 and node2
         node1_properties = node1.get_class_properties() if node1 in self.classes else node1.get_properties()
         node2_properties = node2.get_class_properties() if node2 in self.classes else node2.get_properties()
@@ -85,10 +79,8 @@ class Comparison:
                 return
             
             # Base case 1: if children are None 
-            # TODO already in consistency checks? if so rm 
-            # TODO none type - potentially inconsistent
             if node1_obj and node2_obj is None:
-                return # TODO do what check? check if they belong to the same class, then check if their names/labels are the same? 
+                return 
             # Base case 2: if children are data values
             if node1_obj_is_data_value and node2_obj_is_data_value:
                 return
@@ -97,7 +89,6 @@ class Comparison:
             if not node1_obj_is_data_value and not node2_obj_is_data_value:
                 return self.recursion_check(node1_obj, node2_obj, check_type, count+1) 
 
-    # TODO check if should do individual check or class check
     def run_individual_inter_checks(self, item1, item2):
         place_equality_consistent = self.place_equality_consistency_check(item1, item2) #needed to run self.subplace_consistency_check
         self.subplace_consistency_check(place_equality_consistent, item1, item2)
@@ -107,20 +98,30 @@ class Comparison:
         self.interval_equality_consistency_check(item1, item2)
         self.interval_non_overlap_consistency_check(item1, item2)
 
-    def run_individual_intra_checks(self, item):
+    # TODO add
+    def run_intra_checks(self, item):
         self.quantity_measure_consistency_check(item)
-
-    def run_class_intra_checks(self, item):
-        self.quantity_measure_consistency_check(item)
+        # if item is a ratio (individual), run the following checks
+        item_property_names = [p.name for p in item.get_properties()]
+        if all(p in item_property_names for p in ['hasNumerator', 'hasDenominator']) or all(p in item_property_names for p in ['numerator', 'hasDenominator']) or all(p in item_property_names for p in ['hasNumerator', 'denominator']) or all(p in item_property_names for p in ['numerator', 'denominator']):
+            for p in item.get_properties():
+                if p.name == 'hasNumerator' or p.name  == 'numerator':
+                    numerator_obj = p[item]
+                if p.name == 'hasDenominator' or p.name == 'denominator':
+                    denominator_obj = p[item]
+            self.indicator_unit_component_consistency_check(numerator_obj, denominator_obj)
+            self.temporal_granularity_consistency_check(numerator_obj, denominator_obj)
+            place_equality_consistent = self.place_equality_consistency_check(numerator_obj, denominator_obj) #needed to run self.subplace_consistency_check
+            self.subplace_consistency_check(place_equality_consistent, numerator_obj, denominator_obj)
 
     def run_class_inter_checks(self, item1, item2):
         self.class_type_consistency_check(item1, item2)
 
-    def run_mixed_intra_checks(self, item):
-        self.quantity_measure_consistency_check(item)
-
     def run_mixed_inter_checks(self, item1, item2):
-        pass
+        self.instance_type_consistency_check(item1, item2)
+        self.property_consistency_check(item1, item2)
+        self.singular_unit_consistency_check(item1, item2)
+        self.correspondence_consistency_check(item1, item2)
 
     
     def remove_annotation_properties(self, properties):
@@ -337,11 +338,13 @@ class Comparison:
         if item2 not in self.individuals: #cannot run this check unless both are instances
             print("Subinterval consistency check not run - it is only done when comparing 2 individuals.")
             return
-    
-        beginning1 = item1.hasBeginning
-        end1 = item1.hasEnd
-        beginning2 = item2.hasBeginning
-        end2 = item2.hasEnd
+        if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
+            beginning1 = item1.hasBeginning 
+            end1 = item1.hasEnd
+            beginning2 = item2.hasBeginning
+            end2 = item2.hasEnd
+        else: 
+            return
 
         if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
             intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
@@ -479,10 +482,13 @@ class Comparison:
             print("Temporal granularity consistency check not run - it is only done when comparing 2 individuals.")
             return
 
-        beginning1 = item1.hasBeginning
-        end1 = item1.hasEnd
-        beginning2 = item2.hasBeginning
-        end2 = item2.hasEnd
+        if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
+            beginning1 = item1.hasBeginning 
+            end1 = item1.hasEnd
+            beginning2 = item2.hasBeginning
+            end2 = item2.hasEnd
+        else: 
+            return
 
         #print(beginning1.year, type(beginning1.month), end1, beginning2, end2.day, type(end2.day))
 
@@ -629,10 +635,13 @@ class Comparison:
             print("Interval equality consistency check not run - it is only done when comparing an instance to another instance.")
             return
         
-        beginning1 = item1.hasBeginning
-        end1 = item1.hasEnd
-        beginning2 = item2.hasBeginning
-        end2 = item2.hasEnd
+        if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
+            beginning1 = item1.hasBeginning 
+            end1 = item1.hasEnd
+            beginning2 = item2.hasBeginning
+            end2 = item2.hasEnd
+        else: 
+            return
         
         if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
             intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
@@ -663,10 +672,13 @@ class Comparison:
             print("Non overlapping interval consistency check not run - it is only done when comparing an instance to another instance.")
             return
 
-        beginning1 = item1.hasBeginning
-        end1 = item1.hasEnd
-        beginning2 = item2.hasBeginning
-        end2 = item2.hasEnd
+        if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
+            beginning1 = item1.hasBeginning 
+            end1 = item1.hasEnd
+            beginning2 = item2.hasBeginning
+            end2 = item2.hasEnd
+        else: 
+            return
 
         if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
             intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
@@ -723,38 +735,40 @@ class Comparison:
         location = None
         location2 = None
         
-        if item1.located_in:
+        item1_property_names = [p.name for p in item1.get_properties()]
+        if 'located_in' in item1_property_names:
             location = item1.located_in
-        elif item1.parentCountry:
+        elif 'parentCountry' :
             location = item1.parentCountry
-        elif item1.hasCountry:
+        elif 'hasCountry' in item1_property_names:
             location = item1.hasCountry
-        elif item1.hasProvince:
+        elif 'hasProvince' in item1_property_names:
             location = item1.hasProvince
-        elif item1.hasState:
+        elif 'hasState' in item1_property_names:
             location = item1.hasState
-        elif item1.for_city: #city checked after Province/State so that most specific information can be compared
+        elif 'for_city' in item1_property_names: #city checked after Province/State so that most specific information can be compared
             location = item1.for_city
-        elif item1.hasCity:
+        elif 'hasCity' in item1_property_names:
             location = item1.hasCity
-        elif item1.hasCitySection:
+        elif 'hasCitySection' in item1_property_names:
             location = item1.hasCitySection
 
-        if item2.located_in:
+        item2_property_names = [p.name for p in item2.get_properties()]
+        if 'located_in' in item2_property_names:
             location2 = item2.located_in
-        elif item2.parentCountry:
+        elif 'parentCountry' :
             location2 = item2.parentCountry
-        elif item2.hasCountry:
+        elif 'hasCountry' in item2_property_names:
             location2 = item2.hasCountry
-        elif item2.hasProvince:
+        elif 'hasProvince' in item2_property_names:
             location2 = item2.hasProvince
-        elif item2.hasState:
+        elif 'hasState' in item2_property_names:
             location2 = item2.hasState
-        elif item2.for_city: #city checked after Province/State so that most specific information can be compared
+        elif 'for_city' in item2_property_names: #city checked after Province/State so that most specific information can be compared
             location2 = item2.for_city
-        elif item2.hasCity:
+        elif 'hasCity' in item2_property_names:
             location2 = item2.hasCity
-        elif item2.hasCitySection:
+        elif 'hasCitySection' in item2_property_names:
             location2 = item2.hasCitySection
         
         if not(location) or not(location2):
@@ -799,22 +813,23 @@ class Comparison:
 
         #else: 
         #has location but does not fulfill above indicator relationship
-        if (item1.hasCitySection and item2.hasCitySection) and location2 == item1.hasCitySection:
+        if ('hasCitySection' in item1_property_names and 'hasCitySection' in item2_property_names) and location2 == item1.hasCitySection:
             print(item1, " and ", item2, " refer to the same city section. Therefore they are place equality consistent.")
             place_equality_consistent = True
             #not returning here in case the city section name is the same but the country/province/state/city isnt
-        elif (item1.hasCitySection and item2.hasCitySection) and location2 != item1.hasCitySection:
+        elif ('hasCitySection' in item1_property_names and 'hasCitySection' in item2_property_names) and location2 != item1.hasCitySection:
             print(item1, " and ", item2, " do not refer to the same city section. Therefore they are not place equality consistent.")
             return place_equality_consistent
-        elif (item1.hasCity or item1.for_city) and (item2.hasCity or item2.for_city): 
-            if (item2.hasCity or item2.for_city) and ((item1.hasCity == item2.hasCity) or (item1.for_city == item2.for_city) or (item1.hasCity == item2.for_city) or (item1.for_city == item2.hasCity)):
+        elif ('hasCity' in item1_property_names or 'for_city' in item1_property_names) and ('hasCity' in item2_property_names or 'for_city' in item2_property_names): 
+            if ('hasCity' in item1_property_names or 'hasCity' in item2_property_names) and (('hasCity' in item1_property_names == 'hasCity' in item2_property_names) or ('for_city' in item1_property_names == 'for_city' in item2_property_names) or ('for_city' in item1_property_names == 'for_city' in item2_property_names) or ('for_city' in item1_property_names == 'hasCity' in item1_property_names)):
                 print(item1, " and ", item2, " refer to the same city. Therefore they are place equality consistent.")
                 place_equality_consistent = True
                 #not returning here in case the city name is the same but the country/province/state isnt
             else:
                 print(item1, " and ", item2, " do not refer to the same city. Therefore they are not place equality consistent.")
                 return place_equality_consistent
-        if (item1.hasProvince or item1.hasState) and (item2.hasProvince or item2.hasState):
+        # TODO wip 
+        if ('hasProvince' in item1_property_names or 'hasState' in item1_property_names) and ('hasProvince' in item2_property_names or 'hasState' in item2_property_names):
             if  (item1.hasProvince == item2.hasProvince or item1.hasState == item2.hasState or item1.hasProvince == item2.hasState or item1.hasState == item2.hasProvince):
                 print(item1, " and ", item2, " refer to the same province/state. Therefore they are place equality consistent.")
                 place_equality_consistent = True
@@ -1004,9 +1019,8 @@ class Comparison:
         '''
         Any two instances mij and mik ∊ Mi are measurement inconsistent if an instance of Quantity mij has a unit of measure uniti that is different from the Measure's unit of measure unit’i. 
         '''
-        # TODO error
         item1 = item
-        item2 = item.valueOf
+        item2 = item.valueOf # TODO error. ppt does not exist
 
         if item2 not in self.individuals:
             print(item2, " is not an instance. Quantity Measurement Consistency Check cannot be run.")
@@ -1054,13 +1068,24 @@ class Comparison:
         if item2 not in self.individuals:
             print(item2, " is not an instance. Indicator Unit Component Consistency Check cannot be run.")
             return
+       
+        for p in item1.get_properties():
+            if p.name == 'hasNumerator' or p.name  == 'numerator':
+                item1_numerator_obj = p[item1]
+            if p.name == 'hasDenominator' or p.name == 'denominator':
+                item1_denominator_obj = p[item1]
+        for p in item2.get_properties():
+            if p.name == 'hasNumerator' or p.name  == 'numerator':
+                item2_numerator_obj = p[item2]
+            if p.name == 'hasDenominator' or p.name == 'denominator':
+                item2_denominator_obj = p[item2]
 
-        elif item2 == item1.hasNumerator or item2 == item1.numerator or item2 == item1.hasDenominator or item2 == item1.denominator: #item2 has to be a component of item1 to run this check
+        if item2 == item1_numerator_obj or item2 == item1_denominator_obj: #item2 has to be a component of item1 to run this check
             if item2.unit_of_measure[0] == item1.unit_of_measure[0]:
                 print(item1, " has the same unit of measure as its component, ", item2, ". They are indicator unit component consistent.")
                 return
 
-        elif item1 == item2.hasNumerator or item1 == item2.numerator or item1 == item2.hasDenominator or item1 == item2.denominator: #item2 has to be a component of item1 to run this check
+        elif item1 == item2_numerator_obj or item1 == item2_denominator_obj: #item2 has to be a component of item1 to run this check
             if item2.unit_of_measure[0] == item1.unit_of_measure[0]:
                 print(item2, " has the same unit of measure as its component, ", item1, ". They are indicator unit component consistent.")
                 return
@@ -1195,8 +1220,8 @@ class Comparison:
                         individual_nodes.remove('rdf-schema.comment')
             #print(prop)
 
-            if len(class_nodes) > len(individual_nodes):
-            #if set(class_nodes) != set(individual_nodes):
+            # if len(class_nodes) > len(individual_nodes):
+            if set(class_nodes) != set(individual_nodes):
                 print("Not all components in the definition are covered by the instance. Therefore they are correspondence inconsistent.")
             
             else:
