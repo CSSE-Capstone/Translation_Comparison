@@ -771,13 +771,14 @@ class Comparison:
         elif 'hasCitySection' in item2_property_names:
             location2 = item2.hasCitySection
         
+        
         if not(location) or not(location2):
-            if not(location) and not(location2):
-                print(f'{item1} and {item2} do not have a location property associated with them - place equality consistency check cannot be run.')
-                return place_equality_consistent
+            # if not(location) and not(location2):
+                # print(f'{item1} and {item2} do not have a location property associated with them - place equality consistency check cannot be run.') # TODO neevi rm - silent return
+                # return place_equality_consistent
 
-            item = item1 if not(location) else item2
-            print(item, " does not have a location property associated with it - place equality consistency check cannot be run.")
+            # item = item1 if not(location) else item2
+            # print(item, " does not have a location property associated with it - place equality consistency check cannot be run.") # TODO neevi rm print statements - silent return
             return place_equality_consistent
 
     #   #considering case when checking consistency between indicator (item1) that has a location + its population/population definition (item2) has a location
@@ -821,24 +822,32 @@ class Comparison:
             print(item1, " and ", item2, " do not refer to the same city section. Therefore they are not place equality consistent.")
             return place_equality_consistent
         elif ('hasCity' in item1_property_names or 'for_city' in item1_property_names) and ('hasCity' in item2_property_names or 'for_city' in item2_property_names): 
-            if ('hasCity' in item1_property_names or 'hasCity' in item2_property_names) and (('hasCity' in item1_property_names == 'hasCity' in item2_property_names) or ('for_city' in item1_property_names == 'for_city' in item2_property_names) or ('for_city' in item1_property_names == 'for_city' in item2_property_names) or ('for_city' in item1_property_names == 'hasCity' in item1_property_names)):
+            item1_city_obj = item1.hasCity if 'hasCity' in item1_property_names else item1.for_city
+            item2_city_obj = item2.hasCity if 'hasCity' in item2_property_names else item2.for_city
+            if (item1_city_obj == item2_city_obj):
                 print(item1, " and ", item2, " refer to the same city. Therefore they are place equality consistent.")
                 place_equality_consistent = True
                 #not returning here in case the city name is the same but the country/province/state isnt
             else:
                 print(item1, " and ", item2, " do not refer to the same city. Therefore they are not place equality consistent.")
                 return place_equality_consistent
-        # TODO wip 
+
         if ('hasProvince' in item1_property_names or 'hasState' in item1_property_names) and ('hasProvince' in item2_property_names or 'hasState' in item2_property_names):
-            if  (item1.hasProvince == item2.hasProvince or item1.hasState == item2.hasState or item1.hasProvince == item2.hasState or item1.hasState == item2.hasProvince):
+            item1_province_obj = item1.hasProvince if 'hasProvince' in item1_property_names else item1.hasState
+            item2_province_obj = item2.hasProvince if 'hasProvince' in item2_property_names else item2.hasState
+            if (item1_province_obj == item2_province_obj):
                 print(item1, " and ", item2, " refer to the same province/state. Therefore they are place equality consistent.")
                 place_equality_consistent = True
                 #not returning here in case the state/province name is the same but the country isnt
             else:
                 print(item1, " and ", item2, " do not refer to the same province/state. Therefore they are not place equality consistent.")
                 return place_equality_consistent
-        if (item1.hasCountry or item1.parentCountry) and (item2.hasCountry or item2.parentCountry):
-            if item1.hasCountry == item2.hasCountry or item1.parentCountry == item2.parentCountry or item1.hasCountry == item2.parentCountry or item1.parentCountry == item2.hasCountry:
+
+        if ('hasCountry' in item1_property_names or 'parentCountry' in item1_property_names) and ('hasCountry' in item2_property_names or 'parentCountry' in item2_property_names):
+            item1_country_obj = item1.hasCountry if 'hasCountry' in item1_property_names else item1.parentCountry
+            item2_country_obj = item2.hasCountry if 'hasCountry' in item2_property_names else item2.parentCountry
+
+            if (item1_country_obj == item2_country_obj):
                 print(item1, " and ", item2, " refer to the same country. Therefore they are place equality consistent.")
                 place_equality_consistent = True
                 return place_equality_consistent
@@ -856,163 +865,96 @@ class Comparison:
         The measure may not be complete if city’i is only an area within cityi since not all populations in cityi have been considered. 
 
             city section vs city
-          city section vs province
-          city section vs country
+            city section vs province
+            city section vs country
         '''
-    
-        if item2 in self.individuals and place_equality_consistent == False:
-            #item1
-            if not item1.hasCitySection and (not item1.hasCity or not item1.for_city) and (not item1.hasProvince or not item1.hasState) and (not item1.hasCountry or not item1.parentCountry):
-                #no location information
-                print("Subplace consistency check not run - location information not available for ", item1, ".") 
-                return
-            elif item1.hasCitySection and item1.hasCity and item2.hasCity and not item2.hasCitySection and item1.hasCity == item2.hasCity:
-                #item1 is a city section, item2 is not a city section, and item1's city is item2's city
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and item1.for_city and item2.for_city and not item2.hasCitySection and item1.for_city == item2.for_city:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and item1.hasCity and item2.for_city and not item2.hasCitySection and item1.hasCity == item2.for_city:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and item1.for_city and item2.hasCity and not item2.hasCitySection and item1.for_city == item2.hasCity:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and item1.hasProvince and item2.hasProvince and not item2.hasCitySection and item1.hasProvince == item2.hasProvince:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and not item2.hasCitySection and item1.hasState and item2.hasState and item1.hasState == item2.hasState:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and not item2.hasCitySection and item1.hasState and item2.hasProvince and item1.hasState == item2.hasProvince:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and not item2.hasCitySection and item1.hasProvince and item2.hasState and item1.hasProvince == item2.hasState:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and not item2.hasCitySection and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and not item2.hasCitySection  and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and not item2.hasCitySection and item1.hasCountry and item2.parentCountry and item1.hasCountry == item2.parentCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif item1.hasCitySection and not item2.hasCitySection and item1.parentCountry and item2.hasCountry and item1.parentCountry == item2.hasCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-
-            #   city vs province
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasProvince and item2.hasProvince and item1.hasProvince == item2.hasProvince:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasState and item2.hasState and item1.hasState == item2.hasState:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasState and item2.hasProvince and item1.hasState == item2.hasProvince:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasProvince and item2.hasState and item1.hasProvince == item2.hasState:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            
-            #   city vs country
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasCountry and item2.parentCountry and item1.hasCountry == item2.parentCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.parentCountry and item2.hasCountry and item1.parentCountry == item2.hasCountry:
-                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            else: #some missing location information
-                print("some location information is not available. Therefore " ,item1, " and ", item2, " are potentially inconsistent.")
-
-            #item2
-            if not item2.hasCitySection and (not item2.hasCity or not item2.for_city) and (not item2.hasProvince or not item2.hasState) and (not item2.hasCountry or not item2.parentCountry):
-                #no location information
-                print("Subplace consistency check not run - location information not available for ", item2, ".") 
-                return
-            elif item2.hasCitySection and item2.hasCity and item1.hasCity and not item1.hasCitySection and item1.hasCity == item2.hasCity:
-                #item1 is a city section, item2 is not a city section, and item1's city is item2's city
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and item2.for_city and item1.for_city and not item1.hasCitySection and item1.for_city == item2.for_city:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and item2.hasCity and item1.for_city and not item1.hasCitySection and item2.hasCity == item1.for_city:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and item2.for_city and item1.hasCity and not item1.hasCitySection and item2.for_city == item1.hasCity:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and item2.hasProvince and item1.hasProvince and not item1.hasCitySection and item1.hasProvince == item2.hasProvince:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and not item1.hasCitySection and item2.hasState and item1.hasState and item1.hasState == item2.hasState:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and not item1.hasCitySection and item2.hasState and item1.hasProvince and item2.hasState == item1.hasProvince:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and not item1.hasCitySection and item2.hasProvince and item1.hasState and item2.hasProvince == item1.hasState:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and not item1.hasCitySection and item2.hasCountry and item1.hasCountry and item1.hasCountry == item2.hasCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and not item1.hasCitySection  and item2.parentCountry and item1.parentCountry and item1.parentCountry == item2.parentCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and not item1.hasCitySection and item2.hasCountry and item1.parentCountry and item2.hasCountry == item1.parentCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif item2.hasCitySection and not item1.hasCitySection and item2.parentCountry and item1.hasCountry and item2.parentCountry == item1.hasCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-
-            #   city vs province
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasProvince and item1.hasProvince and item1.hasProvince == item2.hasProvince:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasState and item1.hasState and item1.hasState == item2.hasState:
-                print (item2, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-                return
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasState and item1.hasProvince and item2.hasState == item1.hasProvince:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasProvince and item1.hasState and item2.hasProvince == item1.hasState:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            
-            #   city vs country
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasCountry and item1.parentCountry and item2.hasCountry == item1.parentCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.parentCountry and item1.hasCountry and item2.parentCountry == item1.hasCountry:
-                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-                return
-            else: #some missing location information
-                print("some location information is not available. Therefore " ,item2, " and ", item1, " are potentially inconsistent.")
-
-        else:
-            if place_equality_consistent == True:
-                print ("Subplace consistency check not run since the two items were already found to be place equality consistent.") 
-            else:
-                print("Subplace consistency check not run - it is only done when comparing an instance to another instance.") 
+        if item2 not in self.individuals and place_equality_consistent == True:
+            # print ("Subplace consistency check not run since the two items were already found to be place equality consistent.") # TODO neevi rm silent return
+                # print("Subplace consistency check not run - it is only done when comparing an instance to another instance.") # TODO neevi rm silent return
             return
+
+        item1_property_names = [p.name for p in item1.get_properties()]
+        item2_property_names = [p.name for p in item2.get_properties()]
+        
+        item1_city_section = item1.hasCitySection if 'hasCitySection' in item1_property_names else None
+        item1_city = None
+        item1_province = None
+        item1_country = None
+        if 'hasCity' in item1_property_names:
+            item1_city = item1.hasCity
+        elif 'for_city' in item1_property_names:
+            item1_city = item1.for_city
+        if 'hasProvince' in item1_property_names:
+            item1_province = item1.hasProvince
+        elif 'hasState' in item1_property_names:
+            item1_province = item1.hasState
+        if 'hasCountry' in item1_property_names:
+            item1_country = item1.hasCountry
+        elif 'parentCountry' in item1_property_names:
+            item1_country = item1.parentCountry
+        
+        item2_city_section = item2.hasCitySection if 'hasCitySection' in item2_property_names else None
+        item2_city = None
+        item2_province = None
+        item2_country = None
+        if 'hasCity' in item2_property_names:
+            item2_city = item2.hasCity
+        elif 'for_city' in item2_property_names:
+            item2_city = item2.for_city
+        if 'hasProvince' in item2_property_names:
+            item2_province = item2.hasProvince
+        elif 'hasState' in item2_property_names:
+            item2_province = item2.hasState
+        if 'hasCountry' in item2_property_names:
+            item2_country = item2.hasCountry
+        elif 'parentCountry' in item2_property_names:
+            item2_country = item2.parentCountry
+            
+        # If Item1 is a place node and has complete information
+        if ('hasCitySection' in item1_property_names and ('hasCity' in item1_property_names or 'for_city' in item1_property_names) and ('hasProvince' in item1_property_names or 'hasState' in item1_property_names) and ('hasCountry' in item1_property_names or 'parentCountry' in item1_property_names)):
+            # If item2 has at least one place property, item2 is a place node. Proceed with check. But if item2 does not have any place properties, item2 is not a place node. Therefore return. 
+            if all([obj is None for obj in [item2_city_section, item2_city, item2_province, item2_country]]):
+                return # Silent return
+            # check item1 (place node, complete information) against item2 (place node, incomplete information)
+            if not item2_city_section and item2_city and item1_city == item2_city:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif not item2_city_section and item2_province and item1_province == item2_province:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif not item2_city_section and item2_country and item1_country == item2_country:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif not item2_city and item2_province and item1_province == item2_province:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif not item2_city and item2_country and item1_country == item2_country:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+        # elif item2 is a place node with complete information
+        elif ('hasCitySection' in item1_property_names and ('hasCity' in item1_property_names or 'for_city' in item1_property_names) and ('hasProvince' in item1_property_names or 'hasState' in item1_property_names) and ('hasCountry' in item1_property_names or 'parentCountry' in item2_property_names)):
+            # If item1 has at least one place property, item1 is a place node. Proceed with check. But if item1 does not have any place properties, item1 is not a place node. Therefore return. 
+            if all([obj is None for obj in [item1_city_section, item1_city, item1_province, item1_country]]):
+                return # Silent return
+            # check item2 (place node, complete information) against item1 (place node, incomplete information)
+            if not item1_city_section and item1_city and item2_city == item1_city:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif not item1_city_section and item1_province and item2_province == item1_province:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif not item1_city_section and item1_country and item2_country == item1_country:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif not item1_city and item1_province and item2_province == item1_province:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif not item1_city and item1_country and item2_country == item1_country:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+        else:
+            return
+
 
     # intra check: done outside of the recursive loop
     def quantity_measure_consistency_check(self, item):
