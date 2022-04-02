@@ -8,11 +8,14 @@ class Comparison:
     
     # MAIN
     def compare_class_or_individual(self, item1, item2):
-        
-        self.correspondence_consistency_check #for class and individual
-        #TODO some checks may benefit from recognizing correspondence
-        self.instance_type_consistency_check(item1, item2) #for class and individual
-        self.singular_unit_consistency_check #for class and individual
+        # TODO list of mix case checks
+        # TODO list of class checks
+        # TODO list of individuals checks
+        if item1 in self.classes and item2 in self.individuals or item1 in self.individuals and item2 in self.classes:
+            self.correspondence_consistency_check #for class and individual
+            #TODO some checks may benefit from recognizing correspondence
+            self.instance_type_consistency_check(item1, item2) #for class and individual
+            self.singular_unit_consistency_check #for class and individual
         
         if item1 in self.classes:
             allprop = item1.get_class_properties()
@@ -999,6 +1002,7 @@ class Comparison:
             print(item1, " or ", item2, "is not the definition class of the other. Singular Unit Consistency Check cannot be run.")
 
     #this one is comparing the instance to its definition class, but the way it does the proving is by looking at both internally. But I think it's still inter
+    # put outside of recusion loop
     def correspondence_consistency_check(self, item1, item2):
         '''
         Correspondence Inconsistency: where there are no correspondence detected between nodes in the indicator’s definition and published indicator data. 
@@ -1006,6 +1010,7 @@ class Comparison:
         published indicator data Si is inconsistent in terms of correspondence if for any corresponding nodes mij  Mi and nik  Ni, 
         there exists a class niy that is linked to nik via property ait where there is no node mix linked to mij that corresponds to niy. 
         '''
+        # TODO call get prop based on if item1 /2is class or indvidual
         if item1 in self.classes and item2 in self.individuals:
             class_nodes = item1.get_class_properties()
             #remove annotation properties
@@ -1042,7 +1047,7 @@ class Comparison:
             
             else:
                 print("All components in the definition are covered by the instance. Therefore they are correspondence consistent.")
-        
+        # TODO rm
         elif item1 in self.individuals and item2 in self.classes:
             class_nodes = item2.get_class_properties()
             #remove annotation properties
