@@ -134,13 +134,9 @@ class Clustering:
                 token_embeddings = torch.stack(hidden_states, dim=0)
                 token_embeddings = torch.squeeze(token_embeddings, dim=1)
                 
-
-
                 token_embeddings = token_embeddings.permute(1,0,2)
 
                 word_embeddings = self.get_word_embeddings(token_embeddings) #outer length is embedding, inner is each word
-                # bert_embeddings.extend(word_embeddings[1:-2])
-                # word_list.extend(tokenized_text[1:-2])
 
                 # Remove Stop Words First
                 new_text, new_embeddings = self.remove_stop_words(tokenized_text, word_embeddings, self.create_stopwords())
@@ -158,14 +154,13 @@ class Clustering:
             X.append(embedding.cpu().detach().numpy()) # TODO error - np.append(X, embedding.cpu().detach().numpy()) instead? -> shape is (1536,)
             X = np.array(X)
 
+        # Remove any statistical outliers prior to clustering
         mean, stdev = np.median(X, axis=0), np.std(X, axis=0)
 
         outliers = ((np.abs(X[:,0] - mean[0]) > stdev[0])
                 * (np.abs(X[:,1] - mean[1]) > stdev[1])
                 * (np.abs(X[:,2] - mean[2]) > stdev[2]))
-        # print(len(outliers))
-        # print(X.shape)
-        # print(np.count_nonzero(outliers))
+
         X_no_outliers = list(X)
         word_list_no_outliers = copy.deepcopy(word_list)
         for i in range(len(outliers)-1, -1, -1):
@@ -173,10 +168,8 @@ class Clustering:
                 X_no_outliers.pop(i)
                 word_list_no_outliers.pop(i)
 
-        # how to cluster with labelled data
+        # KMeans Clustering
         kmeans = KMeans(n_clusters=85, random_state=0, max_iter=600, algorithm="full")
-        # kmeans = KMedoids(n_clusters=85, random_state=0, max_iter=600)
-
         y_kmeans_token = kmeans.fit_predict(X_no_outliers)
 
         clusters = defaultdict(list)
@@ -239,7 +232,7 @@ class Clustering:
         clusterGroups.append((74, "EnvironmentThing"))
         clusterGroups.append((81, "Employee"))
         clusterGroups.append((52, "Population"))
-        clusterGroups.append((46, "Area")) # Q: should these be features or areas or geography or.. ?
+        clusterGroups.append((46, "Area"))
         clusterGroups.append((8, "Area"))
         clusterGroups.append((54, "Quantity"))
         clusterGroups.append((22, "DateTime"))
@@ -347,10 +340,7 @@ class Clustering:
                     diff = j-i-1
                     i+=(1+diff)
                     #Need to add cluster
-            # print(joinedTokens)
-            # print(joinedClusters)
-            # print(mapping_dict)
-            # print(y)
+
             return mapping_dict
 
 

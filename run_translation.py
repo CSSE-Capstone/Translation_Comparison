@@ -1,4 +1,4 @@
-import networkx as nx 
+# import networkx as nx TODO
 import matplotlib.pyplot as plt
 import pandas as pd
 import nltk
@@ -9,6 +9,7 @@ import argparse
 from rule_based.main import RuleBased
 from clustering.main import Clustering 
 from wordnet.main import WordNet
+from owl_export import convert_owl
 
 # Command line options 
 parser = argparse.ArgumentParser()
@@ -68,6 +69,7 @@ cids_classes = pd.read_csv(file_path + 'cidsclasses.csv', header=None, squeeze=T
 matched_indicators = pd.read_csv(file_path + 'glossarymatchedindicators.csv', index_col=0, header=None, squeeze=True).to_dict()
 
 # Peform translation on each sentence in indicatortestset.csv
+output_dict_list = []
 for index, row in indtestset.iterrows():
 	ind_code = row['Indicator Code']
 	ind_def = row['Indicator Definition']
@@ -89,15 +91,20 @@ for index, row in indtestset.iterrows():
 	print('wordnet_output')
 	print(wordnet_output)
 
-	# Plot networkx graph
-	G, prop_rel = rb.plot_KG(wordnet_output)
-	pos = nx.spring_layout(G, k=0.2)
-	plt.figure(figsize=(15,8))                                                    
-	nx.draw(G, pos, with_labels=True, arrows=True)                                                              
-	nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
+	output_dict_list.append(wordnet_output)
 
-	if plot_graph:
-		plt.show() 
-	print('\n')
+	# Plot networkx graph TODO
+	# G, prop_rel = rb.plot_KG(wordnet_output)
+	# pos = nx.spring_layout(G, k=0.2)
+	# plt.figure(figsize=(15,8))                                                    
+	# nx.draw(G, pos, with_labels=True, arrows=True)                                                              
+	# nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
 
-# TODO @sandy: Add translated indicators to CIDS .owl file 
+	# if plot_graph:
+	# 	plt.show() 
+	# print('\n')
+
+# Create OWL File
+
+translated_onto = owl_export.convert_owl(output_dict_list)
+translated_onto.save(file = "translations.owl", format = "rdfxml")
