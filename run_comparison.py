@@ -34,12 +34,13 @@ individuals.extend(list(genericProperties_onto.individuals()))
 # Initialize Comparison 
 c = Comparison(classes, individuals)
 
+indicator_standard_selection = input("Which indicator standards, if any, have been included? The options are “none”, “UN SDG”, “IRIS”, or both.")
 text1 = input("Input the first thing (an individual or a class) from CIDS that you wish to compare: ")
 text2 = input("Input the second thing (an individual or a class) from CIDS that you wish to compare: ")
 
+#exact label
 item1 = cids_onto.search_one(label = text1, _use_str_as_loc_str=True, _case_sensitive=False) 
 item2 = cids_onto.search_one(label = text2, _use_str_as_loc_str=True, _case_sensitive=False) 
 
 
 c.recursion_check(item1, item2, check_type='individual', count=0) # Run individual check 
-
