@@ -35,6 +35,7 @@ Example output:
 
 TODO @Neevi
 ```
+<inserthere>
 ```
 
 # Steps:
@@ -44,7 +45,7 @@ TODO @Neevi
 3. Install package dependencies needed to run the code: `pip install -r requirements.txt` 
 ## Run the Translation model
 To run the translation model, run `python3 run_translation.py`.
-The .owl output file will be saved in the present directory TODO <- correct? @Sandy . But if you wish to save the command line outputs as well, run `python3 run_translation.py >> translation_output.txt"`
+The .owl output file will be saved in the present directory. But if you wish to save the command line outputs as well, run `python3 run_translation.py >> translation_output.txt"`
 One of the features of the translation model is that it can plot knowledge graphs of each translated indicator. By default, this feature is disabled. To enable this feature, run `python3 run_translation.py -p`.
 By default, the translation model runs on `{PATH_TO_LOCAL_REPO}/files/indicatortestset.csv`. However, if you have another indicator text definition csv file that you wish to run on, run `python3 run_translation.py -d {MY_INDICATOR_SET}.csv`
 To enable both customizations, simply run the script wtih both options: `python3 run_translation.py -p -d {MY_INDICATOR_SET}.csv`
