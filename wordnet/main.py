@@ -74,6 +74,8 @@ class WordNet:
     def get_ranked_similar_cids_class(self, sentence: str, target_word, list_of_class_names):
         '''
         Returns a CIDS class that is most semantically related to the target word. The target word will become a new CIDS class, and it will become the child of the returned CIDS class.
+        
+        Assumes that the muiltiwords are in PascalCase.
 
         We will be using the Wu-Palmer similarity formula. It is a ratio and therefore yields a score between 0 and 1.
         '''
@@ -96,7 +98,7 @@ class WordNet:
                 if self.t_ss_method == 'mfs':
                     target_word_ss = self.mfs(target_word)
                 elif self.t_ss_method == 'lesk':
-                    target_word_ss = self.lesk(sentence, target_word) # TODO test: make work for multiword # lower doesnt work if word is actually first word (hence capitalized)
+                    target_word_ss = self.lesk(sentence, target_word)
                 
                 # If class is a multiword, it will not be in WordNet and have no synsets
                 if len(wn.synsets(c)) == 0:
@@ -109,7 +111,7 @@ class WordNet:
                         if len(wn.synsets(sw)) > 0:
                             if self.c_ss_method == 'mfs':
                                 sw_ss = self.mfs(sw) 
-                            elif self.c_ss_method == 'lesk': # TODO test
+                            elif self.c_ss_method == 'lesk':
                                 sw_ss = self.lesk(sentence, sw)
                             # Run Wu-Palmer similarity on target word synset to the CIDS class synset
                             term_similarity.append(target_word_ss.wup_similarity(sw_ss)) 
@@ -122,12 +124,12 @@ class WordNet:
                             similarity += t * weight
                         else:
                             similarity += t * self.last_subword_weight
-                    if similarity > 1.0: import pdb;pdb.set_trace() # TODO rm
+                            
                 # If class is a single word, it should be in WordNet and therefore have synsets
                 else: 
                     if self.c_ss_method == 'mfs':
                         c_ss = self.mfs(c) 
-                    elif self.c_ss_method == 'lesk': # TODO test
+                    elif self.c_ss_method == 'lesk':
                         c_ss = self.lesk(sentence, c)
                     similarity = target_word_ss.wup_similarity(c_ss)          
                 if similarity >= self.similarity_threshold:
@@ -144,10 +146,12 @@ class WordNet:
         target noun - 'pupil'
         clustering output - 'EducationThing'
         'EducationThing' acts as a filter. It goes through the list of similar classes to the target noun, and only retains classes that are related to education. 
+        
+        Assumes that the muiltiwords are in PascalCase.
+
         Returns a filtered list of similar CIDS classes. 
         '''
         # Take the first word out of genre
-        ## Assumes that the muiltiwords are in PascalCase # TODO move to docstring
         genre = re.findall('[A-Z][^A-Z]*', genre)[0]
         # Get genre's sense
         g_ss = self.mfs(genre)
@@ -241,17 +245,6 @@ class WordNet:
 
         return signature
 
-    # TODO rm 
-    def token_filtering(self, tokens: List[str]) -> List[str]:
-        """
-        Removes stop words and punctuation tokens from the token list. 
-        """
-        filtered_tokens = []
-        for token in tokens:
-            if token not in punctuation and token.lower() not in stopwords.words('english'):
-                filtered_tokens.append(token)
-        return filtered_tokens
-
     def flatten(self, list: List) -> List:
         return [item for sublist in list for item in sublist] 
 
@@ -287,12 +280,3 @@ class WordNet:
         s = [w for w in re.findall(r"[\w]+|['/.,!?;]", sentence) if w.lower() not in stopwords.words('english') and w not in punctuation]
 
         return s
-
-    # TODO rm
-    def split_sentence(self, sentence: str) -> List[str]: # TODO move to a different file # TODO may not need this if alrady handled upstream
-        '''
-        Punctuations found in a sentence are individual elements in the returned list.
-        '''
-        # Split sentence by whitespaces and punctuation
-        return re.findall(r"[\w]+|['/.,!?;]", sentence) # TODO <word>/<word> - include / in separation
-        
