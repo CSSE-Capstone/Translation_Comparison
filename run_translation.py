@@ -1,7 +1,8 @@
-# import networkx as nx TODO
+import networkx as nx 
 import matplotlib.pyplot as plt
 import pandas as pd
 import nltk
+# nltk.download('omw-1.4')
 from transformers import BertTokenizer, BertModel
 from nltk.corpus import stopwords
 import argparse
@@ -82,7 +83,7 @@ for index, row in indtestset.iterrows():
 	print('rb_output')
 	print(rb_output)
 
-	clusterMap, kmeans = clustering.cluster()
+	clusterMap, y_kmeans_token, kmeans = clustering.cluster()
 	cluster_output = clustering.rb_cluster_combined(rb_output, ind_def, clusterMap, kmeans)
 	print('cluster_output')
 	print(cluster_output)
@@ -93,18 +94,19 @@ for index, row in indtestset.iterrows():
 
 	output_dict_list.append(wordnet_output)
 
-	# Plot networkx graph TODO
-	# G, prop_rel = rb.plot_KG(wordnet_output)
-	# pos = nx.spring_layout(G, k=0.2)
-	# plt.figure(figsize=(15,8))                                                    
-	# nx.draw(G, pos, with_labels=True, arrows=True)                                                              
-	# nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
+	# Plot networkx graph
+	G, prop_rel = rb.plot_KG(wordnet_output)
+	pos = nx.spring_layout(G, k=0.2)
+	plt.figure(figsize=(15,8))                                                    
+	nx.draw(G, pos, with_labels=True, arrows=True)                                                              
+	nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
 
-	# if plot_graph:
-	# 	plt.show() 
-	# print('\n')
+	if plot_graph:
+		plt.show() 
+	print('\n')
 
 # Create OWL File
 
-translated_onto = owl_export.convert_owl(output_dict_list)
+translated_onto = convert_owl(output_dict_list)
 translated_onto.save(file = "translations.owl", format = "rdfxml")
+print("File Saved in Current Directory")

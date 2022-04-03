@@ -5,12 +5,12 @@ from owlready2 import *
 def create_ontology():
 
   world = owl2.World()
-  cids_onto = world.get_ontology("cids.owl").load() #web protege download
-  time_onto = world.get_ontology("Time.owl").load() #web protege download
-  activity_onto = world.get_ontology("activity.owl").load() #web protege download
+  cids_onto = world.get_ontology("files/cids.owl").load() #web protege download
+  time_onto = world.get_ontology("files/Time.owl").load() #web protege download
+  activity_onto = world.get_ontology("files/activity.owl").load() #web protege download
   # icontact_onto = world.get_ontology("/work/icontact.owl").load() #web protege download
-  iso21972_onto = world.get_ontology("iso21972.owl").load() #web protege download
-  organization_onto = world.get_ontology("organization.owl").load() #web protege download
+  iso21972_onto = world.get_ontology("files/iso21972.owl").load() #web protege download
+  organization_onto = world.get_ontology("files/organization.owl").load() #web protege download
   # genericProperties_onto = world.get_ontology("/work/GenericProperties.owl").load() #web protege download
 
   classes = list(cids_onto.classes())

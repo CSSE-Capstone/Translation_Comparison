@@ -9,6 +9,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 from collections import defaultdict
 from transformers import BertTokenizer, BertModel
+nltk.download("stopwords")
 
 # need to import RB lemmatizer
 class Clustering: 
@@ -21,8 +22,6 @@ class Clustering:
     
     def create_stopwords(self):
         # stop words 
-        nltk.download("stopwords")
-
         stop = set(stopwords.words('english'))
         stop.remove('during')
         stop.remove('between')
@@ -75,7 +74,7 @@ class Clustering:
             # Use `sum_vec` to represent `token`.
             token_vecs_sum.append(sum_vec)
 
-        print ('Shape is: %d x %d' % (len(token_vecs_sum), len(token_vecs_sum[0])))
+        # print ('Shape is: %d x %d' % (len(token_vecs_sum), len(token_vecs_sum[0])))
         return token_vecs_sum
 
 
@@ -151,8 +150,8 @@ class Clustering:
         # how to cluster with labelled data
         X = []
         for embedding in bert_embeddings:
-            X.append(embedding.cpu().detach().numpy()) # TODO error - np.append(X, embedding.cpu().detach().numpy()) instead? -> shape is (1536,)
-            X = np.array(X)
+            X.append(embedding.cpu().detach().numpy()) 
+        X = np.array(X)
 
         # Remove any statistical outliers prior to clustering
         mean, stdev = np.median(X, axis=0), np.std(X, axis=0)
@@ -248,7 +247,7 @@ class Clustering:
             else:
                 clusterMap[i] = None
         
-        return clusterMap, y_kmeans_token
+        return clusterMap, y_kmeans_token, kmeans
 
 
     def create_triples(self, text, clusterMap, kmeans):
@@ -291,7 +290,7 @@ class Clustering:
             # word_list.extend(tokenized_text[1:-2])
 
             # Remove Stop Words First
-            new_text, new_embeddings = self.remove_stop_words(tokenized_text, word_embeddings)
+            new_text, new_embeddings = self.remove_stop_words(tokenized_text, word_embeddings, self.create_stopwords())
             bert = new_embeddings[1:-1]
             words = new_text[1:-1]
             # print(len(bert))
@@ -328,7 +327,6 @@ class Clustering:
                     j = i+1
                     wordphrase = self.lemmatizer.lemmatize(words[i])
                     while j<len(words):
-                    # TODO add lemmatizer here (wordnet lemmatizer)
                         if clusterMap[y[i]] == clusterMap[y[j]]:
                             wordphrase += self.lemmatizer.lemmatize(words[j].replace("#", ""))
                             j+=1
