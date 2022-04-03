@@ -78,13 +78,12 @@ for index, row in indtestset.iterrows():
 	print('rb_output')
 	print(rb_output)
 
-	# clusterMap, kmeans = clustering.cluster()
-	# cluster_output = clustering.rb_cluster_combined(rb_output, ind_def, clusterMap, kmeans)
-	# print('cluster_output')
-	# print(cluster_output)
+	clusterMap, kmeans = clustering.cluster()
+	cluster_output = clustering.rb_cluster_combined(rb_output, ind_def, clusterMap, kmeans)
+	print('cluster_output')
+	print(cluster_output)
 
-	# wordnet_output = wn.wordnet(ind_def, cluster_output)
-	wordnet_output = wn.wordnet(ind_def, rb_output)
+	wordnet_output = wn.wordnet(ind_def, cluster_output)
 	print('wordnet_output')
 	print(wordnet_output)
 
