@@ -1,6 +1,6 @@
 import owlready2 as owl2
 import datetime
-from main import Comparison
+from comparison.main import Comparison
 
 file_path = 'files/'
 
@@ -34,8 +34,8 @@ individuals.extend(list(genericProperties_onto.individuals()))
 # Initialize Comparison 
 c = Comparison(classes, individuals)
 
-text1 = input("Input the first thing you wish to compare: ")
-text2 = input("Input the second thing you wish to compare: ")
+text1 = input("Input the first thing (an individual or a class) from CIDS that you wish to compare: ")
+text2 = input("Input the second thing (an individual or a class) from CIDS that you wish to compare: ")
 
 item1 = cids_onto.search_one(label = text1, _use_str_as_loc_str=True, _case_sensitive=False) 
 item2 = cids_onto.search_one(label = text2, _use_str_as_loc_str=True, _case_sensitive=False) 
