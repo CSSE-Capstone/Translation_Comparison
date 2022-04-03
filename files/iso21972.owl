@@ -294,6 +294,8 @@ Pattuelli, M.C., (2003), “The GovStat Ontology: Technical Report”. The GovSt
     <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasDenominator">
         <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#iso21972ObjectProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_division"/>
+        <rdfs:range rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_of_measure"/>
     </owl:ObjectProperty>
     
 
@@ -642,6 +644,12 @@ Pattuelli, M.C., (2003), “The GovStat Ontology: Technical Report”. The GovSt
     <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#zero_element">
         <rdfs:subPropertyOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#iso21972ObjectProperty"/>
     </owl:ObjectProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/sumOf -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/sumOf"/>
     
 
 
@@ -1411,6 +1419,8 @@ parameter links back to the using cardinality_of. parameter links back using the
 
     <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit">
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#ISO21972Thing"/>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_of_measure"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Singular Unit</rdfs:label>
     </owl:Class>
     
 
@@ -1448,6 +1458,12 @@ parameter links back to the using cardinality_of. parameter links back using the
 
     <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Sum">
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Parameter"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/sumOf"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Population"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#sum_of"/>
