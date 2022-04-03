@@ -95,6 +95,7 @@ class RuleBased:
         """
         #input text clean up
         phrase = re.split(r'. [A-Z]', phrase)[0] #get first sentence of input text
+        phrase = re.sub(r'/',' ',phrase) #replace / with space to treat slashed words separately
         phrase = re.sub(r'\([^)]*\)', '', phrase) #remove words inside parentheses
         phrase = re.sub(r'[^\w\s]','', phrase) #remove non word phrases
         phrase = re.sub(r'end of the reporting period','', phrase) #date time interval is added by default, remove as a keyphrases
