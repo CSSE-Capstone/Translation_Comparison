@@ -69,7 +69,7 @@ class RuleBased:
 
         return terms
 
-    def acceptable_word(word):
+    def acceptable_word(self, word):
         """
         Checks conditions for acceptable word to be considered in a key phrase: 
             word length, not a stopword (the, and, or)
@@ -113,7 +113,7 @@ class RuleBased:
         
         return keyphrases
 
-    def flip_POS_tag(POS_tag):
+    def flip_POS_tag(self, POS_tag):
         """
         Reformat POS tag output dictionary from using key phrase position as keys, to word phrase as key
 
@@ -134,7 +134,7 @@ class RuleBased:
 
         return flipped_POS_tag
     
-    def joinPhrase(input):
+    def joinPhrase(self, input):
         """
         Join a list of terms into a single string
 
