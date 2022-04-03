@@ -92,7 +92,7 @@ class Comparison:
     def run_individual_inter_checks(self, item1, item2):
         place_equality_consistent = self.place_equality_consistency_check(item1, item2) #needed to run self.subplace_consistency_check
         self.subplace_consistency_check(place_equality_consistent, item1, item2)
-        self.temporal_granularity_consistency_check(item1, item2) #run this before subinterval since subinterval needs them to be the same temporal unit, but actually, does it matter? No, but it does in the way that I implemented it using the datetime library
+        self.temporal_granularity_consistency_check(item1, item2)
         self.subinterval_consistency_check(item1, item2)
         #property_consistency_check(item1, item2) #need to debug
         self.interval_equality_consistency_check(item1, item2)
@@ -123,137 +123,147 @@ class Comparison:
         self.singular_unit_consistency_check(item1, item2)
         self.correspondence_consistency_check(item1, item2)
 
-    
     def remove_annotation_properties(self, properties):
         return [p for p in properties if str(p) not in ['rdf-schema.commment', 'rdf-schema.label']]
 
-
-    # MAIN
-    def compare_class_or_individual(self, item1, item2):
-        # TODO list of mix case checks
-        # TODO list of class checks
-        # TODO list of individuals checks
-        if item1 in self.classes and item2 in self.individuals or item1 in self.individuals and item2 in self.classes:
-            self.correspondence_consistency_check #for class and individual
-            #TODO some checks may benefit from recognizing correspondence
-            self.instance_type_consistency_check(item1, item2) #for class and individual
-            self.singular_unit_consistency_check #for class and individual
+    # # MAIN
+    # def compare_class_or_individual(self, item1, item2):
+    #     # TODO list of mix case checks
+    #     # TODO list of class checks
+    #     # TODO list of individuals checks
+    #     if item1 in self.classes and item2 in self.individuals or item1 in self.individuals and item2 in self.classes:
+    #         self.correspondence_consistency_check #for class and individual
+    #         #TODO some checks may benefit from recognizing correspondence
+    #         self.instance_type_consistency_check(item1, item2) #for class and individual
+    #         self.singular_unit_consistency_check #for class and individual
         
-        if item1 in self.classes:
-            allprop = item1.get_class_properties()
-            #remove annotation properties
-            prop = [str(s) for s in allprop]
-            if len(prop) > 0:
-                for s in prop:
-                #print (type(s))
-                #print(s)
-                    if s == 'rdf-schema.commment':
-                        prop.remove('rdf-schema.commment')
-                    if s == 'rdf-schema.label':
-                        prop.remove('rdf-schema.label')
-                    if s == 'rdf-schema.comment':
-                        prop.remove('rdf-schema.comment')
-          #print(prop)
+    #     if item1 in self.classes:
+    #         allprop = item1.get_class_properties()
+    #         #remove annotation properties
+    #         prop = [str(s) for s in allprop]
+    #         if len(prop) > 0:
+    #             for s in prop:
+    #             #print (type(s))
+    #             #print(s)
+    #                 if s == 'rdf-schema.commment':
+    #                     prop.remove('rdf-schema.commment')
+    #                 if s == 'rdf-schema.label':
+    #                     prop.remove('rdf-schema.label')
+    #                 if s == 'rdf-schema.comment':
+    #                     prop.remove('rdf-schema.comment')
+    #       #print(prop)
 
-            #class type inconsistency - type  inconsistent  if it is  not  the case that the two  self.classes are  equal, 
-            #nor there exists a property  owl:equivalentClass or owl:subclassOf  between  the self.classes,  
-            #or  one class  is  not  subsumed  by  another  class. 
-            self.class_type_consistency_check(item1, item2)
+    #         #class type inconsistency - type  inconsistent  if it is  not  the case that the two  classes are  equal, 
+    #         #nor there exists a property  owl:equivalentClass or owl:subclassOf  between  the classes,  
+    #         #or  one class  is  not  subsumed  by  another  class. 
+    #         self.class_type_consistency_check(item1, item2)
 
-        elif item1 in self.individuals:
-            allprop = item1.get_properties()
-            prop = [str(s) for s in allprop]
-            #remove annotation properties 
-            if len(prop) > 0:
-                for s in prop:
-                #print (type(s))
-                #print(s)
-                    if s == 'rdf-schema.commment':
-                        prop.remove('rdf-schema.commment')
-                    if s == 'rdf-schema.label':
-                            prop.remove('rdf-schema.label')
-                    if s == 'rdf-schema.comment':
-                        prop.remove('rdf-schema.comment')
-                #print(prop)
+    #     elif item1 in self.individuals:
+    #         allprop = item1.get_properties()
+    #         prop = [str(s) for s in allprop]
+    #         #remove annotation properties 
+    #         if len(prop) > 0:
+    #             for s in prop:
+    #             #print (type(s))
+    #             #print(s)
+    #                 if s == 'rdf-schema.commment':
+    #                     prop.remove('rdf-schema.commment')
+    #                 if s == 'rdf-schema.label':
+    #                         prop.remove('rdf-schema.label')
+    #                 if s == 'rdf-schema.comment':
+    #                     prop.remove('rdf-schema.comment')
+    #             #print(prop)
         
-            place_equality_consistent = self.place_equality_consistency_check(item1, item2) #needed to run self.subplace_consistency_check
-            self.subplace_consistency_check(place_equality_consistent, item1, item2)
-            self.temporal_granularity_consistency_check(item1, item2) #run this before subinterval since subinterval needs them to be the same temporal unit, but actually, does it matter? No, but it does in the way that I implemented it using the datetime library
-            self.subinterval_consistency_check(item1, item2)
-            #self.property_consistency_check(item1, item2) #need to debug
-            self.interval_equality_consistency_check(item1, item2)
-            self.interval_non_overlap_consistency_check(item1, item2)
-            self.indicator_unit_component_consistency_check(item1, item2)
-            #self.quantity_measure_consistency_check(item1, item2)
-    #inter
+    #         place_equality_consistent = self.place_equality_consistency_check(item1, item2) #needed to run self.subplace_consistency_check
+    #         self.subplace_consistency_check(place_equality_consistent, item1, item2)
+    #         self.temporal_granularity_consistency_check(item1, item2) 
+    #         self.subinterval_consistency_check(item1, item2)
+    #         #self.property_consistency_check(item1, item2) #need to debug
+    #         self.interval_equality_consistency_check(item1, item2)
+    #         self.interval_non_overlap_consistency_check(item1, item2)
+    #         self.indicator_unit_component_consistency_check(item1, item2)
+    #         #self.quantity_measure_consistency_check(item1, item2)
+    
+    #class inter
     def class_type_consistency_check(self, item1, item2): # item: KG of SPO or Indicator
-        class_type_consistent = False
+        '''
+        From Wang's Thesis: 
+        a class X is type inconsistent with class Y if 
+        X is not the same, 
+        an equivalent class, 
+        nor a subclass of Y, 
+        or X is not subsumed by Y.
+        '''
 
-        if item2 not in self.classes:
-            print("Class type consistency check not run - ", item2, " is not a class.")
+        class_type_consistent = False #used in instance type consistency check
+
+        if item1 not in self.classes and item2 not in self.classes:
+            #print("Class type consistency check not run - ", item1, " and/or ", item2, " is not a class.")
             return
 
         prop1 = [p for p in item1.get_class_properties()]
         prop2 = [p for p in item2.get_class_properties()]
         # type(item) <- direct parent of item
         # prop1 <- names of properties, not the actual property values
+
+        #for equality: checking if same type, same name, and same properties (not checking property values to save computation time)
         if ((type(item1) == type(item2)) and (item1.name and item2.name) and (item1.name == item2.name) and (set(prop1) == set(prop2))): 
-            #check if properties the same (not checking property values to save computation time) and name and type
             class_type_consistent = True
-            print("Class type consistent because self.classes are equal.")
+            print("Class type consistent because classes ", item1, " and ", item2, " are equal.")
             return class_type_consistent
+        
+        #checking equivalency, even if indirect
         elif item2 in item1.INDIRECT_equivalent_to or item1 in item2.INDIRECT_equivalent_to:
             class_type_consistent = True
             print("Class type consistent due to equivalency.")
             return class_type_consistent
+        
+        #checking subclass relationship
         elif item2 in list(item1.subclasses()) or item1 in list(item2.subclasses()):
             class_type_consistent = True
             print("Class type consistent because one is the subclass of the other.")
             return class_type_consistent
-        #subsumption
-        for x in list(item1.self.subclasses()):
-            if x in list(item2.subclasses()) or x in item2.INDIRECT_equivalent_to or x == item2:
+        
+        #subsumption - from Professor Fox's Notes: Class A is subsumed by Class B if all individuals in A are also individuals in B, but not vice versa.
+        if not (set(item1.instances()) == set(item2.instances())): #extra check to ensure they are not the same set of instances for both classes
+            for i in item1.instances():
+                if i in item2.instances():
+                    continue
+                elif i not in item2.instances():
+                    break #all individuals in A should be individuals in B
+                
                 class_type_consistent = True
-                print("Class type consistent due to subsumption.")
+                print("Class type consistent due to subsumption - ", item1, " is subsumed by ", item2, ".")
                 return class_type_consistent
-        for y in list(item2.self.subclasses()):
-            if y in list(item1.subclasses()) or y in item1.INDIRECT_equivalent_to or y == item1:
+
+            for i in item2.instances():
+                if i in item1.instances():
+                    continue
+                elif i not in item1.instances():
+                    break #all individuals in A should be individuals in B
+                
                 class_type_consistent = True
-                print("Class type consistent due to subsumption.")
+                print("Class type consistent due to subsumption - ", item2, " is subsumed by ", item1, ".")
                 return class_type_consistent
+        
         #final verdict
         if class_type_consistent == False:
-            print("Class type inconsistent - neither of the two self.classes is equal, equivalent, or a subclass of the other class.")
+            print("Class type inconsistent - neither of the two classes is equal, equivalent, or a subclass of the other class.")
             return class_type_consistent
         
-    #inter
+    #mixed inter
     def instance_type_consistency_check(self, item1, item2):
         '''
-        Instance type inconsistency verifies that if the instances that make up a city's indicator are an instance of the same class, 
-        #an equivalent class, a subclass of concepts defined in standard, 
+        From Wang's thesis: Instance type inconsistency verifies that if the instances that make up an indicator are an instance of the same class, 
+        an equivalent class, a subclass of concepts defined in standard, 
         or have all necessary properties with values that satisfy the restrictions of those properties defined in the standard definition.
         
-        There does  not  exist  a  direct  rdf:type  relation  between mij  and  nik,  mij is not an  instance  of  nik,  and mij is an  instance  of  civ, and  civ  is type inconsistent with  nik 
-
-        For example, let mij be the 15.2 indicator value published by Toronto, nik be the class iso37120:’15.2’ where Cor(mij,nik). 
-        Assuming there is a direct rdf:type such that Tri(mij, rdf:type, nik), or Tri(mij, rdf:type, civ) 
-        and civ is the same class, equivalent class or a subclass of nik, i.e., iso37120:15.2, then mij is instance type consistent nik. 
-        In Figure 22, given that Cor(mij,nik) and mij is an instance of civ. The class civ and nik are linked to c’iv and n’ik respectively via property ait. 
-
-
-        There does not exist a direct rdf:type relation between mij and nik  (comparing instance m to class n)
-        mij is not an instance of nik, and  
-        mij is an instance of civ, and civ is type inconsistent with nik
-
-        Given an individual and its corresponding class, the rules determine whether:
-        • the individual contains all of the necessary properties as defined by the class it is a member of, and
-        • the corresponding value for the individual’s property is consistent with the restrictions defined by the class for that property.
-
+        Inconsistent if there does not exist a direct rdf:type relation between instance m and class n
+        m is not an instance of n, and 
+        m is an instance of class c, and c is type inconsistent with n
         '''
         if (item2 in self.classes and item1 in self.individuals):
             #item 2 = n, item1 = m
-            #parent = item1.is_instance_of[0] #parent class of item1
-            #if parent in str(item2.self.subclasses()))
 
             if item1 not in item2.instances(): 
                 print(item1, " is not an instance of " , item2, " - therefore they are instance type inconsistent.")
@@ -262,14 +272,13 @@ class Comparison:
             else: #item1 is instance of item2
                 if type(item1) == item2: #item1 has type item2
                     for c in item1.is_instance_of:
-                        #The instance mij is type inconsistent with nik if the class civ is inconsistent with nik, i.e., Type InConsistency(civ,nik) is true. 
+                        #The instance m is type inconsistent with n if the class c is inconsistent with n - class_type_consistency is false.  
                         if self.class_type_consistency_check(c, item2) == False:
                             print(item1, " is an instance of " ,c, ", which is type inconsistent with " ,item2, " - therefore ", item1, "is instance type inconsistent with ", item2, ".")
                             break
                             return
-                        #elif necessary properties satisfy restriction of properties
                         else:
-                            print(item1, " is instance type consistent with ", item2, " because there is a direct rdf:type relation between them, ", item1, " is an instance of ", item2, ", and all self.classes that ", item1, " is an instance of are type consistent with ", item2, ".")
+                            print(item1, " is instance type consistent with ", item2, " because there is a direct rdf:type relation between them, ", item1, " is an instance of ", item2, ", and all classes that ", item1, " is an instance of are type consistent with ", item2, ".")
                             return
                 else:
                     print(item1, " is instance type inconsistent with ", item2, " because there is not a direct rdf:type relation between them.")
@@ -277,8 +286,6 @@ class Comparison:
 
         elif (item1 in self.classes and item2 in self.individuals):
             #item1 = n, item2 = m
-            #parent = item2.is_instance_of[0] #parent class of item2
-            #if parent in str(item1.self.subclasses()))
 
             if item2 not in item1.instances(): 
                 print(item2, " is not an instance of " , item1, " - therefore they are instance type inconsistent.")
@@ -287,23 +294,23 @@ class Comparison:
             else: #item2 is instance of item1
                 if type(item2) == item1: #item2 has type item1
                     for c in item2.is_instance_of:
-                        #The instance mij is type inconsistent with nik if the class civ is inconsistent with nik, i.e., Type InConsistency(civ,nik) is true. 
+                        #The instance m is type inconsistent with n if the class c is inconsistent with n - class_type_consistency is false.  
                         if self.class_type_consistency_check(c, item1) == False:
                             print(item2, " is an instance of " ,c, ", which is type inconsistent with " ,item1, " - therefore ", item2, "is instance type inconsistent with ", item1, ".")
                             break
                             return
-                        #elif necessary properties satisfy restriction of properties, can i use property consistency check?
                         else:
-                            print(item2, " is instance type consistent with ", item1, " because there is a direct rdf:type relation between them, ", item2, " is an instance of ", item1, ", and all self.classes that ", item2, " is an instance of are type consistent with ", item1, ".")
+                            print(item2, " is instance type consistent with ", item1, " because there is a direct rdf:type relation between them, ", item2, " is an instance of ", item1, ", and all classes that ", item2, " is an instance of are type consistent with ", item1, ".")
                             return
                 else:
                     print(item2, " is instance type inconsistent with ", item1, " because there is not a direct rdf:type relation between them.")
                     return
 
         else:
-            print("Instance type consistency check not run - one of the items must be an instance and the other a class.")
+            #print("Instance type consistency check not run - one of the items must be an instance and the other a class.")
             return      
-    
+
+    #TODO remove print statements after testing
     def get_date(self, beginning1, beginning2, end1, end2): 
         intervalBeginning1 = datetime.date(int(beginning1.year), int(beginning1.month), int(beginning1.day))
         intervalEnd1 = datetime.date(int(end1.year), int(end1.month), int(end1.day))
@@ -314,7 +321,8 @@ class Comparison:
         #print(intervalBeginning2, intervalEnd2)
         return intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2
 
-    #might delete
+    #TODO might delete
+    #TODO remove print statements after testing
     def get_date_when_none_values(self, beginning1, beginning2, end1, end2): 
         if type(beginning1.year) == None and (beginning1.month) and (beginning1.day) and type(beginning2.year) == None and (beginning2.month) and (beginning2.day):
             intervalBeginning1 = [int(beginning1.month), int(beginning1.day)]
@@ -332,30 +340,39 @@ class Comparison:
             #print(intervalBeginning2, intervalEnd2)
         return intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2
     
-    #inter, if you want to check a ratio then you have to put item1 as the numerator and item2 as the denominator for example
+    #individual inter
+    #TODO NEED VERSION THAT WORKS WHEN YEAR MISSING! OR IN THIS CASE JUST PRINT - MISSING YEAR INFO. POTENTIALLY INCONSISTENT.
     def subinterval_consistency_check(self, item1, item2): 
         '''
-        #TODO NEED VERSION THAT WORKS WHEN YEAR MISSING! OR IN THIS CASE JUST PRINT - MISSING YEAR INFO. POTENTIALLY INCONSISTENT.
-        #TODO Add docstring
+        An instance x is potentially subinterval inconsistent with y if it is related to a time interval i that 
+        - is during the interval i’ for y, or 
+        - overlaps with i', or 
+        - starts interval i’, or 
+        - ends interval i’, or 
+        - meets interval i’ 
         '''
         if item2 not in self.individuals: #cannot run this check unless both are instances
-            print("Subinterval consistency check not run - it is only done when comparing 2 individuals.")
+            #print("Subinterval consistency check not run - it is only done when comparing 2 individuals.")
             return
+        
+        #if both inputs have beginning and end time interval values
         if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
             beginning1 = item1.hasBeginning 
             end1 = item1.hasEnd
             beginning2 = item2.hasBeginning
             end2 = item2.hasEnd
         else: 
+            #print("Subinterval consistency check not run - missing time interval properties.")
             return
 
+        #if year, month, and day values exist for both inputs, then call get_date function to convert to interval to datetime library
         if (beginning1.year) and (beginning1.month) and (beginning1.day) and (beginning2.year) and (beginning2.month) and (beginning2.day):
             intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date(beginning1, beginning2, end1, end2)
 
-        #compare:
+        #compare (this is facilitated by the datetime library):
 
             #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
-            if (intervalBeginning2 < intervalBeginning1 and intervalBeginning1< intervalEnd1 and intervalEnd1 < intervalEnd2):
+            if (intervalBeginning2 < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 < intervalEnd2):
                 print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are subinterval inconsistent.")
                 return
             elif (intervalBeginning1 < intervalBeginning2 and intervalBeginning2 < intervalEnd2 and intervalEnd2 < intervalEnd1):
@@ -440,41 +457,41 @@ class Comparison:
             print(item2 , " ends when " , item1, " begins. Therefore they are subinterval inconsistent.")
             return
         
-        #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
-        elif (intervalBeginning2[1] < intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
-            print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are subinterval inconsistent.")
-            return
-        elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1] < intervalEnd1[1]):
-            print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are subinterval inconsistent.")
-            return
-        #overlaps: start(a) < start(b) < end(a) < end(b)
-        elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
-            print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are subinterval inconsistent.")
-            return
-        elif (intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
-            print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are subinterval inconsistent.")
-            return
-        #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
-        elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd1[1]  and intervalEnd1[1]  < intervalEnd2[1]:
-            print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are subinterval inconsistent.")
-            return
-        elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning1[1] < intervalEnd2[1]  and intervalEnd2[1]  < intervalEnd1[1]:
-            print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are subinterval inconsistent.")
-            return
-        #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
-        elif intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
-            print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are subinterval inconsistent.")
-            return
-        elif intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1]  == intervalEnd1[1]:
-            print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are subinterval inconsistent.")
-            return
-        #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
-        elif intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd2[1]:
-            print(item1 , " ends when " , item2, " begins. Therefore they are subinterval inconsistent.")
-            return
-        elif intervalBeginning2[1]< intervalEnd2[1] and intervalEnd2[1] == intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1]:
-            print(item2 , " ends when " , item1, " begins. Therefore they are subinterval inconsistent.")
-            return
+        # #during: start(b) < start(a) < end(a) < end(b) (a is contained by b)
+        # elif (intervalBeginning2[1] < intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
+        #     print(item1 , "'s time interval is during " , item2 , "'s. Therefore they are subinterval inconsistent.")
+        #     return
+        # elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1] < intervalEnd1[1]):
+        #     print(item2 , "'s time interval is during " , item1 , "'s. Therefore they are subinterval inconsistent.")
+        #     return
+        # #overlaps: start(a) < start(b) < end(a) < end(b)
+        # elif (intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd1[1] and intervalEnd1[1] < intervalEnd2[1]):
+        #     print(item1 , "'s time interval overlaps with " , item2 , "'s. Therefore they are subinterval inconsistent.")
+        #     return
+        # elif (intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd2 and intervalEnd2 < intervalEnd1):
+        #     print(item2 , "'s time interval overlaps with " , item1 , "'s. Therefore they are subinterval inconsistent.")
+        #     return
+        # #starts: start(a) = start(b) < end(a) < end(b) (a and b start together but a ends before b)
+        # elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd1[1]  and intervalEnd1[1]  < intervalEnd2[1]:
+        #     print(item1 , "and " , item2 , "start together but " , item1 , " ends before " , item2 , ". Therefore they are subinterval inconsistent.")
+        #     return
+        # elif intervalBeginning1[1]  == intervalBeginning2[1] and intervalBeginning1[1] < intervalEnd2[1]  and intervalEnd2[1]  < intervalEnd1[1]:
+        #     print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are subinterval inconsistent.")
+        #     return
+        # #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
+        # elif intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
+        #     print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are subinterval inconsistent.")
+        #     return
+        # elif intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1]  == intervalEnd1[1]:
+        #     print(item1 , "and " , item2 , "end together but " , item2 , " starts after " , item1 , ". Therefore they are subinterval inconsistent.")
+        #     return
+        # #meets: start(a) < end(a) = start(b) < end(b) (a ends when b begins)
+        # elif intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] == intervalBeginning2[1] and intervalBeginning2[1]< intervalEnd2[1]:
+        #     print(item1 , " ends when " , item2, " begins. Therefore they are subinterval inconsistent.")
+        #     return
+        # elif intervalBeginning2[1]< intervalEnd2[1] and intervalEnd2[1] == intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1]:
+        #     print(item2 , " ends when " , item1, " begins. Therefore they are subinterval inconsistent.")
+        #     return
         else:
             print(item1 , " and " , item2 , " are subinterval consistent.")
             return
@@ -957,7 +974,161 @@ class Comparison:
                 return
         else:
             return
+        """
+         if item2 in self.individuals and place_equality_consistent == False:
+            #item1
+            if not item1.hasCitySection and (not item1.hasCity or not item1.for_city) and (not item1.hasProvince or not item1.hasState) and (not item1.hasCountry or not item1.parentCountry):
+                #no location information
+                print("Subplace consistency check not run - location information not available for ", item1, ".") 
+                return
+            elif item1.hasCitySection and item1.hasCity and item2.hasCity and not item2.hasCitySection and item1.hasCity == item2.hasCity:
+                #item1 is a city section, item2 is not a city section, and item1's city is item2's city
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and item1.for_city and item2.for_city and not item2.hasCitySection and item1.for_city == item2.for_city:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and item1.hasCity and item2.for_city and not item2.hasCitySection and item1.hasCity == item2.for_city:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and item1.for_city and item2.hasCity and not item2.hasCitySection and item1.for_city == item2.hasCity:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and item1.hasProvince and item2.hasProvince and not item2.hasCitySection and item1.hasProvince == item2.hasProvince:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and not item2.hasCitySection and item1.hasState and item2.hasState and item1.hasState == item2.hasState:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and not item2.hasCitySection and item1.hasState and item2.hasProvince and item1.hasState == item2.hasProvince:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and not item2.hasCitySection and item1.hasProvince and item2.hasState and item1.hasProvince == item2.hasState:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and not item2.hasCitySection and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and not item2.hasCitySection  and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and not item2.hasCitySection and item1.hasCountry and item2.parentCountry and item1.hasCountry == item2.parentCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif item1.hasCitySection and not item2.hasCitySection and item1.parentCountry and item2.hasCountry and item1.parentCountry == item2.hasCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
 
+            #   city vs province
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasProvince and item2.hasProvince and item1.hasProvince == item2.hasProvince:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasState and item2.hasState and item1.hasState == item2.hasState:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasState and item2.hasProvince and item1.hasState == item2.hasProvince:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasProvince and item2.hasState and item1.hasProvince == item2.hasState:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            
+            #   city vs country
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasCountry and item2.parentCountry and item1.hasCountry == item2.parentCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.parentCountry and item2.hasCountry and item1.parentCountry == item2.hasCountry:
+                print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            else: #some missing location information
+                print("some location information is not available. Therefore " ,item1, " and ", item2, " are potentially inconsistent.")
+
+            #item2
+            if not item2.hasCitySection and (not item2.hasCity or not item2.for_city) and (not item2.hasProvince or not item2.hasState) and (not item2.hasCountry or not item2.parentCountry):
+                #no location information
+                print("Subplace consistency check not run - location information not available for ", item2, ".") 
+                return
+            elif item2.hasCitySection and item2.hasCity and item1.hasCity and not item1.hasCitySection and item1.hasCity == item2.hasCity:
+                #item1 is a city section, item2 is not a city section, and item1's city is item2's city
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and item2.for_city and item1.for_city and not item1.hasCitySection and item1.for_city == item2.for_city:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and item2.hasCity and item1.for_city and not item1.hasCitySection and item2.hasCity == item1.for_city:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and item2.for_city and item1.hasCity and not item1.hasCitySection and item2.for_city == item1.hasCity:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and item2.hasProvince and item1.hasProvince and not item1.hasCitySection and item1.hasProvince == item2.hasProvince:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and not item1.hasCitySection and item2.hasState and item1.hasState and item1.hasState == item2.hasState:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and not item1.hasCitySection and item2.hasState and item1.hasProvince and item2.hasState == item1.hasProvince:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and not item1.hasCitySection and item2.hasProvince and item1.hasState and item2.hasProvince == item1.hasState:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and not item1.hasCitySection and item2.hasCountry and item1.hasCountry and item1.hasCountry == item2.hasCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and not item1.hasCitySection  and item2.parentCountry and item1.parentCountry and item1.parentCountry == item2.parentCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and not item1.hasCitySection and item2.hasCountry and item1.parentCountry and item2.hasCountry == item1.parentCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif item2.hasCitySection and not item1.hasCitySection and item2.parentCountry and item1.hasCountry and item2.parentCountry == item1.hasCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+
+            #   city vs province
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasProvince and item1.hasProvince and item1.hasProvince == item2.hasProvince:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasState and item1.hasState and item1.hasState == item2.hasState:
+                print (item2, " is a subplace of ", item2, " therefore they are not subplace consistent.")
+                return
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasState and item1.hasProvince and item2.hasState == item1.hasProvince:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasProvince and item1.hasState and item2.hasProvince == item1.hasState:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            
+            #   city vs country
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasCountry and item1.parentCountry and item2.hasCountry == item1.parentCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.parentCountry and item1.hasCountry and item2.parentCountry == item1.hasCountry:
+                print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
+                return
+            else: #some missing location information
+                print("some location information is not available. Therefore " ,item2, " and ", item1, " are potentially inconsistent.")
+
+        else:
+            if place_equality_consistent == True:
+                print ("Subplace consistency check not run since the two items were already found to be place equality consistent.") 
+            else:
+                print("Subplace consistency check not run - it is only done when comparing an instance to another instance.") 
+            return
+        """
 
     # intra check: done outside of the recursive loop
     def quantity_measure_consistency_check(self, item):
