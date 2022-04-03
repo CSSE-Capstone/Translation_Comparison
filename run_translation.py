@@ -97,3 +97,5 @@ for index, row in indtestset.iterrows():
 	if plot_graph:
 		plt.show() 
 	print('\n')
+
+# TODO @sandy: Add translated indicators to CIDS .owl file 
