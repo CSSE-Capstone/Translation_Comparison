@@ -13,8 +13,10 @@ from wordnet.main import WordNet
 # Command line options 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--plot', action='store_true', default=False, help='if True, generates NetworkX graphs.')
+parser.add_argument('-d', '--dataset', action='store', default='indicatortestset.csv', help="Specify name of the indicator definition text csv file, e.g. 'indicatortestset.csv'")
 args = parser.parse_args()
 plot_graph = bool(args.plot)
+dataset_name = args.dataset
 
 file_path = 'files/'
 
@@ -61,7 +63,7 @@ wn = WordNet(similarity_threshold=0.8,
 
 
 # Run test set 
-indtestset = pd.read_csv(file_path + 'indicatortestset.csv', encoding = "ISO-8859-1", engine='python')
+indtestset = pd.read_csv(file_path + dataset_name, encoding = "ISO-8859-1", engine='python')
 cids_classes = pd.read_csv(file_path + 'cidsclasses.csv', header=None, squeeze=True).to_list()
 matched_indicators = pd.read_csv(file_path + 'glossarymatchedindicators.csv', index_col=0, header=None, squeeze=True).to_dict()
 
