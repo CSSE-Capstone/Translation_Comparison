@@ -41,8 +41,23 @@ class Comparison:
             self.run_mixed_inter_checks(node1, node2)
         
         # Get all properties of node1 and node2
-        node1_properties = node1.get_class_properties() if node1 in self.classes else node1.get_properties()
-        node2_properties = node2.get_class_properties() if node2 in self.classes else node2.get_properties()
+        if node1 in self.classes:
+            node1_properties = node1.get_class_properties()
+        elif node1[0] in self.classes:
+            node1_properties = node1[0].get_class_properties() 
+        elif node1 in self.individuals: 
+            node1.get_properties()
+        else:
+            node1[0].get_properties()
+        
+        if node2 in self.classes:
+            node2_properties = node2.get_class_properties()
+        elif node2[0] in self.classes:
+            node2_properties = node2[0].get_class_properties() 
+        elif node2 in self.individuals: 
+            node2.get_properties()
+        else:
+            node2[0].get_properties()
 
         # Remove duplicate properties in list, then sort node1_properties and node2_properties
         node1_properties = sorted(list(set(self.remove_annotation_properties(list(node1_properties)))))
@@ -64,8 +79,8 @@ class Comparison:
         # Traverse both trees using their common properties
         for p in common_properties:
             # Get the child of this p for both trees
-            node1_obj = p[node1]
-            node2_obj = p[node2]
+            node1_obj = p[node1][0]
+            node2_obj = p[node2][0]
             
             # Determine if the child is a data value (ie a leaf node)
             node1_obj_is_data_value = isinstance(node1_obj, str) and isinstance(node1_obj, int) # TODO any more types?
@@ -1184,9 +1199,14 @@ class Comparison:
         
         if "iso21972.Quantity" in str(parentItem.ancestors()) and "iso21972.Measure" in str(parentItem2.ancestors()): #this check compares an instance of Quantity to a Measure. 
             if item.unit_of_measure and item2.unit_of_measure:
-                if item.unit_of_measure[0] == item2.unit_of_measure[0]:
-                    print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
-                    return
+                if isinstance(item, list):
+                    if item.unit_of_measure[0] == item2.unit_of_measure[0]:
+                        print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
+                        return
+                elif not isinstance(item, list):
+                    if item.unit_of_measure == item2.unit_of_measure:
+                        print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
+                        return
                 else:
                     print(item, " is measurement inconsistent with ", item2, " because they do not have the same unit of measure.")
                     return
@@ -1216,14 +1236,24 @@ class Comparison:
                 item1_denominator_obj = p[item]
             if p.name == 'unit_of_measure':
                 unit_of_measure = p[item]
-
+        
         if  item1_numerator_obj[0] and unit_of_measure[0]: #numerator has to be a component of item to run this check
-            if item1_numerator_obj[0].unit_of_measure[0] == unit_of_measure[0]:
-                print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
-                return
-            elif item1_numerator_obj[0].unit_of_measure[0] == unit_of_measure[0].numerator[0]:
-                print(item, "'s unit of measure is connected to its component, ", item1_numerator_obj, "'s unit of measure by the numerator property. They are indicator unit component consistent.")
-                return        
+            if isinstance(item1_numerator_obj[0].unit_of_measure, list):
+                if item1_numerator_obj[0].unit_of_measure[0] == unit_of_measure[0]:
+                    print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
+                    return
+                elif item1_numerator_obj[0].unit_of_measure[0] == unit_of_measure[0].numerator[0]:
+                    print(item, "'s unit of measure is connected to its component, ", item1_numerator_obj, "'s unit of measure by the numerator property. They are indicator unit component consistent.")
+                    return
+            elif not isinstance(item1_numerator_obj[0].unit_of_measure, list):
+                if item1_numerator_obj[0].unit_of_measure == unit_of_measure[0]:
+                    print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
+                    return
+            elif not isinstance(item1_numerator_obj[0].unit_of_measure, list) and not isinstance(unit_of_measure, list):
+                if item1_numerator_obj[0].unit_of_measure == unit_of_measure:
+                    print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
+                    return
+            
         elif item1_denominator_obj[0] and unit_of_measure[0]: #denominator has to be a component of item to run this check
             if item1_denominator_obj[0].unit_of_measure[0] == unit_of_measure[0]:
                 print(item, " has the same unit of measure as its component, ", item1_denominator_obj, ". They are indicator unit component consistent.")
@@ -1241,19 +1271,33 @@ class Comparison:
         Instance m has a unit of measure a that is multiple or submultiple of the unit defined in its definition class n. 
         Instance m is then singular unit inconsistent with its definition class n. 
         '''
-        if item1 in item2.is_instance_of: #if item1 is the definition class, and item2 is the individual of that class
+        if item1 in self.classes and item1 in item2.is_instance_of: #if item1 is the definition class, and item2 is the individual of that class
         #is_instance_of returns list
-            if item2.unit_of_measure[0] and item1.unit_of_measure[0]: #if both items have unit of measure values
-                measure1 = item1.unit_of_measure[0] 
-                measure2 = item2.unit_of_measure[0] 
-                if "iso21972.Singular_unit" in str(measure1.is_instance_of): #if definition class has unit of measure of singular unit
-                    if "iso21972.multiple_or_submultiple" in str(measure2.is_instance_of): #if instance had unit of measure of multiple unit
-                        if measure2.singular_unit and measure2.singular_unit[0] == measure1:
-                        #Did it here but if multiple unit, not necessary to check if multiple unit's property of singular_unit leads back to measure1 since even knowing that the class is singular but the instance isn't shows inconsistency
-                            print(item2, " is a multiple or submultiple of the unit defined in its definition class, ", item1, ". Therefore they are singular unit inconsistent.")
-                            return
-                    elif "iso21972.multiple_or_submultiple" not in str(measure2.is_instance_of) and "iso21972.Singular_unit" in str(measure2.is_instance_of): #if instance had unit of measure of singular unit
-                        if measure2 == measure1:
+            if item2.unit_of_measure and item1.unit_of_measure: #if both items have unit of measure values
+                if isinstance(item2.unit_of_measure, list):
+                    measure1 = item1.unit_of_measure[0] 
+                    measure2 = item2.unit_of_measure[0]
+                else:
+                    measure1 = item1.unit_of_measure
+                    measure2 = item2.unit_of_measure
+
+                if "iso21972.Singular_unit" in str(measure1.ancestors()): #if definition class has unit of measure of singular unit
+                    if "iso21972.Unit_multiple_or_submultiple" in str(measure2.is_instance_of): #if instance had unit of measure of multiple unit
+                        if isinstance(measure2.singular_unit, list):
+                            if measure2.singular_unit and type(measure2.singular_unit[0]) == measure1:
+                            #Did it here but if multiple unit, not necessary to check if multiple unit's property of singular_unit leads back to measure1 since even knowing that the class is singular but the instance isn't shows inconsistency
+                                print(item2, " is a multiple or submultiple of the unit defined in its definition class, ", item1, ". Therefore they are singular unit inconsistent.")
+                                return
+                        else:
+                            if measure2.singular_unit and type(measure2.singular_unit) == measure1:
+                            #Did it here but if multiple unit, not necessary to check if multiple unit's property of singular_unit leads back to measure1 since even knowing that the class is singular but the instance isn't shows inconsistency
+                                print(item2, " is a multiple or submultiple of the unit defined in its definition class, ", item1, ". Therefore they are singular unit inconsistent.")
+                                return
+                    
+                    elif "iso21972.Unit_multiple_or_submultiple" not in str(measure2.is_instance_of):
+                        # and "iso21972.Singular_unit" in str(measure2.is_instance_of): 
+                        #if instance had unit of measure of singular unit
+                        if measure1 == measure2.is_instance_of[0] or measure2 == measure1:
                             print(item2, " is a singular unit of the type of unit defined in its definition class, ", item1, ". Therefore they are singular unit consistent.")
                             return
                     else:
@@ -1263,29 +1307,39 @@ class Comparison:
                 #print("Either ", item1, " or ", item2, " does not have a unit of measure property. Therefore Singular Unit Consistency Check cannot be run.")
                 return
 
-        elif item2 in item1.is_instance_of: #if item2 is the definition class, and item1 is the individual of that class
+        elif item2 in self.classes and item2 in item1.is_instance_of: #if item2 is the definition class, and item1 is the individual of that class
             #is_instance_of returns list
-            if item2.unit_of_measure[0] and item1.unit_of_measure[0]:
-                measure1 = item1.unit_of_measure[0] 
-                measure2 = item2.unit_of_measure[0] 
-                if "iso21972.Singular_unit" in str(measure2.is_instance_of): #if definition class had unit of measure of singular unit
-                    if "iso21972.multiple_or_submultiple" in str(measure1.is_instance_of): #if instance had unit of measure of multiple unit
-                        if measure1.singular_unit and measure1.singular_unit[0] == measure2:
-                        #I did it here but if multiple unit, not necessary to check if multiple unit's property of singular_unit leads back to measure1 since even knowing that the class is singular but the instance isn't shows inconsistency
-                            print(item1, " is a multiple or submultiple of the unit defined in its definition class, ", item2, ". Therefore they are singular unit inconsistent.")
-                            return
-                    elif "iso21972.multiple_or_submultiple" not in str(measure1.is_instance_of) and "iso21972.Singular_unit" in str(measure1.is_instance_of): #if instance had unit of measure of singular unit
-                        if measure2 == measure1:
-                            print(item2, " is a singular unit of the type of unit defined in its definition class, ", item1, ". Therefore they are singular unit consistent.")
-                            return
-                    else:
-                        #print("Either ", item1, " or ", item2, " does not have a singular, multiple, or submultiple unit of measure property. Therefore Singular Unit Consistency Check cannot be run.")
-                        return
-            else:
-                #print("Either ", item1, " or ", item2, " does not have a unit of measure property. Therefore Singular Unit Consistency Check cannot be run.")
-                return
+            if item1.unit_of_measure and item2.unit_of_measure:
+                if isinstance(item1.unit_of_measure, list):
+                    measure1 = item1.unit_of_measure[0] 
+                    measure2 = item2.unit_of_measure[0]
+                else:
+                    measure1 = item1.unit_of_measure
+                    measure2 = item2.unit_of_measure
+                
+                if "iso21972.Singular_unit" in str(measure2.ancestors()): #if definition class had unit of measure of singular unit
+                    if "iso21972.Unit_multiple_or_submultiple" in str(measure1.is_instance_of): #if instance had unit of measure of multiple unit
+                        if isinstance(measure1.singular_unit, list):
+                            if measure1.singular_unit and type(measure1.singular_unit[0]) == measure2:
+                                print(item1, " is a multiple or submultiple of the unit defined in its definition class, ", item2, ". Therefore they are singular unit inconsistent.")
+                                return
+                        else:
+                            if measure1.singular_unit and type(measure1.singular_unit) == measure2:
+                                print(item1, " is a multiple or submultiple of the unit defined in its definition class, ", item2, ". Therefore they are singular unit inconsistent.")
+                                return
+                    
+                    elif "iso21972.Unit_multiple_or_submultiple" not in str(measure1.is_instance_of):
+                         #and "iso21972.Singular_unit" in str(measure1.is_a): 
+                         #if instance had unit of measure of singular unit
+                            if measure2 == measure1.is_instance_of[0] or measure2 == measure1:
+                                print(item1, " is a singular unit of the type of unit defined in its definition class, ", item2, ". Therefore they are singular unit consistent.")
+                                return
+                else:
+                    # print("Either ", item1, " or ", item2, " does not have a singular, multiple, or submultiple unit of measure property. Therefore Singular Unit Consistency Check cannot be run.")
+                    return
+            
         else:
-            #print(item1, " or ", item2, "is not the definition class of the other. Singular Unit Consistency Check cannot be run.")
+            # print(item1, " or ", item2, "is not the definition class of the other. Singular Unit Consistency Check cannot be run.")
             return
 
     #this one is comparing the instance to its definition class
@@ -1306,21 +1360,21 @@ class Comparison:
                 print("Not all components in the definition are covered by the instance. Therefore they are correspondence inconsistent.")
                 return
             
-            elif set(class_properties) != set(individual_properties):
+            elif set(class_properties) == set(individual_properties):
                 print("All components in the definition are covered by the instance. Therefore they are correspondence consistent.")
                 return
         
         elif item1 in self.individuals and item2 in self.classes:
             class_properties = item2.get_class_properties()
             individual_properties = item1.get_properties()
-            self.remove_annotation_properties(class_properties) #remove annotation properties
-            self.remove_annotation_properties(individual_properties)
+            class_properties = self.remove_annotation_properties(class_properties) #remove annotation properties
+            individual_properties = self.remove_annotation_properties(individual_properties)
 
             if set(class_properties) != set(individual_properties):
                 print("Not all components in the definition are covered by the instance. Therefore they are correspondence inconsistent.")
                 return
             
-            elif set(class_properties) != set(individual_properties):
+            elif set(class_properties) == set(individual_properties):
                 print("All components in the definition are covered by the instance. Therefore they are correspondence consistent.")
                 return
 
