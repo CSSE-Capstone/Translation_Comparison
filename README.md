@@ -47,7 +47,7 @@ webprotege.stanford.edu.SPO1ReportingPeriod and  webprotege.stanford.edu.SPO3Rep
 
 To run the translation model, run `python3 run_translation.py`.
 
-The .owl output file will be saved in the present directory. But if you wish to save the command line outputs as well, run `python3 run_translation.py >> translation_output.txt"`
+The .owl output file will be saved in the present directory. But if you wish to save the console outputs as well, run `python3 run_translation.py >> translation_output.txt"`
 
 One of the features of the translation model is that it can plot knowledge graphs of each translated indicator. By default, this feature is disabled. To enable this feature, run `python3 run_translation.py -p`.
 
@@ -60,5 +60,5 @@ To enable both customizations, simply run the script wtih both options: `python3
 
 To run the comparison model, run `python3 run_comparison.py`.
 
-If you wish to save the comparison command line output, run `python3 run_comparison.py >> comparison_output.txt"`.
+If you wish to save the console output, run `python3 run_comparison.py >> comparison_output.txt"`.
 
