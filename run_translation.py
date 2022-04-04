@@ -105,7 +105,6 @@ for index, row in indtestset.iterrows():
 	print('\n')
 
 # Create OWL File
-
 translated_onto = convert_owl(output_dict_list)
 translated_onto.save(file = "translations.owl", format = "rdfxml")
 print("File Saved in Current Directory")
