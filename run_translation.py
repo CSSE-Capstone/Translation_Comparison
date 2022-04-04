@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
 import nltk
+# nltk.download('omw-1.4')
 from transformers import BertTokenizer, BertModel
 from nltk.corpus import stopwords
 import argparse
@@ -9,6 +10,7 @@ import argparse
 from rule_based.main import RuleBased
 from clustering.main import Clustering 
 from wordnet.main import WordNet
+from owl_export import convert_owl
 
 # Command line options 
 parser = argparse.ArgumentParser()
@@ -68,6 +70,7 @@ cids_classes = pd.read_csv(file_path + 'cidsclasses.csv', header=None, squeeze=T
 matched_indicators = pd.read_csv(file_path + 'glossarymatchedindicators.csv', index_col=0, header=None, squeeze=True).to_dict()
 
 # Peform translation on each sentence in indicatortestset.csv
+output_dict_list = []
 for index, row in indtestset.iterrows():
 	ind_code = row['Indicator Code']
 	ind_def = row['Indicator Definition']
@@ -80,7 +83,7 @@ for index, row in indtestset.iterrows():
 	print('rb_output')
 	print(rb_output)
 
-	clusterMap, kmeans = clustering.cluster()
+	clusterMap, y_kmeans_token, kmeans = clustering.cluster()
 	cluster_output = clustering.rb_cluster_combined(rb_output, ind_def, clusterMap, kmeans)
 	print('cluster_output')
 	print(cluster_output)
@@ -88,6 +91,8 @@ for index, row in indtestset.iterrows():
 	wordnet_output = wn.wordnet(ind_def, cluster_output)
 	print('wordnet_output')
 	print(wordnet_output)
+
+	output_dict_list.append(wordnet_output)
 
 	# Plot networkx graph
 	G, prop_rel = rb.plot_KG(wordnet_output)
@@ -100,4 +105,8 @@ for index, row in indtestset.iterrows():
 		plt.show() 
 	print('\n')
 
-# TODO @sandy: Add translated indicators to CIDS .owl file 
+# Create OWL File
+
+translated_onto = convert_owl(output_dict_list)
+translated_onto.save(file = "translations.owl", format = "rdfxml")
+print("File Saved in Current Directory")
