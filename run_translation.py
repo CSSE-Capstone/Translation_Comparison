@@ -63,7 +63,6 @@ wn = WordNet(similarity_threshold=0.8,
 			c_ss_method='lesk',
 			last_word_weight=0.6)
 
-
 # Run test set 
 indtestset = pd.read_csv(file_path + dataset_name, encoding = "ISO-8859-1", engine='python')
 cids_classes = pd.read_csv(file_path + 'cidsclasses.csv', header=None, squeeze=True).to_list()
