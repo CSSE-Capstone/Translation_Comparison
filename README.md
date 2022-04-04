@@ -33,9 +33,8 @@ Prints an analysis of whether the two items are consistent or inconsistent by ea
 
 Example output:
 
-TODO @Neevi
 ```
-<inserthere>
+webprotege.stanford.edu.SPO1ReportingPeriod and  webprotege.stanford.edu.SPO3ReportingPeriod start together but  webprotege.stanford.edu.SPO3ReportingPeriod ends before webprotege.stanford.edu.SPO1ReportingPeriod. Therefore they are subinterval inconsistent.
 ```
 
 # Steps:
