@@ -41,9 +41,11 @@ TODO @Neevi
 # Steps:
 ## Set up locally
 1. Clone this repository to your local computer. `git clone https://github.com/CSSE-Capstone/Translation_Comparison.git`
-2. On your computer, go to the cloned directory. 
+2. On your computer, go to the root directory of this project. 
 3. Install package dependencies needed to run the code: `pip install -r requirements.txt` 
 ## Run the Translation model
+**Note**: Perform the following runs at the root directory of this project.
+
 To run the translation model, run `python3 run_translation.py`.
 
 The .owl output file will be saved in the present directory. But if you wish to save the command line outputs as well, run `python3 run_translation.py >> translation_output.txt"`
@@ -55,6 +57,8 @@ By default, the translation model runs on `{PATH_TO_LOCAL_REPO}/files/indicatort
 To enable both customizations, simply run the script wtih both options: `python3 run_translation.py -p -d {MY_INDICATOR_SET}.csv`
 
 ## Run the Comparison model
+**Note**: Perform the following runs at the root directory of this project.
+
 To run the comparison model, run `python3 run_comparison.py`.
 
 If you wish to save the comparison command line output, run `python3 run_comparison.py >> comparison_output.txt"`.
