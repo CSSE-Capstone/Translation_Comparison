@@ -15,6 +15,7 @@
      xmlns:vann="http://purl.org/vocab/vann/"
      xmlns:terms="http://purl.org/dc/terms/"
      xmlns:icontact="http://ontology.eil.utoronto.ca/tove/icontact#"
+     xmlns:iso21972="http://ontology.eil.utoronto.ca/ISO21972/iso21972#"
      xmlns:webprotege="http://webprotege.stanford.edu/"
      xmlns:organization="http://ontology.eil.utoronto.ca/tove/organization#"
      xmlns:GenericProperties="http://ontology.eil.utoronto.ca/5087/1/GenericProperties/">
@@ -362,6 +363,12 @@ Note that the value-space is not defined, so a generic OWL2 processor cannot com
     
 
 
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#denominator -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#denominator"/>
+    
+
+
     <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasDenominator -->
 
     <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasDenominator"/>
@@ -370,13 +377,46 @@ Note that the value-space is not defined, so a generic OWL2 processor cannot com
 
     <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasNumerator -->
 
-    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasNumerator"/>
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasNumerator">
+        <rdfs:domain rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_division"/>
+        <rdfs:range rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_of_measure"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasPhenomenon -->
 
     <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasPhenomenon"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#numerator -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#numerator"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#singular_unit -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#singular_unit"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#sum_of -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#sum_of"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#unit_of_measure -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#unit_of_measure"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#value -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#value"/>
     
 
 
@@ -432,6 +472,14 @@ Note that the value-space is not defined, so a generic OWL2 processor cannot com
 
     <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/cardinalityOf">
         <rdfs:label>cardinalityOf</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://webprotege.stanford.edu/forAccount -->
+
+    <owl:ObjectProperty rdf:about="http://webprotege.stanford.edu/forAccount">
+        <rdfs:label>forAccount</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -1174,12 +1222,6 @@ DBPedia provides a set of resources corresponding to the IANA timezones, with a 
     
 
 
-    <!-- http://ontology.eil.utoronto.ca/tove/icontact#hasUnitNumber -->
-
-    <owl:DatatypeProperty rdf:about="http://ontology.eil.utoronto.ca/tove/icontact#hasUnitNumber"/>
-    
-
-
     <!-- http://webprotege.stanford.edu/dateSold -->
 
     <owl:DatatypeProperty rdf:about="http://webprotege.stanford.edu/dateSold">
@@ -1628,9 +1670,27 @@ The range of this property is not specified, so can be replaced by any specific 
     
 
 
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#City -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#City"/>
+    
+
+
     <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Feature -->
 
     <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Feature"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Measure -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Measure"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Monetary_unit -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Monetary_unit"/>
     
 
 
@@ -1640,9 +1700,39 @@ The range of this property is not specified, so can be replaced by any specific 
     
 
 
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit"/>
+    
+
+
     <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Sum -->
 
     <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Sum"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_division -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_division"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_exponentiation -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_exponentiation"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_multiple_or_submultiple -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_multiple_or_submultiple"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_of_measure -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_of_measure"/>
     
 
 
@@ -1694,15 +1784,47 @@ The range of this property is not specified, so can be replaced by any specific 
     
 
 
+    <!-- http://ontology.eil.utoronto.ca/cids/cids#Supplier -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/cids/cids#Supplier"/>
+    
+
+
     <!-- http://ontology.eil.utoronto.ca/cids/cids#cidsThing -->
 
     <owl:Class rdf:about="http://ontology.eil.utoronto.ca/cids/cids#cidsThing"/>
     
 
 
+    <!-- http://ontology.eil.utoronto.ca/tove/organization#Organization -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/organization#Organization"/>
+    
+
+
     <!-- http://ontology.eil.utoronto.ca/tove/organization#OrganizationID -->
 
     <owl:Class rdf:about="http://ontology.eil.utoronto.ca/tove/organization#OrganizationID"/>
+    
+
+
+    <!-- http://schema.org/Country -->
+
+    <owl:Class rdf:about="http://schema.org/Country"/>
+    
+
+
+    <!-- http://schema.org/Person -->
+
+    <owl:Class rdf:about="http://schema.org/Person">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Person</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://schema.org/State -->
+
+    <owl:Class rdf:about="http://schema.org/State"/>
     
 
 
@@ -1732,11 +1854,59 @@ The range of this property is not specified, so can be replaced by any specific 
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Feature"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/icontact#hasCity"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#City"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/tove/icontact#hasCountry"/>
-                <owl:hasValue rdf:resource="http://webprotege.stanford.edu/SampleCountry"/>
+                <owl:someValuesFrom rdf:resource="http://schema.org/Country"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/hasProvince"/>
+                <owl:someValuesFrom rdf:resource="http://schema.org/State"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label>AreaofPlantedTrees</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/Assets -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/Assets">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#cidsThing"/>
+        <rdfs:label>Assets</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/AssetsPopulation -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/AssetsPopulation">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Population"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#definedBy"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/Assets"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forAccount"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/StatutoryAccount"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forTimeInterval"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>AssetsPopulation</rdfs:label>
     </owl:Class>
     
 
@@ -1824,6 +1994,14 @@ The range of this property is not specified, so can be replaced by any specific 
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label>DebtAmount</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/Distributor -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/Distributor">
+        <rdfs:label>Distributor</rdfs:label>
     </owl:Class>
     
 
@@ -1951,6 +2129,27 @@ The range of this property is not specified, so can be replaced by any specific 
     
 
 
+    <!-- http://webprotege.stanford.edu/FP6152 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/FP6152">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#RatioIndicator"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasDenominator"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/LiabilitiesPopulation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#hasNumerator"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/AssetsPopulation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>FP6152</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://webprotege.stanford.edu/Farmer -->
 
     <owl:Class rdf:about="http://webprotege.stanford.edu/Farmer">
@@ -1971,6 +2170,34 @@ The range of this property is not specified, so can be replaced by any specific 
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label>Female</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/FemaleDistributors -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/FemaleDistributors">
+        <rdfs:subClassOf rdf:resource="http://schema.org/Person"/>
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/Distributor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/productSold"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/GeneralProduct"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/serviceSold"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/GeneralService"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/soldBy"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/Female"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>FemaleDistributors</rdfs:label>
     </owl:Class>
     
 
@@ -2141,10 +2368,74 @@ The range of this property is not specified, so can be replaced by any specific 
     
 
 
+    <!-- http://webprotege.stanford.edu/IndividualSuppliers -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/IndividualSuppliers">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Supplier"/>
+        <rdfs:subClassOf rdf:resource="http://schema.org/Person"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/productSold"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/GeneralProduct"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/serviceSold"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/GeneralService"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/soldTo"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#Organization"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>IndividualSuppliers</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://webprotege.stanford.edu/Land -->
 
     <owl:Class rdf:about="http://webprotege.stanford.edu/Land">
         <rdfs:label>Land</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/Liabilities -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/Liabilities">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#cidsThing"/>
+        <rdfs:label>Liabilities</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/LiabilitiesPopulation -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/LiabilitiesPopulation">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Population"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#definedBy"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/Liabilities"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forAccount"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/StatutoryAccount"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forTimeInterval"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>LiabilitiesPopulation</rdfs:label>
     </owl:Class>
     
 
@@ -2316,6 +2607,7 @@ The range of this property is not specified, so can be replaced by any specific 
                 <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/OI2165Population"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">OI2165</rdfs:label>
     </owl:Class>
     
 
@@ -2346,6 +2638,12 @@ The range of this property is not specified, so can be replaced by any specific 
     <owl:Class rdf:about="http://webprotege.stanford.edu/PI2302">
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Sum"/>
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Indicator"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#unit_of_measure"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/poundSterlings"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://webprotege.stanford.edu/parameterOfVar"/>
@@ -2390,6 +2688,12 @@ The range of this property is not specified, so can be replaced by any specific 
     <owl:Class rdf:about="http://webprotege.stanford.edu/PI2551">
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Sum"/>
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Indicator"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#unit_of_measure"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/dollar"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://webprotege.stanford.edu/parameterOfVar"/>
@@ -2556,7 +2860,6 @@ The range of this property is not specified, so can be replaced by any specific 
                 <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/EmployeeDuration"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:label>PI2688 Employee</rdfs:label>
     </owl:Class>
     
 
@@ -2626,6 +2929,156 @@ The range of this property is not specified, so can be replaced by any specific 
     
 
 
+    <!-- http://webprotege.stanford.edu/PI4060 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI4060">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Cardinality"/>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Indicator"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/cardinalityOf"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/PI4060Population"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>PI4060</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI4060Population -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI4060Population">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Population"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#definedBy"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/UniqueClientIndividuals"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forTimeInterval"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>PI4060 Population</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI5350 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI5350">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Cardinality"/>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Indicator"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/cardinalityOf"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/PI5350Population"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Number of individuals who sold goods or services to the organization during the reporting period.</rdfs:comment>
+        <rdfs:label>PI5350</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI5350Population -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI5350Population">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Population"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#definedBy"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/IndividualSuppliers"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forTimeInterval"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>PI5350Population</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI6659 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI6659">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Cardinality"/>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Indicator"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/cardinalityOf"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/PI6659Population"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Number of female individuals who served as distributors of the organization&apos;s products/services during the reporting period.</rdfs:comment>
+        <rdfs:label>PI6659</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI6659Population -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI6659Population">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Population"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#definedBy"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/FemaleDistributors"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forTimeInterval"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>PI6659Population</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI8330 -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI8330">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Cardinality"/>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Indicator"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/cardinalityOf"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/PI8330Population"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>PI8330</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI8330Population -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/PI8330Population">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Population"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#definedBy"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/UniqueWomenClientIndividuals"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://webprotege.stanford.edu/forTimeInterval"/>
+                <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>PI8330Population</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://webprotege.stanford.edu/PI9991 -->
 
     <owl:Class rdf:about="http://webprotege.stanford.edu/PI9991">
@@ -2637,6 +3090,7 @@ The range of this property is not specified, so can be replaced by any specific 
                 <owl:someValuesFrom rdf:resource="http://webprotege.stanford.edu/PI9991Population"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PI9991</rdfs:label>
     </owl:Class>
     
 
@@ -2736,14 +3190,6 @@ The range of this property is not specified, so can be replaced by any specific 
     
 
 
-    <!-- http://webprotege.stanford.edu/SPO7BeginningNew -->
-
-    <owl:Class rdf:about="http://webprotege.stanford.edu/SPO7BeginningNew">
-        <rdfs:label>SPO7BeginningNew</rdfs:label>
-    </owl:Class>
-    
-
-
     <!-- http://webprotege.stanford.edu/SmallholderWhoSold -->
 
     <owl:Class rdf:about="http://webprotege.stanford.edu/SmallholderWhoSold">
@@ -2755,6 +3201,15 @@ The range of this property is not specified, so can be replaced by any specific 
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label>SmallholderWhoSold</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/StatutoryAccount -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/StatutoryAccount">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#cidsThing"/>
+        <rdfs:label>StatutoryAccount</rdfs:label>
     </owl:Class>
     
 
@@ -2775,6 +3230,43 @@ The range of this property is not specified, so can be replaced by any specific 
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label>SupportedFinancedEnterprise</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/UniqueClientIndividuals -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/UniqueClientIndividuals">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Client"/>
+        <rdfs:label>UniqueClientIndividuals</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/UniqueWomenClientIndividuals -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/UniqueWomenClientIndividuals">
+        <rdfs:subClassOf rdf:resource="http://webprotege.stanford.edu/UniqueClientIndividuals"/>
+        <rdfs:label>UniqueWomenClientIndividuals</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/dollar -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/dollar">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Monetary_unit"/>
+        <rdfs:label>dollar</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://webprotege.stanford.edu/poundSterlings -->
+
+    <owl:Class rdf:about="http://webprotege.stanford.edu/poundSterlings">
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Monetary_unit"/>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit"/>
+        <rdfs:label>pound sterlings</rdfs:label>
     </owl:Class>
     
 
@@ -3686,21 +4178,127 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     
 
 
+    <!-- http://ontology.eil.utoronto.ca/tove/icontact#alberta -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/icontact#alberta"/>
+    
+
+
     <!-- http://ontology.eil.utoronto.ca/tove/icontact#canada -->
 
     <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/icontact#canada"/>
     
 
 
-    <!-- http://ontology.eil.utoronto.ca/tove/icontact#ontario -->
+    <!-- http://ontology.eil.utoronto.ca/tove/organization#calgaryAbCa -->
 
-    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/icontact#ontario"/>
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/organization#calgaryAbCa"/>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/tove/organization#edmontonAbCa -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/organization#edmontonAbCa"/>
     
 
 
     <!-- http://ontology.eil.utoronto.ca/tove/organization#torontoOnCa -->
 
     <owl:NamedIndividual rdf:about="http://ontology.eil.utoronto.ca/tove/organization#torontoOnCa"/>
+    
+
+
+    <!-- http://webprotege.stanford.edu/MockClient -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/MockClient">
+        <rdfs:label>MockClient</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688Employee -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688Employee">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2688Employee"/>
+        <webprotege:workFor rdf:resource="http://webprotege.stanford.edu/MockClient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688ReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688ReportingPeriod">
+        <rdfs:label>PI2688ReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688SupportedFinancedEnterprise -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterprise">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2688"/>
+        <webprotege:cardinalityOf rdf:resource="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterprisePopulation"/>
+        <rdfs:label>PI2688SupportedFinancedEnterprise</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseEmployee -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseEmployee">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2688Employee"/>
+        <webprotege:resideIn rdf:resource="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseLowIncomeArea"/>
+        <webprotege:workFor rdf:resource="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseOrganization"/>
+        <time:intervalDuring rdf:resource="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseEmployeeDuration"/>
+        <rdfs:label>PI2688SupportedFinancedEnterpriseEmployee</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseEmployeeDuration -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseEmployeeDuration">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EmployeeDuration"/>
+        <rdfs:label>PI2688SupportedFinancedEnterpriseEmployeeDuration</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseLowIncomeArea -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseLowIncomeArea">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/LowIncomeArea"/>
+        <rdfs:label>PI2688SupportedFinancedEnterpriseLowIncomeArea</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseOrganization -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseOrganization">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/SupportedFinancedEnterprise"/>
+        <rdfs:label>PI2688SupportedFinancedEnterpriseOrganization</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688SupportedFinancedEnterprisePopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterprisePopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2688Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseEmployee"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseReportingPeriod"/>
+        <rdfs:label>PI2688SupportedFinancedEnterprisePopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/PI2688SupportedFinancedEnterpriseReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <rdfs:label>PI2688SupportedFinancedEnterpriseReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
     
 
 
@@ -3720,6 +4318,543 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI9991Population"/>
         <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO2SmallholderWhoSold"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PI9991Population2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO10EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO10EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <rdfs:label>SPO10EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO10EarningsAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsPopulation"/>
+        <rdfs:label>SPO10EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsDateTimeDescriptionBeginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsDateTimeDescriptionBeginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO10EarningsOfFemaleDistributorsDateTimeDescriptionBeginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsDateTimeDescriptionEnd -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsDateTimeDescriptionEnd">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</time:year>
+        <rdfs:label>SPO10EarningsOfFemaleDistributorsDateTimeDescriptionEnd</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO10FemaleDistributors"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsReportingPeriod"/>
+        <rdfs:label>SPO10EarningsOfFemaleDistributorsPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsDateTimeDescriptionBeginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO10EarningsOfFemaleDistributorsDateTimeDescriptionEnd"/>
+        <rdfs:label>SPO10EarningsOfFemaleDistributorsReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO10FemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO10FemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemaleEarnings"/>
+        <rdfs:label>SPO10FemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <GenericProperties:hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">earnings_amount</GenericProperties:hasName>
+        <rdfs:label>SPO11EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Sum"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/euros"/>
+        <iso21972:value rdf:resource="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributors_Measure"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO11EarningsAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsPopulation"/>
+        <rdfs:label>SPO11EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsDateTimeDescriptionBeginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsDateTimeDescriptionBeginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO11EarningsOfFemaleDistributorsDateTimeDescriptionBeginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsDateTimeDescriptionEnd -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsDateTimeDescriptionEnd">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO11EarningsOfFemaleDistributorsDateTimeDescriptionEnd</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO11FemaleDistributors"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsReportingPeriod"/>
+        <rdfs:label>SPO11EarningsOfFemaleDistributorsPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsDateTimeDescriptionBeginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributorsDateTimeDescriptionEnd"/>
+        <rdfs:label>SPO11EarningsOfFemaleDistributorsReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributors_Measure -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11EarningsOfFemaleDistributors_Measure">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Measure"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO11EarningsOfFemaleDistributors_Measure</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO11FemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO11FemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemaleEarnings"/>
+        <rdfs:label>SPO11FemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO12EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO12EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <rdfs:label>SPO12EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/millionDollars"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO12EarningsAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsPopulation"/>
+        <rdfs:label>SPO12EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsDateTimeDescriptionBeginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsDateTimeDescriptionBeginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</time:year>
+        <rdfs:label>SPO12EarningsOfFemaleDistributorsDateTimeDescriptionBeginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsDateTimeDescriptionEnd -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsDateTimeDescriptionEnd">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</time:year>
+        <rdfs:label>SPO12EarningsOfFemaleDistributorsDateTimeDescriptionEnd</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO12FemaleDistributors"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsReportingPeriod"/>
+        <rdfs:label>SPO12EarningsOfFemaleDistributorsPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsDateTimeDescriptionBeginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO12EarningsOfFemaleDistributorsDateTimeDescriptionEnd"/>
+        <rdfs:label>SPO12EarningsOfFemaleDistributorsReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO12FemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO12FemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemaleEarnings"/>
+        <rdfs:label>SPO12FemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO13EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO13EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <rdfs:label>SPO13EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO13EarningsAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsPopulation"/>
+        <rdfs:label>SPO13EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsDateTimeDescriptionBeginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsDateTimeDescriptionBeginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO13EarningsOfFemaleDistributorsDateTimeDescriptionBeginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsDateTimeDescriptionEnd -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsDateTimeDescriptionEnd">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO13EarningsOfFemaleDistributorsDateTimeDescriptionEnd</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO13FemaleDistributors"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsReportingPeriod"/>
+        <rdfs:label>SPO13EarningsOfFemaleDistributorsPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsDateTimeDescriptionBeginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO13EarningsOfFemaleDistributorsDateTimeDescriptionEnd"/>
+        <rdfs:label>SPO13EarningsOfFemaleDistributorsReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO13FemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO13FemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemaleEarnings"/>
+        <rdfs:label>SPO13FemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO14EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO14EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <rdfs:label>SPO14EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO14EarningsAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsPopulation"/>
+        <rdfs:label>SPO14EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsDateTimeDescriptionBeginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsDateTimeDescriptionBeginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO14EarningsOfFemaleDistributorsDateTimeDescriptionBeginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsDateTimeDescriptionEnd -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsDateTimeDescriptionEnd">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO14EarningsOfFemaleDistributorsDateTimeDescriptionEnd</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO14FemaleDistributors"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsReportingPeriod"/>
+        <rdfs:label>SPO14EarningsOfFemaleDistributorsPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsDateTimeDescriptionBeginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO14EarningsOfFemaleDistributorsDateTimeDescriptionEnd"/>
+        <rdfs:label>SPO14EarningsOfFemaleDistributorsReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO14FemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO14FemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemaleEarnings"/>
+        <rdfs:label>SPO14FemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO15EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO15EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <rdfs:label>SPO15EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO15EarningsAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsPopulation"/>
+        <rdfs:label>SPO15EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsDateTimeDescriptionBeginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsDateTimeDescriptionBeginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO15EarningsOfFemaleDistributorsDateTimeDescriptionBeginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsDateTimeDescriptionEnd -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsDateTimeDescriptionEnd">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</time:year>
+        <rdfs:label>SPO15EarningsOfFemaleDistributorsDateTimeDescriptionEnd</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO15FemaleDistributors"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsReportingPeriod"/>
+        <rdfs:label>SPO15EarningsOfFemaleDistributorsPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsDateTimeDescriptionBeginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO15EarningsOfFemaleDistributorsDateTimeDescriptionEnd"/>
+        <rdfs:label>SPO15EarningsOfFemaleDistributorsReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO15FemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO15FemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemaleEarnings"/>
+        <rdfs:label>SPO15FemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO16EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO16EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <rdfs:label>SPO16EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributors -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO16EarningsAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsPopulation"/>
+        <rdfs:label>SPO16EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsDateTimeDescriptionBeginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsDateTimeDescriptionBeginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO16EarningsOfFemaleDistributorsDateTimeDescriptionBeginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsDateTimeDescriptionEnd -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsDateTimeDescriptionEnd">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO16EarningsOfFemaleDistributorsDateTimeDescriptionEnd</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO16FemaleEarnings"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsReportingPeriod"/>
+        <rdfs:label>SPO16EarningsOfFemaleDistributorsPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsDateTimeDescriptionBeginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO16EarningsOfFemaleDistributorsDateTimeDescriptionEnd"/>
+        <rdfs:label>SPO16EarningsOfFemaleDistributorsReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO16FemaleEarnings -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO16FemaleEarnings">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemaleEarnings"/>
+        <rdfs:label>SPO16FemaleEarnings</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -3748,13 +4883,37 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     
 
 
+    <!-- http://webprotege.stanford.edu/SPO1EarningsAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO1EarningsAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/EarningsAmount"/>
+        <rdfs:label>SPO1EarningsAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://webprotege.stanford.edu/SPO1EarningsOfFemaleDistributors -->
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO1EarningsOfFemaleDistributors">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Sum"/>
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <iso21972:sum_of rdf:resource="http://webprotege.stanford.edu/SPO1FemaleDistributors"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <iso21972:value rdf:resource="http://webprotege.stanford.edu/SPO1EarningsOfFemaleDistributors_Measure"/>
         <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO1ReportingPeriod"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO1EarningsAmount"/>
         <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO1FemaleDistributors"/>
         <rdfs:label>SPO1EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO1EarningsOfFemaleDistributors_Measure -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO1EarningsOfFemaleDistributors_Measure">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Measure"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO1EarningsOfFemaleDistributors_Measure</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -3849,6 +5008,27 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO1_PI9991">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI9991"/>
+        <webprotege:cardinalityOf rdf:resource="http://webprotege.stanford.edu/PI9991Population1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO2CurrentAssets -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO2CurrentAssets">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/CurrentAssets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/euros"/>
+        <rdfs:label>SPO2CurrentAssets</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO2CurrentLiabilities -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO2CurrentLiabilities">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/CurrentLiabilities"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO2CurrentLiabilities</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -3883,6 +5063,29 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
         <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO2FemaleDistributors"/>
         <rdfs:label>SPO2EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO2FP4224 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO2FP4224">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#RatioIndicator"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FP4224"/>
+        <iso21972:hasDenominator rdf:resource="http://webprotege.stanford.edu/SPO2CurrentLiabilities"/>
+        <iso21972:hasNumerator rdf:resource="http://webprotege.stanford.edu/SPO2CurrentAssets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/division_unit"/>
+        <cids:forOrganization rdf:resource="http://webprotege.stanford.edu/SPOFP4224Organization"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO2FP4224ReportingPeriod"/>
+        <rdfs:label>SPO2FP4224</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO2FP4224ReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO2FP4224ReportingPeriod">
+        <rdfs:label>SPO2FP4224ReportingPeriod</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -3975,8 +5178,97 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3EarningsOfFemaleDistributors">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/poundSterling"/>
+        <iso21972:value rdf:resource="http://webprotege.stanford.edu/SPO3EarningsOfFemaleDistributors_Measure"/>
         <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO3FemaleDistributors"/>
         <rdfs:label>SPO3EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3EarningsOfFemaleDistributors_Measure -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3EarningsOfFemaleDistributors_Measure">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Measure"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO3EarningsOfFemaleDistributors_Measure</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3FP4224 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3FP4224">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#RatioIndicator"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FP4224"/>
+        <iso21972:hasDenominator rdf:resource="http://webprotege.stanford.edu/SPO3FP4224Liabilities"/>
+        <iso21972:hasNumerator rdf:resource="http://webprotege.stanford.edu/SPO3FP4224Assets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/exponent_unit"/>
+        <cids:forOrganization rdf:resource="http://webprotege.stanford.edu/MockClient"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO3FP4224ReportingPeriod"/>
+        <rdfs:label>SPO3FP4224</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3FP4224Assets -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3FP4224Assets">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/CurrentAssets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO3FP4224Assets</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3FP4224Liabilities -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3FP4224Liabilities">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/CurrentLiabilities"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO3FP4224Liabilities</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3FP4224ReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3FP4224ReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <rdfs:label>SPO3FP4224ReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3FP6152SolvencyRatio -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3FP6152SolvencyRatio">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#RatioIndicator"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FP6152"/>
+        <iso21972:hasDenominator rdf:resource="http://webprotege.stanford.edu/SPO3FP6152SolvencyRatioLiabilities"/>
+        <iso21972:hasNumerator rdf:resource="http://webprotege.stanford.edu/SPO3FP6152SolvencyRatioAssets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/exponent_unit"/>
+        <rdfs:label>SPO3FP6152SolvencyRatio</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3FP6152SolvencyRatioAssets -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3FP6152SolvencyRatioAssets">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/AssetsPopulation"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO3FP6152SolvencyRatioAssets</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO3FP6152SolvencyRatioLiabilities -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO3FP6152SolvencyRatioLiabilities">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/LiabilitiesPopulation"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPO3FP6152SolvencyRatioLiabilities</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4138,8 +5430,20 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO4EarningsOfFemaleDistributors">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2551"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/poundSterling"/>
+        <iso21972:value rdf:resource="http://webprotege.stanford.edu/SPO4EarningsOfFemaleDistributors_Measure"/>
         <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO4PI2551Population"/>
         <rdfs:label>SPO4EarningsOfFemaleDistributors</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO4EarningsOfFemaleDistributors_Measure -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO4EarningsOfFemaleDistributors_Measure">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Measure"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/poundSterling"/>
+        <rdfs:label>SPO4EarningsOfFemaleDistributors_Measure</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4302,8 +5606,30 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     <!-- http://webprotege.stanford.edu/SPO6SupportedOrgsCardinality -->
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO6SupportedOrgsCardinality">
-        <icontact:hasUnitNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</icontact:hasUnitNumber>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2688Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/PI2688Employee"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/PI2688ReportingPeriod"/>
         <rdfs:label>SPO6SupportedOrgsCardinality</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7AreaofPlantedTrees -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7AreaofPlantedTrees">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/AreaofPlantedTrees"/>
+        <icontact:hasCity rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#calgaryAbCa"/>
+        <icontact:hasCountry rdf:resource="http://ontology.eil.utoronto.ca/tove/icontact#canada"/>
+        <rdfs:label>SPO7AreaofPlantedTrees</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7AreaofPlantedTreesReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7AreaofPlantedTreesReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <rdfs:label>SPO7AreaofPlantedTreesReportingPeriod</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4343,6 +5669,8 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7City">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO7LandArea"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO7LandPopulation"/>
         <icontact:hasAreaCode rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</icontact:hasAreaCode>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SPO7Land</rdfs:label>
     </owl:NamedIndividual>
@@ -4353,9 +5681,18 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7CountryvsProvince">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848"/>
-        <icontact:hasCountry rdf:resource="http://ontology.eil.utoronto.ca/tove/icontact#canada"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO7CountryvsProvinceArea"/>
         <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO7PI3848Population"/>
         <rdfs:label>SPO7CountryvsProvince</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7CountryvsProvinceArea -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7CountryvsProvinceArea">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/Area"/>
+        <rdfs:label>SPO7CountryvsProvinceArea</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4430,9 +5767,50 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     
 
 
+    <!-- http://webprotege.stanford.edu/SPO7LandArea -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7LandArea">
+        <rdfs:label>SPO7LandArea</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7LandAreaofPlantedTrees -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7LandAreaofPlantedTrees">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/AreaofPlantedTrees"/>
+        <icontact:hasCity rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#torontoOnCa"/>
+        <icontact:hasCountry rdf:resource="http://webprotege.stanford.edu/SampleCountry"/>
+        <rdfs:label>SPO7LandAreaofPlantedTrees</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7LandPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7LandPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO7LandAreaofPlantedTrees"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO7LandReportingPeriod"/>
+        <rdfs:label>SPO7LandPopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7LandReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7LandReportingPeriod">
+        <rdfs:label>SPO7LandReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://webprotege.stanford.edu/SPO7PI3848Population -->
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7PI3848Population">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO7AreaofPlantedTrees"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO7AreaofPlantedTreesReportingPeriod"/>
         <rdfs:label>SPO7PI3848Population</rdfs:label>
     </owl:NamedIndividual>
     
@@ -4442,9 +5820,46 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7Province">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848"/>
-        <webprotege:hasProvince rdf:resource="http://ontology.eil.utoronto.ca/tove/icontact#ontario"/>
-        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO7PI3848Population"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO7ProvincePopulation"/>
         <rdfs:label>SPO7Province</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7ProvinceAreaofPlantedTrees -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7ProvinceAreaofPlantedTrees">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/AreaofPlantedTrees"/>
+        <icontact:hasCountry rdf:resource="http://ontology.eil.utoronto.ca/tove/icontact#canada"/>
+        <webprotege:hasProvince rdf:resource="http://ontology.eil.utoronto.ca/tove/icontact#alberta"/>
+        <rdfs:label>SPO7ProvinceAreaofPlantedTrees</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7ProvincePopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7ProvincePopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO7ProvinceAreaofPlantedTrees"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO7ProvinceReportingPeriod"/>
+        <rdfs:label>SPO7ProvincePopulation</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO7ProvinceReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO7ProvinceReportingPeriod">
+        <rdfs:label>SPO7ProvinceReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO8Area -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO8Area">
+        <rdfs:label>SPO8Area</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4453,8 +5868,7 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO8AreaofPlantedTrees">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/AreaofPlantedTrees"/>
-        <icontact:hasCity rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#torontoOnCa"/>
-        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1995</time:year>
+        <icontact:hasCity rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#calgaryAbCa"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SPO8AreaofPlantedTrees</rdfs:label>
     </owl:NamedIndividual>
     
@@ -4465,6 +5879,7 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO8PI3848Population">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848Population"/>
         <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO8AreaofPlantedTrees"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO1TimeInterval"/>
         <rdfs:label>SPO8PI3848Population</rdfs:label>
     </owl:NamedIndividual>
     
@@ -4474,6 +5889,7 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO8Toronto1995">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPO8Area"/>
         <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPO8PI3848Population"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SPO8AreaPlantedTreesToronto1995</rdfs:label>
     </owl:NamedIndividual>
@@ -4494,9 +5910,33 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
 
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO9AreaofPlantedTrees">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/AreaofPlantedTrees"/>
-        <icontact:hasCity rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#torontoOnCa"/>
+        <icontact:hasCity rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#edmontonAbCa"/>
         <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
         <rdfs:label>SPO9AreaofPlantedTrees</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO9Beginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO9Beginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</time:year>
+        <rdfs:label>SPO9Beginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO9End -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO9End">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <time:day rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">31</time:day>
+        <time:month rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</time:month>
+        <time:year rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</time:year>
+        <rdfs:label>SPO9End</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4506,7 +5946,286 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO9PI3848Population">
         <rdf:type rdf:resource="http://webprotege.stanford.edu/PI3848Population"/>
         <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPO9AreaofPlantedTrees"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPO9ReportingPeriod"/>
         <rdfs:label>SPO9PI3848Population</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPO9ReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPO9ReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPO9Beginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPO9End"/>
+        <rdfs:label>SPO9ReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#RatioIndicator"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FP4224"/>
+        <iso21972:hasDenominator rdf:resource="http://webprotege.stanford.edu/SPOFP4224CurrentLiabilities"/>
+        <iso21972:hasNumerator rdf:resource="http://webprotege.stanford.edu/SPOFP4224CurrentAssets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/division_unit"/>
+        <cids:forOrganization rdf:resource="http://webprotege.stanford.edu/SPOFP4224Organization1"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPOFP4224ReportingPeriod"/>
+        <rdfs:label>SPOFP4224</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224CurrentAssets -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224CurrentAssets">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/CurrentAssets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPOFP4224CurrentAssets</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224CurrentLiabilities -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224CurrentLiabilities">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/CurrentLiabilities"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPOFP4224CurrentLiabilities</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224Organization -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224Organization">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Organization"/>
+        <organization:hasID rdf:resource="http://webprotege.stanford.edu/SPOFP4224OrganizationID"/>
+        <organization:hasID rdf:resource="http://webprotege.stanford.edu/SPOFP4224OrganizationID1"/>
+        <rdfs:label>SPOFP4224Organization</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224Organization1 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224Organization1">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Organization"/>
+        <organization:hasID rdf:resource="http://webprotege.stanford.edu/SPOFP4224OrganizationID2"/>
+        <rdfs:label>SPOFP4224Organization1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224OrganizationID -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224OrganizationID">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#OrganizationID"/>
+        <rdfs:label>SPOFP4224OrganizationID</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224OrganizationID1 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224OrganizationID1">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/tove/organization#OrganizationID"/>
+        <rdfs:label>SPOFP4224OrganizationID1</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224OrganizationID2 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224OrganizationID2">
+        <rdfs:label>SPOFP4224OrganizationID2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP4224ReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP4224ReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <rdfs:label>SPOFP4224ReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP6152 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP6152">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#RatioIndicator"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FP6152"/>
+        <iso21972:hasDenominator rdf:resource="http://webprotege.stanford.edu/SPOFP6152Liabilities"/>
+        <iso21972:hasNumerator rdf:resource="http://webprotege.stanford.edu/SPOFP6152Assets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/division_unit"/>
+        <rdfs:label>SPOFP6152</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP6152Assets -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP6152Assets">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/AssetsPopulation"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/euros"/>
+        <rdfs:label>SPOFP6152Assets</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP6152Liabilities -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP6152Liabilities">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/LiabilitiesPopulation"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPOFP6152Liabilities</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP6152SolvencyRatio -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP6152SolvencyRatio">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#RatioIndicator"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FP6152"/>
+        <iso21972:hasDenominator rdf:resource="http://webprotege.stanford.edu/SPOFP6152SolvencyRatioLiabilities"/>
+        <iso21972:hasNumerator rdf:resource="http://webprotege.stanford.edu/SPOFP6152SolvencyRatioAssets"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/division_unit"/>
+        <rdfs:label>SPOFP6152SolvencyRatio</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP6152SolvencyRatioAssets -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP6152SolvencyRatioAssets">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/AssetsPopulation"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPOFP6152SolvencyRatioAssets</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOFP6152SolvencyRatioLiabilities -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOFP6152SolvencyRatioLiabilities">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/LiabilitiesPopulation"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>SPOFP6152SolvencyRatioLiabilities</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPI2302 -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPI2302">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2302"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/millionPoundSterling"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPOPI2302PaymentAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPOPI2302Population"/>
+        <rdfs:label>SPOPI2302</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPI2302Beginning -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPI2302Beginning">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <rdfs:label>SPOPI2302Beginning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPI2302End -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPI2302End">
+        <rdf:type rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+        <rdfs:label>SPOPI2302End</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPI2302FemalePayment -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPI2302FemalePayment">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemalePayment"/>
+        <rdfs:label>SPOPI2302FemalePayment</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPI2302PaymentAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPI2302PaymentAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PaymentAmount"/>
+        <rdfs:label>SPOPI2302PaymentAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPI2302Population -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPI2302Population">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2302Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPOPI2302FemalePayment"/>
+        <webprotege:forTimeInterval rdf:resource="http://webprotege.stanford.edu/SPOPI2302ReportingPeriod"/>
+        <rdfs:label>SPOPI2302Population</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPI2302ReportingPeriod -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPI2302ReportingPeriod">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/ReportingPeriod"/>
+        <time:hasBeginning rdf:resource="http://webprotege.stanford.edu/SPOPI2302Beginning"/>
+        <time:hasEnd rdf:resource="http://webprotege.stanford.edu/SPOPI2302End"/>
+        <rdfs:label>SPOPI2302ReportingPeriod</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliers -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliers">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2302"/>
+        <iso21972:unit_of_measure rdf:resource="http://webprotege.stanford.edu/poundSterling"/>
+        <webprotege:parameterOfVar rdf:resource="http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPaymentAmount"/>
+        <webprotege:sumOf rdf:resource="http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPopulation"/>
+        <rdfs:label>SPOPaymentsToFemaleSuppliers</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPayment -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPayment">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/FemalePayment"/>
+        <rdfs:label>SPOPaymentsToFemaleSuppliersPayment</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPaymentAmount -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPaymentAmount">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PaymentAmount"/>
+        <rdfs:label>SPOPaymentsToFemaleSuppliersPaymentAmount</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPopulation -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SPOPaymentsToFemaleSuppliersPopulation">
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/PI2302Population"/>
+        <cids:definedBy rdf:resource="http://webprotege.stanford.edu/SPOPI2302FemalePayment"/>
+        <rdfs:label>SPOPaymentsToFemaleSuppliersPopulation</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4540,6 +6259,100 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/SampleCountry">
         <icontact:hasAreaCode rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</icontact:hasAreaCode>
         <rdfs:label>SampleCountry</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/division_unit -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/division_unit">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_division"/>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#denominator"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit"/>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#denominator"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#numerator"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit"/>
+            </owl:Restriction>
+        </rdf:type>
+        <rdf:type>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#numerator"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+            </owl:Restriction>
+        </rdf:type>
+        <rdfs:label>division_unit</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/dollars -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/dollars">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Monetary_unit"/>
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/dollar"/>
+        <rdfs:label>dollars</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/euros -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/euros">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Monetary_unit"/>
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit"/>
+        <rdfs:label>euros</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/exponent_unit -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/exponent_unit">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_exponentiation"/>
+        <rdfs:label>exponent_unit</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/millionDollars -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/millionDollars">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_multiple_or_submultiple"/>
+        <iso21972:singular_unit rdf:resource="http://webprotege.stanford.edu/dollars"/>
+        <rdfs:label>million dollars</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/millionPoundSterling -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/millionPoundSterling">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Unit_multiple_or_submultiple"/>
+        <iso21972:singular_unit rdf:resource="http://webprotege.stanford.edu/poundSterling"/>
+        <rdfs:label>million pound sterling</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://webprotege.stanford.edu/poundSterling -->
+
+    <owl:NamedIndividual rdf:about="http://webprotege.stanford.edu/poundSterling">
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Monetary_unit"/>
+        <rdf:type rdf:resource="http://ontology.eil.utoronto.ca/ISO21972/iso21972#Singular_unit"/>
+        <rdf:type rdf:resource="http://webprotege.stanford.edu/poundSterlings"/>
+        <rdfs:label>pound sterling</rdfs:label>
     </owl:NamedIndividual>
     
 
@@ -4925,8 +6738,9 @@ It is deprecated in this edition of OWL-Time. </skos:historyNote>
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    <rdf:Description rdf:about="http://schema.org/Person">
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Person</rdfs:label>
+    <rdf:Description rdf:about="http://webprotege.stanford.edu/PI2688Employee">
+        <rdfs:label>PI2688Employee</rdfs:label>
+        <rdfs:label>PI2688 Employee</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="wptmp:entity#EmployeeDuration">
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Employee Duration</rdfs:label>

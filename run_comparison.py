@@ -1,11 +1,8 @@
-#imports
-from main import *
 import owlready2 as owl2
 import datetime
+from comparison.main import Comparison
 
-#Edit file path 
-#file_path = '../files/'
-file_path = '/Users/neevi/OneDrive - University of Toronto/Fourth Year 2T1-2T2/Capstone/Translation_Comparison/files/'
+file_path = 'files/'
 
 world = owl2.World()
 cids_onto = world.get_ontology(file_path + "cids.owl").load() #web protege download
@@ -34,14 +31,21 @@ individuals.extend(list(iso21972_onto.individuals()))
 individuals.extend(list(organization_onto.individuals()))
 individuals.extend(list(genericProperties_onto.individuals()))
 
-#input
+# Initialize Comparison 
+c = Comparison(classes, individuals)
+
 indicator_standard_selection = input("Which indicator standards, if any, have been included? The options are “none”, “UN SDG”, “IRIS”, or both.")
-text = input("Input the label of the first thing you wish to compare: ")
-text2 = input("Input the label of the second thing you wish to compare: ")
+text1 = input("Input the first thing (an individual or a class) from CIDS that you wish to compare: ")
+text2 = input("Input the second thing (an individual or a class) from CIDS that you wish to compare: ")
 
-item1 = cids_onto.search_one(label = "*" + text + "*", _use_str_as_loc_str=True, _case_sensitive=False) 
-item2 = cids_onto.search_one(label = "*" + text + "*", _use_str_as_loc_str=True, _case_sensitive=False) 
+#exact label
+item1 = cids_onto.search_one(label = text1, _use_str_as_loc_str=True, _case_sensitive=False) 
+item2 = cids_onto.search_one(label = text2, _use_str_as_loc_str=True, _case_sensitive=False) 
 
-#run recursion check
-#recursion_check(self, node1, node2, check_type, count=0)
-recursion_check(item1, item2, "class", count=0)
+
+if item1 in classes and item2 in classes:
+    c.recursion_check(item1, item2, check_type='class', count=0)
+elif item1 in individuals and item2 in individuals:
+    c.recursion_check(item1, item2, check_type='individual', count=0)
+else:
+    c.recursion_check(item1, item2, check_type='mixed', count=0)
