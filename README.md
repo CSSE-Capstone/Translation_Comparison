@@ -62,3 +62,5 @@ To run the comparison model, run `python3 run_comparison.py`.
 
 If you wish to save the console output, run `python3 run_comparison.py >> comparison_output.txt"`.
 
+## Pulling latest changes
+In the case where you have previously cloned the repository into your local computer, but new changes have been pushed on remote, keep your local repository up-to-date by running `git pull`.
