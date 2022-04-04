@@ -1,3 +1,4 @@
+from numpy import isin
 import owlready2 as owl2
 import datetime
 
@@ -139,6 +140,21 @@ class Comparison:
     def remove_annotation_properties(self, properties):
         return [p for p in properties if str(p) not in ['rdf-schema.commment', 'rdf-schema.comment', 'rdf-schema.label']]
     
+    def get_object(obj):
+        '''
+        When accessing the object via <item>.<property>, sometimes OwlReady2 returns a list containing the object, other times it returns the object.
+
+        Handles both cases and just returns the object. 
+        '''
+        if isinstance(obj, list):
+            return obj[0]
+        elif:
+            return obj
+
+
+    # ======= consistency checks =======
+
+
     #class inter
     def class_type_consistency_check(self, item1, item2): # item: KG of SPO or Indicator
         '''
@@ -1199,14 +1215,9 @@ class Comparison:
         
         if "iso21972.Quantity" in str(parentItem.ancestors()) and "iso21972.Measure" in str(parentItem2.ancestors()): #this check compares an instance of Quantity to a Measure. 
             if item.unit_of_measure and item2.unit_of_measure:
-                if isinstance(item, list):
-                    if item.unit_of_measure[0] == item2.unit_of_measure[0]:
-                        print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
-                        return
-                elif not isinstance(item, list):
-                    if item.unit_of_measure == item2.unit_of_measure:
-                        print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
-                        return
+                if self.get_object(item.unit_of_measure) == self.get_object(item2.unit_of_measure):
+                    print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
+                    return
                 else:
                     print(item, " is measurement inconsistent with ", item2, " because they do not have the same unit of measure.")
                     return
