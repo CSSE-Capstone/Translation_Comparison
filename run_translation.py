@@ -59,7 +59,7 @@ clustering = Clustering(model, tokenizer, rb_lemmatizer, df)
 wn = WordNet(similarity_threshold=0.8, 
 			t_ss_method='lesk',
 			c_ss_method='lesk',
-			last_subword_weight=0.6)
+			last_word_weight=0.6)
 
 
 # Run test set 
