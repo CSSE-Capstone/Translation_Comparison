@@ -11,23 +11,11 @@ from nltk.probability import FreqDist
 
 
 class WordNet: 
-    def __init__(self, similarity_threshold=0.8, t_ss_method='mfs', c_ss_method='mfs', last_subword_weight=0.6):
+    def __init__(self, similarity_threshold=0.8, t_ss_method='mfs', c_ss_method='mfs', last_word_weight=0.6):
         self.similarity_threshold = similarity_threshold
         self.t_ss_method = t_ss_method
         self.c_ss_method = c_ss_method
-        self.last_subword_weight = last_subword_weight
-
-
-    def get_Thing_classes(self, clustering_kg_dict):
-        '''
-        Returns a dictionary where the key is the target word and the value is the Thing-suffixed cluster output class
-        '''
-        res = {}
-        for key in clustering_kg_dict.keys():
-            if bool(clustering_kg_dict[key]) and "subclassOf" in clustering_kg_dict[key]:
-                if "Thing" in clustering_kg_dict[key]["subclassOf"]:
-                    res[key] = clustering_kg_dict[key]["subclassOf"]
-        return res
+        self.last_word_weight = last_word_weight
 
 
     # MAIN FUNCTION
@@ -47,9 +35,9 @@ class WordNet:
             print(f'No classes to work with. No wordnet output.')
             return
 
-        for target_word, c in tw_c.items():
+        for target_phrase, c in tw_c.items():
             res_class = None
-            ranked_sim_classes = self.get_ranked_similar_cids_class(sentence,target_word, cids_classes)
+            ranked_sim_classes = self.get_ranked_similar_cids_class(sentence,target_phrase, cids_classes)
             # Get the most similar class (first item in ranked list)
             if len(ranked_sim_classes) > 0:
                 res_class = list(ranked_sim_classes.keys())[0]
@@ -70,60 +58,72 @@ class WordNet:
                             res_dict[key]['subclassOf'] = res_class
                         
         return res_dict
+    
 
-    def get_ranked_similar_cids_class(self, sentence: str, target_word, list_of_class_names):
+    def get_Thing_classes(self, clustering_kg_dict):
         '''
-        Returns a CIDS class that is most semantically related to the target word. The target word will become a new CIDS class, and it will become the child of the returned CIDS class.
-        
-        Assumes that the muiltiwords are in PascalCase.
+        Returns a dictionary where the key is the target phrase and the value is the Thing-suffixed cluster output class
+        '''
+        res = {}
+        for key in clustering_kg_dict.keys():
+            if bool(clustering_kg_dict[key]) and "subclassOf" in clustering_kg_dict[key]:
+                if "Thing" in clustering_kg_dict[key]["subclassOf"]:
+                    res[key] = clustering_kg_dict[key]["subclassOf"]
+        return res
 
-        We will be using the Wu-Palmer similarity formula. It is a ratio and therefore yields a score between 0 and 1.
+
+    def get_ranked_similar_cids_class(self, sentence: str, target_phrase, list_of_class_names):
+        '''
+        Returns a CIDS class that is most semantically related to the target (noun) phrase. The target phrase will become a new CIDS class, and it will become the child of the returned CIDS class.
+        
+        The Wu-Palmer similarity measure is used to derive similarity score between the target phrase and a CIDS class. It is a ratio and therefore yields a score between 0 and 1.
+
+        Assumes that the words that make up target_phrase (one or more), as well as the CIDS class, are in PascalCase.
         '''
         
-        # If target word (noun) matches exactly with one of the CIDS classes
-        if target_word in list_of_class_names:
+        # If the target phrase matches exactly with one of the CIDS classes, 
+        if target_phrase in list_of_class_names:
             for c in list_of_class_names:
-                if target_word.lower() == c.lower(): 
+                if target_phrase.lower() == c.lower(): 
                     return c # return the CIDS class
         # If there is no exact match
         else:
             most_similar_classes = dict()
-            # Compare similarity of target word to every CIDS class
+            # Compare similarity of target phrase to every CIDS class
             for idx, c in enumerate(list_of_class_names):
-                # If target word is a multi-word, only keep the last subword (assume it is the noun, and preceding subwords are adjectives)
-                if len(wn.synsets(target_word)) == 0:
-                    # Split it into its constituent terms
-                    target_word = re.findall('[A-Z][^A-Z]*', target_word)[-1] # Only keep the last subword
-                # Get target word sense
+                # If target phrase has no synset matches, it is a phrase composed of multiple words. Only keep the last word (assume it is a noun, and preceding words are adjectives)
+                if len(wn.synsets(target_phrase)) == 0:
+                    # Split it into its constituent words
+                    target_phrase = re.findall('[A-Z][^A-Z]*', target_phrase)[-1] # Only keep the last word
+                # Get target phrase sense
                 if self.t_ss_method == 'mfs':
-                    target_word_ss = self.mfs(target_word)
+                    target_phrase_ss = self.mfs(target_phrase)
                 elif self.t_ss_method == 'lesk':
-                    target_word_ss = self.lesk(sentence, target_word)
+                    target_phrase_ss = self.lesk(sentence, target_phrase)
                 
-                # If class is a multiword, it will not be in WordNet and have no synsets
+                # If the CIDS class is a phrase with more than one word, it will not be in WordNet and have no synsets
                 if len(wn.synsets(c)) == 0:
                     term_similarity = []
-                    # Split it into its constituent terms
-                    subwords = re.findall('[A-Z][^A-Z]*', c)
-                    # For each subword, get its sense. Then do similarity comp w the single-word target 
-                    for sw in subwords:
-                        sw_ss = None
-                        if len(wn.synsets(sw)) > 0:
+                    # Split the CIDS class phrase into its constituent words
+                    words = re.findall('[A-Z][^A-Z]*', c)
+                    # For each word, get its sense. Then do similarity comp w the single-word target 
+                    for w in words:
+                        w_ss = None
+                        if len(wn.synsets(w)) > 0:
                             if self.c_ss_method == 'mfs':
-                                sw_ss = self.mfs(sw) 
+                                w_ss = self.mfs(w) 
                             elif self.c_ss_method == 'lesk':
-                                sw_ss = self.lesk(sentence, sw)
-                            # Run Wu-Palmer similarity on target word synset to the CIDS class synset
-                            term_similarity.append(target_word_ss.wup_similarity(sw_ss)) 
-                    # Derive the score via the weighted average of all subwords.
-                    # 1 - 0.6 = 0.4 / subwords
+                                w_ss = self.lesk(sentence, w)
+                            # Run Wu-Palmer similarity on target phrase synset to the CIDS class synset
+                            term_similarity.append(target_phrase_ss.wup_similarity(w_ss)) 
+                    # Derive the score of this CIDS class against the target phrase, by a weighted score of all words against the target phrase.
                     similarity = 0
                     for idx, t in enumerate(term_similarity):
                         if idx < len(term_similarity) - 1:
-                            weight = (1.0 - self.last_subword_weight) / float(len(term_similarity) - 1) # Weight for each word that is not the last subword
+                            weight = (1.0 - self.last_word_weight) / float(len(term_similarity) - 1) # Weight for each word that is not the last word
                             similarity += t * weight
                         else:
-                            similarity += t * self.last_subword_weight
+                            similarity += t * self.last_word_weight # Multiple the last word's score by last_word_weight
                             
                 # If class is a single word, it should be in WordNet and therefore have synsets
                 else: 
@@ -131,7 +131,7 @@ class WordNet:
                         c_ss = self.mfs(c) 
                     elif self.c_ss_method == 'lesk':
                         c_ss = self.lesk(sentence, c)
-                    similarity = target_word_ss.wup_similarity(c_ss)          
+                    similarity = target_phrase_ss.wup_similarity(c_ss)          
                 if similarity >= self.similarity_threshold:
                     most_similar_classes[c] = similarity
         
@@ -159,20 +159,20 @@ class WordNet:
         res = dict()
         for c in similar_classes:
             if len(wn.synsets(c)) == 0:
-                target_subword_similarity = []
-                # Split it into its constituent terms
-                subwords = re.findall('[A-Z][^A-Z]*', c)
-                for sw in subwords:
-                    if len(wn.synsets(sw)) > 0:
-                        ssw_ss = self.mfs(sw) 
-                        target_subword_similarity.append(g_ss.wup_similarity(ssw_ss)) 
+                target_word_similarity = []
+                # Split it into its constituent words
+                words = re.findall('[A-Z][^A-Z]*', c)
+                for w in words:
+                    if len(wn.synsets(w)) > 0:
+                        w_ss = self.mfs(w) 
+                        target_word_similarity.append(g_ss.wup_similarity(w_ss)) 
                 score = 0
-                for idx, t in enumerate(target_subword_similarity):
-                    if idx < len(target_subword_similarity) - 1:
-                        weight = (1.0 - self.last_subword_weight) / float(len(target_subword_similarity) - 1) # Weight for each word that is not the last subword
+                for idx, t in enumerate(target_word_similarity):
+                    if idx < len(target_word_similarity) - 1:
+                        weight = (1.0 - self.last_word_weight) / float(len(target_word_similarity) - 1) # Weight for each word that is not the last word
                         score += t * weight
                     else:
-                        score += t * self.last_subword_weight
+                        score += t * self.last_word_weight
                 # if does not exceed filter threshold, store to res for filtering later
                 if score < self.similarity_threshold:
                     res[c] = score
@@ -187,7 +187,8 @@ class WordNet:
             if res_c in similar_classes:
                 del similar_classes[res_c]
         # Re-sort the filtered dict and return
-        return self.sort_classes_desc(similar_classes)
+        res = self.sort_classes_desc(similar_classes)
+        return res
 
 
     def sort_classes_desc(self, class_dict: Dict[str, float]) -> Dict[str, float]:
@@ -195,19 +196,20 @@ class WordNet:
         
 
     def mfs(self, word: str) -> Synset:
-        """Most frequent sense of a word.
-        Word is a noun.
+        """Returns the most frequently occuring noun sense of a word in the sense-tagged corpora that WordNet is built upon.
+
         Returns:
             Synset: The most frequent sense for the given word.
         """    
-        return wn.synsets(word)[0] if len(wn.synsets(word)) > 0 else None
+        return wn.synsets(word, pos=wn.NOUN)[0] if len(wn.synsets(word)) > 0 else None
+
 
     def lesk(self, sentence: str, word: str) -> Synset:
         """Simplified Lesk algorithm.
         Args:
             sentence (list of str): The sentence containing the word to be
                 disambiguated1
-            word_index (int): The index of the target word in the sentence.
+            word_index (int): The index of the target phrase in the sentence.
 
         Returns:
             Synset: The prediction of the correct sense for the given word.
