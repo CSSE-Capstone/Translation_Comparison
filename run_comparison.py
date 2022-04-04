@@ -43,4 +43,9 @@ item1 = cids_onto.search_one(label = text1, _use_str_as_loc_str=True, _case_sens
 item2 = cids_onto.search_one(label = text2, _use_str_as_loc_str=True, _case_sensitive=False) 
 
 
-c.recursion_check(item1, item2, check_type='individual', count=0) # Run individual check 
+if item1 in classes and item2 in classes:
+    c.recursion_check(item1, item2, check_type='class', count=0)
+elif item1 in individuals and item2 in individuals:
+    c.recursion_check(item1, item2, check_type='individual', count=0)
+else:
+    c.recursion_check(item1, item2, check_type='mixed', count=0)

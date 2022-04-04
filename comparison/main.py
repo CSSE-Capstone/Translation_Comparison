@@ -28,10 +28,7 @@ class Comparison:
         # run intra checks only once at the start node
         # works at the start node level
         if count == 0:
-            if node1 in self.individuals:
-                self.run_intra_checks(node1)
-            if node2 in self.individuals:
-                self.run_intra_checks(node2)
+            self.run_intra_checks(node1)
         
         # run inter checks
         if check_type == 'individual':
