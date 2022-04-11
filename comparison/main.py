@@ -1,4 +1,3 @@
-from numpy import isin
 import owlready2 as owl2
 import datetime
 
@@ -21,14 +20,15 @@ class Comparison:
                     'mixed'
         Outputs:
             consistency check print statements. For each check, it will determine if the two items are consistent, inconsistent, or potentially consistent at appropriate nodes. 
-    '''
+        '''
         # Validate check_type
         assert check_type in ['individual', 'class', 'mixed'], f"check_type of {check_type} undefined. Make sure that it is one of the following options: 'individual', 'class', 'mixed'"
 
         # run intra checks only once at the start node
         # works at the start node level
-        if count == 0:
+        if count == 0 and check_type == 'individual':
             self.run_intra_checks(node1)
+            self.run_intra_checks(node2) #TODO added
         
         # run inter checks
         if check_type == 'individual':
@@ -38,69 +38,65 @@ class Comparison:
         elif check_type == 'mixed':
             self.run_mixed_inter_checks(node1, node2)
         
+        #leaving print statements here for future debugging purposes:
+        # print("node1: ", node1)
+        # print("node2: ", node2)
+        
         # Get all properties of node1 and node2
         if node1 in self.classes:
-            node1_properties = node1.get_class_properties()
-        elif node1[0] in self.classes:
-            node1_properties = node1[0].get_class_properties() 
+            node1_properties = self.get_object(node1).get_class_properties()
         elif node1 in self.individuals: 
-            node1.get_properties()
-        else:
-            node1[0].get_properties()
+            node1_properties = self.get_object(node1).get_properties()
         
         if node2 in self.classes:
-            node2_properties = node2.get_class_properties()
-        elif node2[0] in self.classes:
-            node2_properties = node2[0].get_class_properties() 
+            node2_properties = self.get_object(node2).get_class_properties()
         elif node2 in self.individuals: 
-            node2.get_properties()
-        else:
-            node2[0].get_properties()
+            node2_properties = self.get_object(node2).get_properties()
 
-        # Remove duplicate properties in list, then sort node1_properties and node2_properties
-        node1_properties = sorted(list(set(self.remove_annotation_properties(list(node1_properties)))))
-        node2_properties = sorted(list(set(self.remove_annotation_properties(list(node2_properties)))))
+        if node1_properties and node2_properties and len(node1_properties) > 0 and len(node2_properties) > 0:
+            # Remove duplicate properties in list, then sort node1_properties and node2_properties
+            node1_properties = sorted(list(set(self.remove_annotation_properties(list(node1_properties)))))
+            node2_properties = sorted(list(set(self.remove_annotation_properties(list(node2_properties)))))
 
-        # Print inconsistent if a property from node1 is not found in node2, and vice versa
-        ## If there are properties found in node1 but not in node2
-        if set(node1_properties) - set(node2_properties):
-            for p in list(set(node1_properties) - set(node2_properties)):
-                print(f'Item 1 has the {node1} - {p} - {p[node1]} triple, but Item 2 does not.')
-        ## If there are properties found in node2 but not in node1
-        if set(node2_properties) - set(node1_properties):
-            for p in list(set(node2_properties) - set(node1_properties)):
-                print(f'Item 2 has the {node2} - {p} - {p[node2]} triple, but Item 1 does not.')
+            # Print inconsistent if a property from node1 is not found in node2, and vice versa
+            ## If there are properties found in node1 but not in node2
+            if set(node1_properties) - set(node2_properties):
+                for p in list(set(node1_properties) - set(node2_properties)):
+                    print(f'Item 1 has the {node1} - {p} - {p[node1]} triple, but Item 2 does not.')
+            ## If there are properties found in node2 but not in node1
+            if set(node2_properties) - set(node1_properties):
+                for p in list(set(node2_properties) - set(node1_properties)):
+                    print(f'Item 2 has the {node2} - {p} - {p[node2]} triple, but Item 1 does not.')
 
-        # Get the list of common properties from node1 and node2
-        common_properties = set(node1_properties).intersection(set(node2_properties))
+            # Get the list of common properties from node1 and node2
+            common_properties = set(node1_properties).intersection(set(node2_properties))
 
-        # Traverse both trees using their common properties
-        for p in common_properties:
-            # Get the child of this p for both trees
-            node1_obj = p[node1][0]
-            node2_obj = p[node2][0]
-            
-            # Determine if the child is a data value (ie a leaf node)
-            node1_obj_is_data_value = isinstance(node1_obj, str) and isinstance(node1_obj, int) # TODO any more types?
-            node2_obj_is_data_value = isinstance(node2_obj, str) and isinstance(node2_obj, int) # TODO any more types?
+            # Traverse both trees using their common properties
+            for p in common_properties:
+                # Get the child of this p for both trees
+                node1_obj = p[node1][0]
+                node2_obj = p[node2][0]
+                
+                # Determine if the child is a data value (ie a leaf node)
+                node1_obj_is_data_value = isinstance(node1_obj, str) and isinstance(node1_obj, int) 
+                node2_obj_is_data_value = isinstance(node2_obj, str) and isinstance(node2_obj, int) 
 
-            # immediately inconsistent cases
-            # TODO already in consistency checks? if so rm 
-            if node1_obj_is_data_value and not node2_obj_is_data_value or not node1_obj_is_data_value and node2_obj_is_data_value:
-                print('Inconsistent')
-                print(f'node1 object is {node1_obj} but node2 object is {node2_obj}')
-                return
-            
-            # Base case 1: if children are None 
-            if node1_obj and node2_obj is None:
-                return 
-            # Base case 2: if children are data values
-            if node1_obj_is_data_value and node2_obj_is_data_value:
-                return
-            
-            # Recursion case 
-            if not node1_obj_is_data_value and not node2_obj_is_data_value:
-                return self.recursion_check(node1_obj, node2_obj, check_type, count+1) 
+                # immediately inconsistent cases
+                if node1_obj_is_data_value and not node2_obj_is_data_value or not node1_obj_is_data_value and node2_obj_is_data_value:
+                    print('Inconsistent')
+                    print(f'node1 object is {node1_obj} but node2 object is {node2_obj}')
+                    return
+                
+                # Base case 1: if children are None 
+                if node1_obj and node2_obj is None:
+                    return 
+                # Base case 2: if children are data values
+                if node1_obj_is_data_value and node2_obj_is_data_value:
+                    return
+                
+                # Recursion case 
+                if not node1_obj_is_data_value and not node2_obj_is_data_value:
+                    return self.recursion_check(node1_obj, node2_obj, check_type, count+1) 
 
     def run_individual_inter_checks(self, item1, item2):
         place_equality_consistent = self.place_equality_consistency_check(item1, item2) #needed to run self.subplace_consistency_check
@@ -113,17 +109,22 @@ class Comparison:
     def run_intra_checks(self, item):
         self.quantity_measure_consistency_check(item)
         # if item is a ratio (individual), run the following checks
-        item_property_names = [p.name for p in item.get_properties()]
-        if all(p in item_property_names for p in ['hasNumerator', 'hasDenominator']) or all(p in item_property_names for p in ['numerator', 'hasDenominator']) or all(p in item_property_names for p in ['hasNumerator', 'denominator']) or all(p in item_property_names for p in ['numerator', 'denominator']):
-            self.indicator_unit_component_consistency_check(item) #running after the if all ensures it's a ratio
-            for p in item.get_properties():
-                if p.name == 'hasNumerator' or p.name  == 'numerator':
-                    numerator_obj = p[item]
-                if p.name == 'hasDenominator' or p.name == 'denominator':
-                    denominator_obj = p[item]
-            self.temporal_granularity_consistency_check(numerator_obj, denominator_obj) #no need to return temporal_granular_consistent boolean here because it will be done in the inter check
-            place_equality_consistent = self.place_equality_consistency_check(numerator_obj, denominator_obj) #needed to run self.subplace_consistency_check
-            self.subplace_consistency_check(numerator_obj, denominator_obj, place_equality_consistent)
+        item = self.get_object(item).get_properties()
+
+        if item and len(item) > 0:
+            item_property_names = [p.name for p in item]
+
+            if all(p in item_property_names for p in ['hasNumerator', 'hasDenominator']) or all(p in item_property_names for p in ['numerator', 'hasDenominator']) or all(p in item_property_names for p in ['hasNumerator', 'denominator']) or all(p in item_property_names for p in ['numerator', 'denominator']):
+                self.indicator_unit_component_consistency_check(self.get_object(item)) #running after the if all ensures it's a ratio
+                
+                for p in self.get_object(item).get_properties():
+                    if p.name == 'hasNumerator' or p.name  == 'numerator':
+                        numerator_obj = p[item]
+                    if p.name == 'hasDenominator' or p.name == 'denominator':
+                        denominator_obj = p[item]
+                self.temporal_granularity_consistency_check(numerator_obj, denominator_obj) #no need to return temporal_granular_consistent boolean here because it will be done in the inter check
+                place_equality_consistent = self.place_equality_consistency_check(numerator_obj, denominator_obj) #needed to run self.subplace_consistency_check
+                self.subplace_consistency_check(numerator_obj, denominator_obj, place_equality_consistent)
 
     def run_class_inter_checks(self, item1, item2):
         self.class_type_consistency_check(item1, item2)
@@ -137,23 +138,21 @@ class Comparison:
     def remove_annotation_properties(self, properties):
         return [p for p in properties if str(p) not in ['rdf-schema.commment', 'rdf-schema.comment', 'rdf-schema.label']]
     
-    def get_object(obj):
+    def get_object(self, obj):
         '''
         When accessing the object via <item>.<property>, sometimes OwlReady2 returns a list containing the object, other times it returns the object.
 
         Handles both cases and just returns the object. 
         '''
-        if isinstance(obj, list):
+        if isinstance(obj, list) and len(obj) > 0:
             return obj[0]
-        elif:
+        else:
             return obj
-
 
     # ======= consistency checks =======
 
-
     #class inter
-    def class_type_consistency_check(self, item1, item2): # item: KG of SPO or Indicator
+    def class_type_consistency_check(self, item1, item2): # item: Knowledge Graph (KG) of SPO or Indicator
         '''
         From Wang's Thesis: 
         a class X is type inconsistent with class Y if 
@@ -174,7 +173,7 @@ class Comparison:
         # type(item) <- direct parent of item
         # prop1 <- names of properties, not the actual property values
 
-        #for equality: checking if same type, same name, and same properties (not checking property values to save computation time)
+        #for equality: checking if same type, same name, and same properties (not checking property values to save computation time, this is potential improvement)
         if ((type(item1) == type(item2)) and (item1.name and item2.name) and (item1.name == item2.name) and (set(prop1) == set(prop2))): 
             class_type_consistent = True
             print("Class type consistent because classes ", item1, " and ", item2, " are equal.")
@@ -242,7 +241,7 @@ class Comparison:
                     for c in item1.is_instance_of:
                         #The instance m is type inconsistent with n if the class c is inconsistent with n - class_type_consistency is false.  
                         if self.class_type_consistency_check(c, item2) == False:
-                            print(item1, " is an instance of " ,c, ", which is type inconsistent with " ,item2, " - therefore ", item1, "is instance type inconsistent with ", item2, ".")
+                            print(item1, " is an instance of " ,c, ", which is type inconsistent with " ,item2, " - therefore ", item1, " is instance type inconsistent with ", item2, ".")
                             break
                             return
                         else:
@@ -264,7 +263,7 @@ class Comparison:
                     for c in item2.is_instance_of:
                         #The instance m is type inconsistent with n if the class c is inconsistent with n - class_type_consistency is false.  
                         if self.class_type_consistency_check(c, item1) == False:
-                            print(item2, " is an instance of " ,c, ", which is type inconsistent with " ,item1, " - therefore ", item2, "is instance type inconsistent with ", item1, ".")
+                            print(item2, " is an instance of " ,c, ", which is type inconsistent with " ,item1, " - therefore ", item2, " is instance type inconsistent with ", item1, ".")
                             break
                             return
                         else:
@@ -278,7 +277,6 @@ class Comparison:
             #print("Instance type consistency check not run - one of the items must be an instance and the other a class.")
             return      
 
-    #TODO remove print statements after testing
     def get_date(self, beginning1, beginning2, end1, end2): 
         '''
         This function gets the interval date values into 1 list in the order of year, month, day. 
@@ -292,7 +290,6 @@ class Comparison:
         #print(intervalBeginning2, intervalEnd2)
         return intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2
 
-    #TODO remove print statements after testing
     def get_date_when_none_values(self, beginning1, beginning2, end1, end2): 
         '''
         This function gets the interval date values into 1 list in the order of year, month, day when either the year or the day is missing.
@@ -336,10 +333,10 @@ class Comparison:
         
         #if both inputs have beginning and end time interval values
         if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
-            beginning1 = item1.hasBeginning 
-            end1 = item1.hasEnd
-            beginning2 = item2.hasBeginning
-            end2 = item2.hasEnd
+            beginning1 = self.get_object(item1.hasBeginning) 
+            end1 = self.get_object(item1.hasEnd)
+            beginning2 = self.get_object(item2.hasBeginning)
+            end2 = self.get_object(item2.hasEnd)
         else: 
             #print("Subinterval consistency check not run - missing time interval properties.")
             return
@@ -459,7 +456,7 @@ class Comparison:
                 print(item1 , "and " , item2 , "start together but " , item2 , " ends before " , item1 , ". Therefore they are subinterval inconsistent.")
                 return
             #ends: start(b) < start(a) < end(a) = end(b) (a and b end together but a starts after b)
-            elif intervalBeginning2[1] < intervalBeginning1 and intervalBeginning1 < intervalEnd1 and intervalEnd1 == intervalEnd2:
+            elif intervalBeginning2[1] < intervalBeginning1[1] and intervalBeginning1[1] < intervalEnd1[1] and intervalEnd1[1] == intervalEnd2[1]:
                 print(item1 , "and " , item2 , "end together but " , item1 , " starts after " , item2 , ". Therefore they are subinterval inconsistent.")
                 return
             elif intervalBeginning1[1] < intervalBeginning2[1] and intervalBeginning2[1] < intervalEnd2[1] and intervalEnd2[1]  == intervalEnd1[1]:
@@ -488,10 +485,10 @@ class Comparison:
             return
 
         if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
-            beginning1 = item1.hasBeginning 
-            end1 = item1.hasEnd
-            beginning2 = item2.hasBeginning
-            end2 = item2.hasEnd
+            beginning1 = self.get_object(item1.hasBeginning) 
+            end1 = self.get_object(item1.hasEnd)
+            beginning2 = self.get_object(item2.hasBeginning)
+            end2 = self.get_object(item2.hasEnd)
         else: 
             #print("Subinterval consistency check not run - missing time interval properties.")
             return
@@ -619,7 +616,7 @@ class Comparison:
                             cardinalityType = None #only restriction
                             if r.type == 24: #some
                                 cardinalityType = "some"
-                            elif r.type == 26:
+                            elif r.type == 26: #exactly
                                 cardinalityType = "exactly"
                             elif r.type == 27: #min
                                 cardinalityType = "min"
@@ -631,6 +628,9 @@ class Comparison:
 
                                 for v in p[item2]: #for value in property p of item2
                                     #print(".%s == %s" % (p.name, v))
+                                    if r.value not in v.is_instance_of:
+                                        print(item2 , " is property inconsistent with " , item1 , " because it does not satisfy the value restriction of property " , p , " defined in " , item1, ".")
+                                        return
                                     for vi in v.is_instance_of: #if the value in the instance item2 is of the same type as the value of r in the class
                                         if "|" in str(r.value) or "OneOf" in str(r.value): #or symbol for multiple options
                                             if str(r.value) in str(vi): #even if substring match since there are multiple options possible
@@ -645,26 +645,22 @@ class Comparison:
                                                 print(item2 , " is property inconsistent with " , item1 , " because it does not satisfy the cardinality restriction of property " , p , " defined in " , item1, ".")
                                                 return
                                         
-                                        #evaluate:
-                                        if cardinalityType == "exactly" and count == c:
-                                            continue
-                                        elif cardinalityType == "min" and count >= c:
-                                            continue
-                                        elif cardinalityType == "max" and count <= c:
-                                            continue
-                                        elif cardinalityType == "some" and count >= 1:
-                                            continue
-                                        else:
-                                            print(item2 , " is property inconsistent with " , item1 , " because it does not satisfy the cardinality restriction of property " , p , " defined in " , item1, ".")
-                                            return
-                                    
-                                    if r.value not in v.is_instance_of:
-                                        print(item2 , " is property inconsistent with " , item1 , " because it does not satisfy the value restriction of property " , p , " defined in " , item1, ".")
+                                    #evaluate:
+                                    if cardinalityType == "exactly" and count == c:
+                                        continue
+                                    elif cardinalityType == "min" and count >= c:
+                                        continue
+                                    elif cardinalityType == "max" and count <= c:
+                                        continue
+                                    elif cardinalityType == "some" and count >= 1:
+                                        continue
+                                    else:
+                                        print(item2 , " is property inconsistent with " , item1 , " because it does not satisfy the cardinality restriction of property " , p , " defined in " , item1, ".")
                                         return
-                                        
-                            #if not returned yet
-                            print(item2 , " is property consistent with " , item1 , " because it satisfies the cardinality restriction of the properties defined in " , item1, ".")
-                            return
+                                                 
+                        #if not returned yet
+                        print(item2 , " is property consistent with " , item1 , " because it satisfies the cardinality restriction of the properties defined in " , item1, ".")
+                        return
                                 
         elif (item2 in self.classes and item1 in item2.instances()):
             #check if they have the same properties (a that is defined in n also exists in m)
@@ -692,7 +688,7 @@ class Comparison:
                             cardinalityType = None #only restriction
                             if r.type == 24: #some
                                 cardinalityType = "some"
-                            elif r.type == 26:
+                            elif r.type == 26: #some
                                 cardinalityType = "exactly"
                             elif r.type == 27: #min
                                 cardinalityType = "min"
@@ -704,6 +700,10 @@ class Comparison:
 
                                 for v in p[item1]: #for value in property p of item1
                                     #print(".%s == %s" % (p.name, v))
+                                    if r.value not in v.is_instance_of:
+                                        print(item1, " is property inconsistent with " , item2, " because it does not satisfy the value restriction of property " , p , " defined in " , item2, ".")
+                                        return
+
                                     for vi in v.is_instance_of: #if the value in the instance item1 is of the same type as the value of r in the class
                                         if "|" in str(r.value) or "OneOf" in str(r.value): #or symbol for multiple options
                                             if str(r.value) in str(vi): #even if substring match since there are multiple options possible
@@ -718,26 +718,22 @@ class Comparison:
                                                 print(item1 , " is property inconsistent with " , item2, " because it does not satisfy the cardinality restriction of property " , p , " defined in " , item2, ".")
                                                 return
                                         
-                                        #evaluate:
-                                        if cardinalityType == "exactly" and count == c:
-                                            continue
-                                        elif cardinalityType == "min" and count >= c:
-                                            continue
-                                        elif cardinalityType == "max" and count <= c:
-                                            continue
-                                        elif cardinalityType == "some" and count >= 1:
-                                            continue
-                                        else:
-                                            print(item1 , " is property inconsistent with " , item2, " because it does not satisfy the cardinality restriction of property " , p , " defined in " , item2, ".")
-                                            return
-                                    
-                                    if r.value not in v.is_instance_of:
-                                        print(item1, " is property inconsistent with " , item2, " because it does not satisfy the value restriction of property " , p , " defined in " , item2, ".")
+                                    #evaluate:
+                                    if cardinalityType == "exactly" and count == c:
+                                        continue
+                                    elif cardinalityType == "min" and count >= c:
+                                        continue
+                                    elif cardinalityType == "max" and count <= c:
+                                        continue
+                                    elif cardinalityType == "some" and count >= 1:
+                                        continue
+                                    else:
+                                        print(item1 , " is property inconsistent with " , item2, " because it does not satisfy the cardinality restriction of property " , p , " defined in " , item2, ".")
                                         return
                                         
-                            #if not returned yet
-                            print(item1, " is property consistent with " , item2, " because it satisfies the cardinality restriction of the properties defined in " , item2, ".")
-                            return
+                        #if not returned yet
+                        print(item1, " is property consistent with " , item2, " because it satisfies the cardinality restriction of the properties defined in " , item2, ".")
+                        return
 
     #individual inter
     def interval_equality_consistency_check(self, item1, item2):
@@ -754,10 +750,10 @@ class Comparison:
             return
         
         if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
-            beginning1 = item1.hasBeginning 
-            end1 = item1.hasEnd
-            beginning2 = item2.hasBeginning
-            end2 = item2.hasEnd
+            beginning1 = self.get_object(item1.hasBeginning) 
+            end1 = self.get_object(item1.hasEnd)
+            beginning2 = self.get_object(item2.hasBeginning)
+            end2 = self.get_object(item2.hasEnd)
         else: 
             #print("Interval equality consistency check not run - either or both inputs are missing one or more time interval properties.")
             return
@@ -802,10 +798,11 @@ class Comparison:
             return
         
         if all(p in [p.name for p in item1.get_properties()] for p in ['hasBeginning', 'hasEnd']) and all(p in [p.name for p in item2.get_properties()] for p in ['hasBeginning', 'hasEnd']):
-            beginning1 = item1.hasBeginning 
-            end1 = item1.hasEnd
-            beginning2 = item2.hasBeginning
-            end2 = item2.hasEnd
+            beginning1 = self.get_object(item1.hasBeginning) 
+            end1 = self.get_object(item1.hasEnd)
+            beginning2 = self.get_object(item2.hasBeginning)
+            end2 = self.get_object(item2.hasEnd)
+        
         else: 
             #print("Non overlapping interval consistency check not run - either or both inputs are missing one or more time interval properties.")
             return
@@ -824,6 +821,7 @@ class Comparison:
             else:
                 print(item1 , " and " , item2 , "'s time intervals are overlapping or equal. Therefore they are non overlapping interval consistent.")
                 return
+        
         else:
         #check each item of list. List is always organized from [year, month, day]
             intervalBeginning1, intervalEnd1, intervalBeginning2, intervalEnd2 = self.get_date_when_none_values(beginning1, beginning2, end1, end2)
@@ -907,13 +905,14 @@ class Comparison:
             return place_equality_consistent
 
         #has location
-        if ('hasCitySection' in item1_property_names and 'hasCitySection' in item2_property_names) and location2 == item1.hasCitySection:
+        if ('hasCitySection' in item1_property_names and 'hasCitySection' in item2_property_names) and location2 == location:
             print(item1, " and ", item2, " refer to the same city section. Therefore they are place equality consistent.")
             place_equality_consistent = True
             #not returning here in case the city section name is the same but the country/province/state/city isnt
-        elif ('hasCitySection' in item1_property_names and 'hasCitySection' in item2_property_names) and location2 != item1.hasCitySection:
+        elif ('hasCitySection' in item1_property_names and 'hasCitySection' in item2_property_names) and location2 != location:
             print(item1, " and ", item2, " do not refer to the same city section. Therefore they are not place equality consistent.")
             return place_equality_consistent
+        
         elif ('hasCity' in item1_property_names or 'for_city' in item1_property_names) and ('hasCity' in item2_property_names or 'for_city' in item2_property_names): 
             item1_city_obj = item1.hasCity if 'hasCity' in item1_property_names else item1.for_city
             item2_city_obj = item2.hasCity if 'hasCity' in item2_property_names else item2.for_city
@@ -950,7 +949,6 @@ class Comparison:
 
     #inter
     #intra, there is a case where you can compare the indicator's location to its population's location. If the population is drawn from areas within the place specified by the indicator, subplace inconsistent  
-    #TODO check out lynnette's code or take it out
     def subplace_consistency_check(self, item1, item2, place_equality_consistent):
         '''
         For two instances of the same indicator, instance x is subplace inconsistent with instance y if the location of x is within the location of y. 
@@ -999,200 +997,63 @@ class Comparison:
             item2_country = item2.hasCountry
         elif 'parentCountry' in item2_property_names:
             item2_country = item2.parentCountry
-            
-        # # If Item1 is a place node and has complete information
-        # if ('hasCitySection' in item1_property_names and ('hasCity' in item1_property_names or 'for_city' in item1_property_names) and ('hasProvince' in item1_property_names or 'hasState' in item1_property_names) and ('hasCountry' in item1_property_names or 'parentCountry' in item1_property_names)):
-        #     # If item2 has at least one place property, item2 is a place node. Proceed with check. But if item2 does not have any place properties, item2 is not a place node. Therefore return. 
-        #     if all([obj is None for obj in [item2_city_section, item2_city, item2_province, item2_country]]):
-        #         #print("Subplace consistency check not run - location information not available for ", item2, ".") 
-        #         return # Silent return
-        #     # check item1 (place node, complete information) against item2 (place node, incomplete information)
-        #     if not item2_city_section and item2_city and item1_city == item2_city:
-        #         print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item2_city_section and item2_province and item1_province == item2_province:
-        #         print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item2_city_section and item2_country and item1_country == item2_country:
-        #         print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item2_city and item2_province and item1_province == item2_province:
-        #         print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item2_city and item2_country and item1_country == item2_country:
-        #         print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-        #         return
-        
-        # # elif item2 is a place node with complete information
-        # elif ('hasCitySection' in item1_property_names and ('hasCity' in item1_property_names or 'for_city' in item1_property_names) and ('hasProvince' in item1_property_names or 'hasState' in item1_property_names) and ('hasCountry' in item1_property_names or 'parentCountry' in item2_property_names)):
-        #     # If item1 has at least one place property, item1 is a place node. Proceed with check. But if item1 does not have any place properties, item1 is not a place node. Therefore return. 
-        #     if all([obj is None for obj in [item1_city_section, item1_city, item1_province, item1_country]]):
-        #         #print("Subplace consistency check not run - location information not available for ", item1, ".") 
-        #         return # Silent return
-        #     # check item2 (place node, complete information) against item1 (place node, incomplete information)
-        #     if not item1_city_section and item1_city and item2_city == item1_city:
-        #         print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item1_city_section and item1_province and item2_province == item1_province:
-        #         print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item1_city_section and item1_country and item2_country == item1_country:
-        #         print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item1_city and item1_province and item2_province == item1_province:
-        #         print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-        #         return
-        #     elif not item1_city and item1_country and item2_country == item1_country:
-        #         print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-        #         return
-        # else:
-        #     return
 
         #item1
-        if not item1.hasCitySection and (not item1.hasCity or not item1.for_city) and (not item1.hasProvince or not item1.hasState) and (not item1.hasCountry or not item1.parentCountry):
+        if not item1_city_section and not item1_city and not item1_province and not item1_country:
             #no location information
             print("Subplace consistency check not run - location information not available for ", item1, ".") 
             return
-        elif item1.hasCitySection and item1.hasCity and item2.hasCity and not item2.hasCitySection and item1.hasCity == item2.hasCity:
+        elif item1_city_section and item1_city and item2_city and not item2_city_section and item1_city == item2_city:
             #item1 is a city section, item2 is not a city section, and item1's city is item2's city
             print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
             return
-        elif item1.hasCitySection and item1.for_city and item2.for_city and not item2.hasCitySection and item1.for_city == item2.for_city:
+        elif item1_city_section and item1_province and item2_province and not item2_city_section and item1_province == item2_province:
             print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
             return
-        elif item1.hasCitySection and item1.hasCity and item2.for_city and not item2.hasCitySection and item1.hasCity == item2.for_city:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and item1.for_city and item2.hasCity and not item2.hasCitySection and item1.for_city == item2.hasCity:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and item1.hasProvince and item2.hasProvince and not item2.hasCitySection and item1.hasProvince == item2.hasProvince:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and not item2.hasCitySection and item1.hasState and item2.hasState and item1.hasState == item2.hasState:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and not item2.hasCitySection and item1.hasState and item2.hasProvince and item1.hasState == item2.hasProvince:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and not item2.hasCitySection and item1.hasProvince and item2.hasState and item1.hasProvince == item2.hasState:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and not item2.hasCitySection and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and not item2.hasCitySection  and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and not item2.hasCitySection and item1.hasCountry and item2.parentCountry and item1.hasCountry == item2.parentCountry:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif item1.hasCitySection and not item2.hasCitySection and item1.parentCountry and item2.hasCountry and item1.parentCountry == item2.hasCountry:
+        elif item1_city_section and not item2_city_section and item1_country and item2_country and item1_country == item2_country:
             print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
             return
 
         #   city vs province
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasProvince and item2.hasProvince and item1.hasProvince == item2.hasProvince:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasState and item2.hasState and item1.hasState == item2.hasState:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasState and item2.hasProvince and item1.hasState == item2.hasProvince:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasProvince and item2.hasState and item1.hasProvince == item2.hasState:
+        elif item1_city and not item2_city and item1_province and item2_province and item1_province == item2_province:
             print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
             return
         
         #   city vs country
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.hasCountry and item2.parentCountry and item1.hasCountry == item2.parentCountry:
-            print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif (item1.hasCity or item1.for_city) and (not item2.hasCity or not item2.for_city) and item1.parentCountry and item2.hasCountry and item1.parentCountry == item2.hasCountry:
+        elif item1_city and not item2_city and item1_country and item2_country and item1_country == item2_country:
             print (item1, " is a subplace of ", item2, " therefore they are not subplace consistent.")
             return
         else: #some missing location information
-            print("some location information is not available. Therefore " ,item1, " and ", item2, " are potentially inconsistent.")
+            print("Some location information is not available. Therefore " ,item1, " and ", item2, " are potentially inconsistent.")
 
         #item2
-        if not item2.hasCitySection and (not item2.hasCity or not item2.for_city) and (not item2.hasProvince or not item2.hasState) and (not item2.hasCountry or not item2.parentCountry):
+        if not item2_city_section and not item2_city and not item2_province and not item2_country:
             #no location information
             print("Subplace consistency check not run - location information not available for ", item2, ".") 
             return
-        elif item2.hasCitySection and item2.hasCity and item1.hasCity and not item1.hasCitySection and item1.hasCity == item2.hasCity:
+        elif item2_city_section and item2_city and item1_city and not item1_city_section and item1_city == item2_city:
             #item1 is a city section, item2 is not a city section, and item1's city is item2's city
             print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
             return
-        elif item2.hasCitySection and item2.for_city and item1.for_city and not item1.hasCitySection and item1.for_city == item2.for_city:
+        elif item2_city_section and item2_province and item1_province and not item1_city_section and item1_province == item2_province:
             print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
             return
-        elif item2.hasCitySection and item2.hasCity and item1.for_city and not item1.hasCitySection and item2.hasCity == item1.for_city:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and item2.for_city and item1.hasCity and not item1.hasCitySection and item2.for_city == item1.hasCity:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and item2.hasProvince and item1.hasProvince and not item1.hasCitySection and item1.hasProvince == item2.hasProvince:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and not item1.hasCitySection and item2.hasState and item1.hasState and item1.hasState == item2.hasState:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and not item1.hasCitySection and item2.hasState and item1.hasProvince and item2.hasState == item1.hasProvince:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and not item1.hasCitySection and item2.hasProvince and item1.hasState and item2.hasProvince == item1.hasState:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and not item1.hasCitySection and item2.hasCountry and item1.hasCountry and item1.hasCountry == item2.hasCountry:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and not item1.hasCitySection  and item2.parentCountry and item1.parentCountry and item1.parentCountry == item2.parentCountry:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and not item1.hasCitySection and item2.hasCountry and item1.parentCountry and item2.hasCountry == item1.parentCountry:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif item2.hasCitySection and not item1.hasCitySection and item2.parentCountry and item1.hasCountry and item2.parentCountry == item1.hasCountry:
+        elif item2_city_section and not item1_city_section and item2_country and item1_country and item1_country == item2_country:
             print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
             return
 
         #   city vs province
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasProvince and item1.hasProvince and item1.hasProvince == item2.hasProvince:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasState and item1.hasState and item1.hasState == item2.hasState:
-            print (item2, " is a subplace of ", item2, " therefore they are not subplace consistent.")
-            return
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasState and item1.hasProvince and item2.hasState == item1.hasProvince:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasProvince and item1.hasState and item2.hasProvince == item1.hasState:
+        elif item2_city and not item1_city and item2_province and item1_province and item1_province == item2_province:
             print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
             return
         
         #   city vs country
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item1.hasCountry and item2.hasCountry and item1.hasCountry == item2.hasCountry:
+        elif item2_city and not item1_city and item1_country and item2_country and item1_country == item2_country:
             print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
             return
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item1.parentCountry and item2.parentCountry and item1.parentCountry == item2.parentCountry:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.hasCountry and item1.parentCountry and item2.hasCountry == item1.parentCountry:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
-        elif (item2.hasCity or item2.for_city) and (not item1.hasCity or not item1.for_city) and item2.parentCountry and item1.hasCountry and item2.parentCountry == item1.hasCountry:
-            print (item2, " is a subplace of ", item1, " therefore they are not subplace consistent.")
-            return
+        
         else: #some missing location information
-            print("some location information is not available. Therefore " ,item2, " and ", item1, " are potentially inconsistent.")
+            print("Some location information is not available. Therefore " , item2, " and ", item1, " are potentially inconsistent.")
             return
 
     # done outside of the recursive loop
@@ -1206,25 +1067,24 @@ class Comparison:
        
         #quantity = item, measure = item.value
         if item.value:
-            item2 = item.value #item2 is always Measure of item, which is a Quantity
-            parentItem = item.is_instance_of[0]
-            parentItem2 = item2.is_instance_of[0]
+            item2 = self.get_object(item.value) #item2 is always Measure of item, which is a Quantity
+            parentItem = self.get_object(item.is_instance_of)
+            parentItem2 = self.get_object(item2.is_instance_of)
         
-        if "iso21972.Quantity" in str(parentItem.ancestors()) and "iso21972.Measure" in str(parentItem2.ancestors()): #this check compares an instance of Quantity to a Measure. 
-            if item.unit_of_measure and item2.unit_of_measure:
-                if self.get_object(item.unit_of_measure) == self.get_object(item2.unit_of_measure):
-                    print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
-                    return
+            if "iso21972.Quantity" in str(parentItem.ancestors()) and "iso21972.Measure" in str(parentItem2.ancestors()): #this check compares an instance of Quantity to a Measure. 
+                if item.unit_of_measure and item2.unit_of_measure:
+                    if self.get_object(item.unit_of_measure) == self.get_object(item2.unit_of_measure):
+                        print(item, " is measurement consistent with ", item2, " because they have the same unit of measure.")
+                        return
+                    else:
+                        print(item, " is measurement inconsistent with ", item2, " because they do not have the same unit of measure.")
+                        return
                 else:
-                    print(item, " is measurement inconsistent with ", item2, " because they do not have the same unit of measure.")
+                    #print("Either ", item, " or ", item2, " is missing a unit of measure. Quantity Measurement Consistency Check cannot be run.")
                     return
             else:
-                #print("Either ", item, " or ", item2, " is missing a unit of measure. Quantity Measurement Consistency Check cannot be run.")
+                #print("Either ", item, " is not an instance of Quantity or ", item2, " is not an instance of Measure. Quantity Measurement Consistency Check cannot be run.")
                 return
-       
-        else:
-            #print("Either ", item, " is not an instance of Quantity or ", item2, " is not an instance of Measure. Quantity Measurement Consistency Check cannot be run.")
-            return
     
     # done outside of the recursive loop
     def indicator_unit_component_consistency_check(self, item):
@@ -1240,33 +1100,27 @@ class Comparison:
         for p in item.get_properties():
             if p.name == 'hasNumerator' or p.name  == 'numerator':
                 item1_numerator_obj = p[item]
+                item1_numerator_obj = self.get_object(item1_numerator_obj)
             if p.name == 'hasDenominator' or p.name == 'denominator':
                 item1_denominator_obj = p[item]
+                item1_denominator_obj = self.get_object(item1_denominator_obj)
             if p.name == 'unit_of_measure':
                 unit_of_measure = p[item]
+                unit_of_measure = self.get_object(unit_of_measure)
         
-        if  item1_numerator_obj[0] and unit_of_measure[0]: #numerator has to be a component of item to run this check
-            if isinstance(item1_numerator_obj[0].unit_of_measure, list):
-                if item1_numerator_obj[0].unit_of_measure[0] == unit_of_measure[0]:
-                    print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
-                    return
-                elif item1_numerator_obj[0].unit_of_measure[0] == unit_of_measure[0].numerator[0]:
-                    print(item, "'s unit of measure is connected to its component, ", item1_numerator_obj, "'s unit of measure by the numerator property. They are indicator unit component consistent.")
-                    return
-            elif not isinstance(item1_numerator_obj[0].unit_of_measure, list):
-                if item1_numerator_obj[0].unit_of_measure == unit_of_measure[0]:
-                    print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
-                    return
-            elif not isinstance(item1_numerator_obj[0].unit_of_measure, list) and not isinstance(unit_of_measure, list):
-                if item1_numerator_obj[0].unit_of_measure == unit_of_measure:
-                    print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
-                    return
+        if  item1_numerator_obj and unit_of_measure: #numerator has to be a component of item to run this check
+            if self.get_object(item1_numerator_obj.unit_of_measure) == self.get_object(unit_of_measure):
+                print(item, " has the same unit of measure as its component, ", item1_numerator_obj, ". They are indicator unit component consistent.")
+                return
+            elif self.get_object(item1_numerator_obj.unit_of_measure) ==  self.get_object(unit_of_measure.numerator):
+                print(item, "'s unit of measure is connected to its component, ", item1_numerator_obj, "'s unit of measure by the numerator property. They are indicator unit component consistent.")
+                return
             
-        elif item1_denominator_obj[0] and unit_of_measure[0]: #denominator has to be a component of item to run this check
-            if item1_denominator_obj[0].unit_of_measure[0] == unit_of_measure[0]:
+        elif item1_denominator_obj and unit_of_measure: #denominator has to be a component of item to run this check
+            if self.get_object(item1_denominator_obj.unit_of_measure) == self.get_object(unit_of_measure):
                 print(item, " has the same unit of measure as its component, ", item1_denominator_obj, ". They are indicator unit component consistent.")
                 return
-            elif item1_denominator_obj[0].unit_of_measure[0] == unit_of_measure[0].denominator[0]:
+            elif self.get_object(item1_denominator_obj.unit_of_measure) ==  self.get_object(unit_of_measure.numerator):
                 print(item, "'s unit of measure is connected to its component, ", item1_denominator_obj, "'s unit of measure by the denominator property. They are indicator unit component consistent.")
                 return 
         else:
@@ -1282,30 +1136,20 @@ class Comparison:
         if item1 in self.classes and item1 in item2.is_instance_of: #if item1 is the definition class, and item2 is the individual of that class
         #is_instance_of returns list
             if item2.unit_of_measure and item1.unit_of_measure: #if both items have unit of measure values
-                if isinstance(item2.unit_of_measure, list):
-                    measure1 = item1.unit_of_measure[0] 
-                    measure2 = item2.unit_of_measure[0]
-                else:
-                    measure1 = item1.unit_of_measure
-                    measure2 = item2.unit_of_measure
+                measure1 = self.get_object(item1.unit_of_measure)
+                measure2 = self.get_object(item2.unit_of_measure)
 
                 if "iso21972.Singular_unit" in str(measure1.ancestors()): #if definition class has unit of measure of singular unit
                     if "iso21972.Unit_multiple_or_submultiple" in str(measure2.is_instance_of): #if instance had unit of measure of multiple unit
-                        if isinstance(measure2.singular_unit, list):
-                            if measure2.singular_unit and type(measure2.singular_unit[0]) == measure1:
+                        if measure2.singular_unit and type(self.get_object(measure2.singular_unit)) == measure1:
                             #Did it here but if multiple unit, not necessary to check if multiple unit's property of singular_unit leads back to measure1 since even knowing that the class is singular but the instance isn't shows inconsistency
-                                print(item2, " is a multiple or submultiple of the unit defined in its definition class, ", item1, ". Therefore they are singular unit inconsistent.")
-                                return
-                        else:
-                            if measure2.singular_unit and type(measure2.singular_unit) == measure1:
-                            #Did it here but if multiple unit, not necessary to check if multiple unit's property of singular_unit leads back to measure1 since even knowing that the class is singular but the instance isn't shows inconsistency
-                                print(item2, " is a multiple or submultiple of the unit defined in its definition class, ", item1, ". Therefore they are singular unit inconsistent.")
-                                return
+                            print(item2, " is a multiple or submultiple of the unit defined in its definition class, ", item1, ". Therefore they are singular unit inconsistent.")
+                            return
                     
                     elif "iso21972.Unit_multiple_or_submultiple" not in str(measure2.is_instance_of):
                         # and "iso21972.Singular_unit" in str(measure2.is_instance_of): 
                         #if instance had unit of measure of singular unit
-                        if measure1 == measure2.is_instance_of[0] or measure2 == measure1:
+                        if measure1 == self.get_object(measure2.is_instance_of) or measure1 == measure2:
                             print(item2, " is a singular unit of the type of unit defined in its definition class, ", item1, ". Therefore they are singular unit consistent.")
                             return
                     else:
@@ -1318,23 +1162,14 @@ class Comparison:
         elif item2 in self.classes and item2 in item1.is_instance_of: #if item2 is the definition class, and item1 is the individual of that class
             #is_instance_of returns list
             if item1.unit_of_measure and item2.unit_of_measure:
-                if isinstance(item1.unit_of_measure, list):
-                    measure1 = item1.unit_of_measure[0] 
-                    measure2 = item2.unit_of_measure[0]
-                else:
-                    measure1 = item1.unit_of_measure
-                    measure2 = item2.unit_of_measure
+                measure1 = self.get_object(item1.unit_of_measure)
+                measure2 = self.get_object(item2.unit_of_measure)
                 
                 if "iso21972.Singular_unit" in str(measure2.ancestors()): #if definition class had unit of measure of singular unit
                     if "iso21972.Unit_multiple_or_submultiple" in str(measure1.is_instance_of): #if instance had unit of measure of multiple unit
-                        if isinstance(measure1.singular_unit, list):
-                            if measure1.singular_unit and type(measure1.singular_unit[0]) == measure2:
-                                print(item1, " is a multiple or submultiple of the unit defined in its definition class, ", item2, ". Therefore they are singular unit inconsistent.")
-                                return
-                        else:
-                            if measure1.singular_unit and type(measure1.singular_unit) == measure2:
-                                print(item1, " is a multiple or submultiple of the unit defined in its definition class, ", item2, ". Therefore they are singular unit inconsistent.")
-                                return
+                        if measure1.singular_unit and type(self.get_object(measure1.singular_unit)) == measure2:
+                            print(item1, " is a multiple or submultiple of the unit defined in its definition class, ", item2, ". Therefore they are singular unit inconsistent.")
+                            return
                     
                     elif "iso21972.Unit_multiple_or_submultiple" not in str(measure1.is_instance_of):
                          #and "iso21972.Singular_unit" in str(measure1.is_a): 
@@ -1356,6 +1191,8 @@ class Comparison:
         Correspondence Inconsistency is when there is no correspondence detected between nodes in the indicator’s definition and the instance. 
         This means that not all components in the definition are covered by the instance. 
         '''
+        item1  = self.get_object(item1)
+        item2 = self.get_object(item2)
 
         if item1 in self.classes and item2 in self.individuals:
             class_properties = item1.get_class_properties()
