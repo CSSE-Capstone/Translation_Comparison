@@ -1692,6 +1692,7 @@ version 0.1 6 November 2019</owl:versionInfo>
 
     <owl:Class rdf:about="http://ontology.eil.utoronto.ca/cids/cids#Client">
         <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/cids/cids#Stakeholder"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Client</rdfs:label>
     </owl:Class>
     
 
