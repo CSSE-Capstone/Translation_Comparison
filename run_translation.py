@@ -67,6 +67,7 @@ wn = WordNet(similarity_threshold=0.8,
 indtestset = pd.read_csv(file_path + dataset_name, encoding = "ISO-8859-1", engine='python')
 cids_classes = pd.read_csv(file_path + 'cidsclasses.csv', header=None, squeeze=True).to_list()
 matched_indicators = pd.read_csv(file_path + 'glossarymatchedindicators.csv', index_col=0, header=None, squeeze=True).to_dict()
+clusterMap, y_kmeans_token, kmeans = clustering.cluster()
 
 # Peform translation on each sentence in indicatortestset.csv
 output_dict_list = []
@@ -81,8 +82,7 @@ for index, row in indtestset.iterrows():
 	rb_output = rb.rb_translation(pos_tagged, ind_code, cids_classes, matched_indicators)
 	print('rb_output')
 	print(rb_output)
-
-	clusterMap, y_kmeans_token, kmeans = clustering.cluster()
+	
 	cluster_output = clustering.rb_cluster_combined(rb_output, ind_def, clusterMap, kmeans)
 	print('cluster_output')
 	print(cluster_output)
